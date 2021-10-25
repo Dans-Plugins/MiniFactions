@@ -1,4 +1,4 @@
-name: Medieval Factions Redesign
+name: Medieval Factions Redesigned
 version: ${project.version}
-main: dansplugins.medievalfactionsredesign.MedievalFactionsRedesign
+main: dansplugins.medievalfactionsredesign.MedievalFactionsRedesigned
 api-version: 1.17
