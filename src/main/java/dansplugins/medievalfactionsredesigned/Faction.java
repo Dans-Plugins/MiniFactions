@@ -74,37 +74,63 @@ public class Faction {
         return leader.equals(UUID);
     }
 
-    // TODO: add comment
+    /**
+     * Method to add a player to the faction.
+     *
+     * @param UUID  The UUID of the player being added.
+     */
     public void addMember(UUID UUID) {
         members.add(UUID);
     }
 
-    // TODO: add comment
+    /**
+     * Method to remove a player from a faction.
+     *
+     * @param UUID  The UUID of the player being removed.
+     */
     public void removeMember(UUID UUID) {
         members.remove(UUID);
     }
 
-    // TODO: add comment
-    public boolean isMember(UUID uuid) {
-        return members.contains(uuid);
+    /**
+     * Method to check if a player is a member of the faction.
+     *
+     * @param UUID  The UUID of the player being checked.
+     * @return Boolean signifying whether the player whose UUID is passed is a member of the faction.
+     */
+    public boolean isMember(UUID UUID) {
+        return members.contains(UUID);
     }
 
-    // TODO: add comment
-    public void invite(UUID playerName) {
-        Player player = getServer().getPlayer(playerName);
+    /**
+     * Method to invite a player to the faction.
+     *
+     * @param UUID  The UUID of the player being invited.
+     */
+    public void invite(UUID UUID) {
+        Player player = getServer().getPlayer(UUID);
         if (player != null) {
-            UUID playerUUID = getServer().getPlayer(playerName).getUniqueId();
+            UUID playerUUID = getServer().getPlayer(UUID).getUniqueId();
             invited.add(playerUUID);
         }
     }
 
-    // TODO: add comment
-    public void uninvite(UUID player) {
-        invited.remove(player);
+    /**
+     * Method to invite a player to the faction.
+     *
+     * @param UUID  The UUID of the player being uninvited.
+     */
+    public void uninvite(UUID UUID) {
+        invited.remove(UUID);
     }
 
-    // TODO: add comment
-    public boolean isInvited(UUID uuid) {
-        return invited.contains(uuid);
+    /**
+     * Method to check if a player is invited to the faction.
+     *
+     * @param UUID  The UUID of the player being checked.
+     * @return Boolean signifying whether the player whose UUID is passed is invited to the faction.
+     */
+    public boolean isInvited(UUID UUID) {
+        return invited.contains(UUID);
     }
 }
