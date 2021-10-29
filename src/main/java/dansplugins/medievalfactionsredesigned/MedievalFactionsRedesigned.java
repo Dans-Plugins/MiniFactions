@@ -10,6 +10,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author Daniel Stephenson
+ * @since 10/25/2021
+ */
 public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
 
     private static MedievalFactionsRedesigned instance;

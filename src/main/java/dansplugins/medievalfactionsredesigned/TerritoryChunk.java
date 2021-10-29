@@ -6,7 +6,7 @@ import org.bukkit.entity.Entity;
 
 /**
  * @author Daniel Stephenson
- * @since 10/25/2021
+ * @since 10/28/2021
  */
 public class TerritoryChunk {
     private int x;
