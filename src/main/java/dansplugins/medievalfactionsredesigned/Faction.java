@@ -2,7 +2,7 @@ package dansplugins.medievalfactionsredesigned;
 
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 import static org.bukkit.Bukkit.getServer;
@@ -14,8 +14,8 @@ import static org.bukkit.Bukkit.getServer;
 public class Faction {
     private String name;
     private UUID leader;
-    private final ArrayList<UUID> members = new ArrayList<>();
-    private final ArrayList<UUID> invited = new ArrayList<>();
+    private final HashSet<UUID> members = new HashSet<>();
+    private final HashSet<UUID> invited = new HashSet<>();
 
     /**
      * Constructor to initialize the faction.
