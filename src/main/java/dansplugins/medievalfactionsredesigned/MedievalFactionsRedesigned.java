@@ -28,10 +28,7 @@ public final class MedievalFactionsRedesigned extends AbstractPonderPlugin {
         instance = this;
         ponderAPI_integrator = new PonderAPI_Integrator(this);
         toolbox = getPonderAPI().getToolbox();
-
         initializeConfigService();
-
-        // create/load config
         initializeConfigFile();
     }
 
