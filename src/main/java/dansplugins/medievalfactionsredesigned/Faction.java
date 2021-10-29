@@ -12,6 +12,7 @@ import static org.bukkit.Bukkit.getServer;
  * @since 10/25/2021
  */
 public class Faction {
+    private int ID;
     private String name;
     private UUID leader;
     private final HashSet<UUID> members = new HashSet<>();
@@ -22,10 +23,12 @@ public class Faction {
      *
      * @param name          Initial name of the faction.
      * @param creatorUUID   UUID of the player who created the faction.
+     * @param ID            Unique ID of the faction.
      */
-    public Faction(String name, UUID creatorUUID) {
+    public Faction(String name, UUID creatorUUID, int ID) {
         this.name = name;
         this.leader = creatorUUID;
+        this.ID = ID;
     }
 
     /**

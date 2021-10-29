@@ -1,6 +1,8 @@
 package dansplugins.medievalfactionsredesigned;
 
 import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 
 /**
  * @author Daniel Stephenson
@@ -10,16 +12,39 @@ public class TerritoryChunk {
     private int x;
     private int z;
     private String worldName;
+    private int factionID;
 
     /**
      * Constructor to initialize the territory chunk.
      *
      * @param chunk {@link Chunk}   Chunk used to initialize the class with.
+     * @param factionID             ID of the faction that this territory chunk belongs to.
      */
-    public TerritoryChunk(Chunk chunk) {
+    public TerritoryChunk(Chunk chunk, int factionID) {
         x = chunk.getX();
         z = chunk.getZ();
         worldName = chunk.getWorld().getName();
+        this.factionID = factionID;
+    }
+
+    /**
+     * Constructor to initialize the territory chunk with a location.
+     *
+     * @param location {@link Location}   Location used to initialize the class with.
+     * @param factionID             ID of the faction that this territory chunk belongs to.
+     */
+    public TerritoryChunk(Location location, int factionID) {
+        this(location.getChunk(), factionID);
+    }
+
+    /**
+     * Constructor to initialize the territory chunk with an entity.
+     *
+     * @param entity {@link Entity}   Entity used to initialize the class with.
+     * @param factionID             ID of the faction that this territory chunk belongs to.
+     */
+    public TerritoryChunk(Entity entity, int factionID) {
+        this(entity.getLocation(), factionID);
     }
 
     /**
