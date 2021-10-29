@@ -32,6 +32,15 @@ public class Faction {
     }
 
     /**
+     * Method to get the unique ID of the faction.
+     *
+     * @return The unique ID of the faction.
+     */
+    public int getID() {
+        return ID;
+    }
+
+    /**
      * Method to set the name of the faction.
      *
      * @param newName   The new name of the faction.
