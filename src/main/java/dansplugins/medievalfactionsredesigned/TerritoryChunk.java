@@ -9,7 +9,7 @@ import org.bukkit.Chunk;
 public class TerritoryChunk {
     private int x;
     private int z;
-    private String world;
+    private String worldName;
 
     /**
      * Constructor to initialize the territory chunk.
@@ -19,7 +19,7 @@ public class TerritoryChunk {
     public TerritoryChunk(Chunk chunk) {
         x = chunk.getX();
         z = chunk.getZ();
-        world = chunk.getWorld().getName();
+        worldName = chunk.getWorld().getName();
     }
 
     /**
@@ -38,5 +38,14 @@ public class TerritoryChunk {
      */
     public int getZ() {
         return z;
+    }
+
+    /**
+     * Method to get the name of the world that the territory  is located in.
+     *
+     * @return The name of the world that the territory is located in.
+     */
+    public String getWorldName() {
+        return worldName;
     }
 }
