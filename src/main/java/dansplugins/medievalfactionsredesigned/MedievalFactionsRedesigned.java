@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class MedievalFactionsRedesigned extends AbstractPonderPlugin {
+public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
 
     private static MedievalFactionsRedesigned instance;
 
@@ -41,20 +41,32 @@ public final class MedievalFactionsRedesigned extends AbstractPonderPlugin {
 
     // helper methods -------------------------------------------------------------------------
 
+    /**
+     * Method to get initialize the config service with config options and values.
+     *
+     */
     private void initializeConfigService() {
         HashMap<String, Object> configOptions = new HashMap<>();
         configOptions.put("debugMode", false);
         getPonderAPI().getConfigService().initialize(configOptions);
     }
 
+    /**
+     * Method to create and register the event handlers.
+     *
+     */
     private void registerEventHandlers() {
         ArrayList<Listener> listeners = new ArrayList<>();
         // TODO: add listeners
         getToolbox().getEventHandlerRegistry().registerEventHandlers(listeners, this);
     }
 
+    /**
+     * Method to initialize the actual config.yml file.
+     *
+     */
     private void initializeConfigFile() {
-        if (!(new File("./plugins/Mailboxes/config.yml").exists())) {
+        if (!(new File("./plugins/MedievalFactionsRedesigned/config.yml").exists())) {
             getPonderAPI().getConfigService().saveMissingConfigDefaultsIfNotPresent();
         }
         else {
@@ -66,6 +78,10 @@ public final class MedievalFactionsRedesigned extends AbstractPonderPlugin {
         }
     }
 
+    /**
+     * Method to initialize the command service with commands.
+     *
+     */
     private void initializeCommandService() {
         ArrayList<ICommand> commands = new ArrayList<>();
         // TODO: add commands classes
