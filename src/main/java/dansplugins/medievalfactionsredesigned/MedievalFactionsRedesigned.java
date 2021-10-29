@@ -30,6 +30,8 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
         toolbox = getPonderAPI().getToolbox();
         initializeConfigService();
         initializeConfigFile();
+        registerEventHandlers();
+        initializeCommandService();
     }
 
     @Override
@@ -52,16 +54,6 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
     }
 
     /**
-     * Method to create and register the event handlers.
-     *
-     */
-    private void registerEventHandlers() {
-        ArrayList<Listener> listeners = new ArrayList<>();
-        // TODO: add listeners
-        getToolbox().getEventHandlerRegistry().registerEventHandlers(listeners, this);
-    }
-
-    /**
      * Method to initialize the actual config.yml file.
      *
      */
@@ -76,6 +68,16 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
             }
             reloadConfig();
         }
+    }
+
+    /**
+     * Method to create and register the event handlers.
+     *
+     */
+    private void registerEventHandlers() {
+        ArrayList<Listener> listeners = new ArrayList<>();
+        // TODO: add listeners
+        getToolbox().getEventHandlerRegistry().registerEventHandlers(listeners, this);
     }
 
     /**
