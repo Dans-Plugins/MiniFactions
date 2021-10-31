@@ -71,6 +71,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>preponderous</groupId>
             <artifactId>ponder</artifactId>
             <version>v0.7-alpha-2</version>
