@@ -1,5 +1,6 @@
 package dansplugins.medievalfactionsredesigned;
 
+import dansplugins.medievalfactionsredesigned.data.PersistentData;
 import org.bukkit.event.Listener;
 import preponderous.ponder.AbstractPonderPlugin;
 import preponderous.ponder.misc.PonderAPI_Integrator;
@@ -20,6 +21,8 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
 
     private PonderAPI_Integrator ponderAPI_integrator;
     private Toolbox toolbox;
+
+    private PersistentData data = new PersistentData();
 
     // public methods -------------------------------------------------------------------------
 
