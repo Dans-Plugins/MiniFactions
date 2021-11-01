@@ -1,5 +1,6 @@
 package dansplugins.medievalfactionsredesigned;
 
+import dansplugins.medievalfactionsredesigned.commands.HelpCommand;
 import dansplugins.medievalfactionsredesigned.data.PersistentData;
 import org.bukkit.event.Listener;
 import preponderous.ponder.AbstractPonderPlugin;
@@ -93,7 +94,7 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
      */
     private void initializeCommandService() {
         ArrayList<ICommand> commands = new ArrayList<>();
-        // TODO: add commands classes
+        commands.add(new HelpCommand());
         getPonderAPI().getCommandService().initialize(commands, "That command wasn't found.");
     }
 
