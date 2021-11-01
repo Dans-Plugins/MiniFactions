@@ -1,6 +1,6 @@
 name: MedievalFactionsRedesigned
-version: ${project.version}
-main: dansplugins.medievalfactionsredesign.MedievalFactionsRedesigned
+version: v5.0-alpha-v0.1
+main: dansplugins.medievalfactionsredesign.MedievalFactions
 api-version: 1.13
 
 commands:

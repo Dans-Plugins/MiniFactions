@@ -16,9 +16,9 @@ import java.util.HashMap;
  * @author Daniel Stephenson
  * @since 10/25/2021
  */
-public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
+public class MedievalFactions extends AbstractPonderPlugin {
 
-    private static MedievalFactionsRedesigned instance;
+    private static MedievalFactions instance;
 
     private PonderAPI_Integrator ponderAPI_integrator;
     private Toolbox toolbox;
@@ -27,7 +27,7 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
 
     // public methods -------------------------------------------------------------------------
 
-    public static MedievalFactionsRedesigned getInstance() {
+    public static MedievalFactions getInstance() {
         return instance;
     }
 
