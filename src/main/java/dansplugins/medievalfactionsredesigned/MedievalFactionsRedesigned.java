@@ -91,7 +91,7 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
     private void initializeCommandService() {
         ArrayList<ICommand> commands = new ArrayList<>();
         // TODO: add commands classes
-        getPonderAPI().getCommandService().initialize(commands, "mf", "(TBD)", "That command wasn't found."); // TODO: make it possible to use multiple core commands
+        getPonderAPI().getCommandService().initialize(commands, "That command wasn't found.");
     }
 
     // end of helper methods -------------------------------------------------------------------------

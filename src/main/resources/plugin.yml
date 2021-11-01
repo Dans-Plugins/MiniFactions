@@ -1,4 +1,14 @@
 name: MedievalFactionsRedesigned
 version: ${project.version}
 main: dansplugins.medievalfactionsredesign.MedievalFactionsRedesigned
-api-version: 1.17
+api-version: 1.13
+
+commands:
+  medievalfactions:
+  mf:
+  factions:
+  f:
+
+permissions:
+  mf.help:
+    default: true
