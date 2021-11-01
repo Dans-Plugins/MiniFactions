@@ -1,5 +1,7 @@
 package dansplugins.medievalfactionsredesigned;
 
+import dansplugins.medievalfactionsredesigned.commands.HelpCommand;
+import dansplugins.medievalfactionsredesigned.data.PersistentData;
 import org.bukkit.event.Listener;
 import preponderous.ponder.AbstractPonderPlugin;
 import preponderous.ponder.misc.PonderAPI_Integrator;
@@ -14,16 +16,18 @@ import java.util.HashMap;
  * @author Daniel Stephenson
  * @since 10/25/2021
  */
-public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
+public class MedievalFactions extends AbstractPonderPlugin {
 
-    private static MedievalFactionsRedesigned instance;
+    private static MedievalFactions instance;
 
     private PonderAPI_Integrator ponderAPI_integrator;
     private Toolbox toolbox;
 
+    private PersistentData data = new PersistentData();
+
     // public methods -------------------------------------------------------------------------
 
-    public static MedievalFactionsRedesigned getInstance() {
+    public static MedievalFactions getInstance() {
         return instance;
     }
 
@@ -90,7 +94,7 @@ public class MedievalFactionsRedesigned extends AbstractPonderPlugin {
      */
     private void initializeCommandService() {
         ArrayList<ICommand> commands = new ArrayList<>();
-        // TODO: add commands classes
+        commands.add(new HelpCommand());
         getPonderAPI().getCommandService().initialize(commands, "That command wasn't found.");
     }
 
