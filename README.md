@@ -5,7 +5,7 @@ We're redesigning Medieval Factions.
 
 ## Version History
 ### Current Version
-v5.0.1-alpha-1
+v5.0-alpha-v0.1
 
 ### Past Versions
 N/A
