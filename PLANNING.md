@@ -1,7 +1,7 @@
 # Planning
 ## Target Features
-- [ ] Social Organization
-- [ ] Territory Management
+- [ ] Social Organization (in progress)
+- [ ] Territory Management (in progress)
 - [ ] Vassals
 - [ ] Locks
 - [ ] Alliances
