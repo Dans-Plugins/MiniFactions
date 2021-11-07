@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public class PersistentData {
 
-    private HashSet<Faction> factions = new HashSet<>();
+    private final HashSet<Faction> factions = new HashSet<>();
 
     /**
      *
