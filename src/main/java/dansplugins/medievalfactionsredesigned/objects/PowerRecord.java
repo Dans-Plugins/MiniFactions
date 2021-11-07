@@ -1,14 +1,17 @@
 package dansplugins.medievalfactionsredesigned.objects;
 
 import dansplugins.medievalfactionsredesigned.json.JsonMember;
+import dansplugins.medievalfactionsredesigned.json.Jsonify;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class PowerRecord {
+public class PowerRecord implements Jsonify {
 
     @JsonMember(identifier = "id")
-    private UUID id;
+    private final UUID id;
 
     @JsonMember(identifier = "power")
     private double power = 0;
@@ -16,25 +19,30 @@ public class PowerRecord {
     /**
      *  Method to create a power record with a {@link UUID}.
      *
-     * @param uuid
+     * @param uuid of the record.
      */
-    public PowerRecord(UUID uuid) {
+    public PowerRecord(@NotNull UUID uuid) {
         this.id = uuid;
     }
 
     /**
      *  Method to create a power record with a player.
-     *
-     * @param player
+     *  <p>
+     *      As {@link Player} extends {@link OfflinePlayer}, using {@link OfflinePlayer} accepts both
+     *      an {@link OfflinePlayer} and a {@link Player}.
+     *      <br><a href="https://www.geeksforgeeks.org/polymorphism-in-java/" target="_blank">More Information.</a>
+     *  </p>
+     * @param player to create a record for.
+     * @see Player
      */
-    public PowerRecord(Player player) {
+    public PowerRecord(@NotNull OfflinePlayer player) {
         this(player.getUniqueId());
     }
 
     /**
      *  Method to set the amount of power associated with this record.
      *
-     * @param newPower
+     * @param newPower overridden power value to set.
      */
     public void setPower(double newPower) {
         power = newPower;

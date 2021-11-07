@@ -1,6 +1,6 @@
 package dansplugins.medievalfactionsredesigned.json;
 
-import dansplugins.medievalfactionsredesigned.objects.Faction;
+import dansplugins.medievalfactionsredesigned.objects.core.JsonFaction;
 
 import java.lang.annotation.*;
 
@@ -17,7 +17,7 @@ public @interface JsonMember {
      * The identifier of the Json object to be stored as a Json entry in the map.
      *
      * @return name of the object.
-     * @see Faction
+     * @see JsonFaction
      */
     String identifier();
 
