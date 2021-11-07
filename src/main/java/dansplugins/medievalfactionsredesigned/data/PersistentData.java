@@ -1,6 +1,6 @@
 package dansplugins.medievalfactionsredesigned.data;
 
-import dansplugins.medievalfactionsredesigned.objects.Faction;
+import dansplugins.medievalfactionsredesigned.objects.iface.Faction;
 
 import java.util.HashSet;
 import java.util.UUID;
