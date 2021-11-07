@@ -1,7 +1,7 @@
-package dansplugins.medievalfactionsredesigned.objects;
+package dansplugins.medievalfactionsredesigned.objects.core;
 
 import dansplugins.medievalfactionsredesigned.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.json.Jsonify;
+import dansplugins.medievalfactionsredesigned.objects.iface.FactionEntity;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -17,16 +18,29 @@ import java.util.UUID;
  * @author Daniel Stephenson
  * @since 10/28/2021
  */
-public class TerritoryChunk implements Jsonify {
+public class TerritoryChunk implements FactionEntity {
 
     @JsonMember(identifier = "x-coordinate")
-    private int x;
+    private final int x;
 
     @JsonMember(identifier = "z-coordinate")
-    private int z;
+    private final int z;
 
-    @JsonMember(identifier = "worldName")
-    private UUID worldId;
+    @JsonMember(identifier = "worldId")
+    private final UUID worldId;
+
+    @JsonMember(identifier = "id")
+    private final UUID id;
+
+    /**
+     * Constructor to build a TerritoryChunk for JSON Injection.
+     */
+    public TerritoryChunk() {
+        x = 0;
+        z = 0;
+        worldId = UUID.randomUUID();
+        id = UUID.randomUUID();
+    }
 
     /**
      * Constructor to build a TerritoryChunk from X, Z and WorldId.
@@ -39,6 +53,7 @@ public class TerritoryChunk implements Jsonify {
         this.x = x;
         this.z = z;
         this.worldId = uid;
+        this.id = UUID.randomUUID();
     }
 
     /**
@@ -66,6 +81,16 @@ public class TerritoryChunk implements Jsonify {
      */
     public TerritoryChunk(Entity entity) {
         this(entity.getLocation());
+    }
+
+    /**
+     * Method to obtain the Id of the FactionEntity.
+     *
+     * @return {@link UUID} never {@code null}.
+     */
+    @Override
+    public @NotNull UUID getId() {
+        return id;
     }
 
     /**
@@ -131,12 +156,36 @@ public class TerritoryChunk implements Jsonify {
     /**
      * Method to obtain the Faction which owns this TerritoryChunk.
      *
-     * @return {@link Faction}.
+     * @return {@link JsonFaction}.
      */
     @Nullable
-    public Faction getFaction() {
+    public JsonFaction getFaction() {
         // TODO When we implement saving properly, we'll do this at runtime, no more saving FactionId.
         return null;
+    }
+
+    /**
+     * Method to obtain the TerritoryChunk as a debug string.
+     *
+     * @return String representation of the TerritoryChunk.
+     */
+    @Override
+    public String toString() {
+        return "TerritoryChunk{" +
+                "x=" + x +
+                ", z=" + z +
+                ", worldId=" + worldId +
+                ", id=" + id +
+                '}';
+    }
+
+    public static void main(String[] args) {
+        final TerritoryChunk chunk = new TerritoryChunk(10, 10, UUID.randomUUID());
+        final Map<String, String> json;
+        System.out.println(json = chunk.toJSON());
+        final TerritoryChunk copy = new TerritoryChunk();
+        copy.fromJSON(json);
+        System.out.println(copy);
     }
 
 }
