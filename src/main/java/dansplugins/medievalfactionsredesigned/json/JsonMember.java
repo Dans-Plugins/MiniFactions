@@ -2,15 +2,13 @@ package dansplugins.medievalfactionsredesigned.json;
 
 import dansplugins.medievalfactionsredesigned.objects.Faction;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * @author Callum Johnson
  * @since 31/10/2021 - 17:54
  */
+@Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface JsonMember {
