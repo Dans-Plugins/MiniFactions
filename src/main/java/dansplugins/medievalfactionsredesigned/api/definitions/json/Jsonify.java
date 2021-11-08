@@ -1,4 +1,4 @@
-package dansplugins.medievalfactionsredesigned.json;
+package dansplugins.medievalfactionsredesigned.api.definitions.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -1,14 +1,15 @@
-package dansplugins.medievalfactionsredesigned.objects;
+package dansplugins.medievalfactionsredesigned.api.data.temp;
 
-import dansplugins.medievalfactionsredesigned.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.json.Jsonify;
+import dansplugins.medievalfactionsredesigned.api.definitions.PowerRecord;
+import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
+import dansplugins.medievalfactionsredesigned.api.definitions.json.Jsonify;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class PowerRecord implements Jsonify {
+public class JsonPowerRecord implements PowerRecord {
 
     @JsonMember(identifier = "id")
     private final UUID id;
@@ -21,7 +22,7 @@ public class PowerRecord implements Jsonify {
      *
      * @param uuid of the record.
      */
-    public PowerRecord(@NotNull UUID uuid) {
+    public JsonPowerRecord(@NotNull UUID uuid) {
         this.id = uuid;
     }
 
@@ -35,24 +36,39 @@ public class PowerRecord implements Jsonify {
      * @param player to create a record for.
      * @see Player
      */
-    public PowerRecord(@NotNull OfflinePlayer player) {
+    public JsonPowerRecord(@NotNull OfflinePlayer player) {
         this(player.getUniqueId());
     }
 
+
     /**
-     *  Method to set the amount of power associated with this record.
+     * Method to obtain the Id of the FactionEntity.
      *
-     * @param newPower overridden power value to set.
+     * @return {@link UUID} never {@code null}.
      */
-    public void setPower(double newPower) {
-        power = newPower;
+    @Override
+    public @NotNull UUID getId() {
+        return id;
     }
 
     /**
-     *  Method to get the amount of power associated with this record.
+     * Method to get the power related to this record.
+     *
+     * @return double power.
      */
+    @Override
     public double getPower() {
         return power;
+    }
+
+    /**
+     * Method to set the power related to this record.
+     *
+     * @param power to set.
+     */
+    @Override
+    public void setPower(double power) {
+        this.power = power;
     }
 
 }

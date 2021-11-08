@@ -1,7 +1,8 @@
 package dansplugins.medievalfactionsredesigned;
 
+import dansplugins.medievalfactionsredesigned.api.MedievalFactionsAPI;
 import dansplugins.medievalfactionsredesigned.commands.HelpCommand;
-import dansplugins.medievalfactionsredesigned.data.PersistentData;
+import dansplugins.medievalfactionsredesigned.api.data.persist.PersistentData;
 import org.bukkit.event.Listener;
 import preponderous.ponder.AbstractPonderPlugin;
 import preponderous.ponder.misc.PonderAPI_Integrator;
@@ -18,12 +19,15 @@ import java.util.HashMap;
  */
 public class MedievalFactions extends AbstractPonderPlugin {
 
+    public static final boolean debug_mode = false;
+
     private static MedievalFactions instance;
 
     private PonderAPI_Integrator ponderAPI_integrator;
     private Toolbox toolbox;
 
     private PersistentData data = new PersistentData();
+    private MedievalFactionsAPI api;
 
     // public methods -------------------------------------------------------------------------
 
@@ -40,6 +44,7 @@ public class MedievalFactions extends AbstractPonderPlugin {
         initializeConfigFile();
         registerEventHandlers();
         initializeCommandService();
+        api = new MedievalFactionsAPI();
     }
 
     @Override
@@ -50,6 +55,16 @@ public class MedievalFactions extends AbstractPonderPlugin {
     // end of public methods -------------------------------------------------------------------------
 
     // helper methods -------------------------------------------------------------------------
+
+
+    /**
+     * Method to obtain the MedievalFactionsAPI
+     *
+     * @return the API instance.
+     */
+    public MedievalFactionsAPI getMedievalFactionsAPI() {
+        return api;
+    }
 
     /**
      * Method to get initialize the config service with config options and values.

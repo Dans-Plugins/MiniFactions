@@ -1,6 +1,6 @@
-package dansplugins.medievalfactionsredesigned.json;
+package dansplugins.medievalfactionsredesigned.api.definitions.json;
 
-import dansplugins.medievalfactionsredesigned.objects.core.JsonFaction;
+import dansplugins.medievalfactionsredesigned.api.data.temp.JsonFaction;
 
 import java.lang.annotation.*;
 

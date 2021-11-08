@@ -1,7 +1,11 @@
-package dansplugins.medievalfactionsredesigned.objects.core;
+package dansplugins.medievalfactionsredesigned.api.data.temp;
 
-import dansplugins.medievalfactionsredesigned.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.objects.iface.Faction;
+import dansplugins.medievalfactionsredesigned.api.definitions.PowerRecord;
+import dansplugins.medievalfactionsredesigned.api.definitions.core.FactionPlayer;
+import dansplugins.medievalfactionsredesigned.api.definitions.core.TerritoryChunk;
+import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
+import dansplugins.medievalfactionsredesigned.api.definitions.core.Faction;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -84,7 +88,7 @@ public class JsonFaction implements Faction {
      * @return {@link Set} of members.
      */
     @Override
-    public @NotNull Set<UUID> getMembers() {
+    public @NotNull Set<UUID> getMemberIds() {
         return members;
     }
 
@@ -211,17 +215,39 @@ public class JsonFaction implements Faction {
 
     // Test Harness
 
-    public static void main(String[] args) {
-        final JsonFaction faction = new JsonFaction();
-        faction.setName("Test_Faction");
-        faction.setLeader(UUID.randomUUID());
-        faction.claimChunk(new TerritoryChunk(0,0,UUID.randomUUID()));
-        final Map<String, String> json = faction.toJSON();
-        System.out.println(json);
+    /**
+     * Method to get the power related to this record.
+     *
+     * @return double power.
+     */
+    @Override
+    public double getPower() {
+        return getMembers().stream()
+                .map(FactionPlayer::getPowerRecord)
+                .mapToDouble(PowerRecord::getPower)
+                .sum();
+    }
 
-        final JsonFaction copy = new JsonFaction();
-        copy.fromJSON(json);
-        System.out.println(copy);
+    /**
+     * Method to set the power related to this record.
+     *
+     * @param power to set.
+     */
+    @Override
+    public void setPower(double power) {
+        // Ignore this functionality.
+    }
+
+    /**
+     * Method to send the recipient a message.
+     *
+     * @param message to send.
+     */
+    @Override
+    public void sendMessage(@NotNull String message) {
+        for (FactionPlayer onlineMember : getOnlineMembers()) {
+            onlineMember.sendMessage(message);
+        }
     }
 
 }

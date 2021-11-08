@@ -1,10 +1,8 @@
-package dansplugins.medievalfactionsredesigned.objects.iface;
+package dansplugins.medievalfactionsredesigned.api.definitions.core;
 
-import dansplugins.medievalfactionsredesigned.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.objects.core.TerritoryChunk;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
+import dansplugins.medievalfactionsredesigned.api.definitions.FactionEntity;
+import dansplugins.medievalfactionsredesigned.api.definitions.MessageRecipient;
+import dansplugins.medievalfactionsredesigned.api.definitions.PowerRecord;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,7 +15,7 @@ import java.util.stream.Collectors;
  * @author Callum Johnson
  * @since 07/11/2021 - 11:32
  */
-public interface Faction extends FactionEntity {
+public interface Faction extends FactionEntity, PowerRecord, MessageRecipient {
 
     /**
      * Method to get the name of the Faction.
@@ -50,23 +48,22 @@ public interface Faction extends FactionEntity {
     void setLeader(@NotNull UUID leader);
 
     /**
-     * Default method to obtain the Leader as an {@link OfflinePlayer}.
+     * Method to set the leader of the Faction.
      *
-     * @return {@link OfflinePlayer} leader.
+     * @param leader of the Faction.
      */
-    @NotNull
-    default OfflinePlayer getLeaderAsOfflinePlayer() {
-        return Bukkit.getOfflinePlayer(getLeader());
+    default void setLeader(@NotNull FactionPlayer leader) {
+        setLeader(leader.getId());
     }
 
     /**
-     * Default method to obtain the Leader as a {@link Player}.
+     * Method to get the leader as a FactionPlayer.
      *
-     * @return {@link Player} leader.
+     * @return leader as FactionPlayer.
      */
     @Nullable
-    default Player getLeaderAsPlayer() {
-        return Bukkit.getPlayer(getLeader());
+    default FactionPlayer getLeaderAsPlayer() {
+        return getAPI().getFactionPlayer(getLeader());
     }
 
     /**
@@ -75,33 +72,30 @@ public interface Faction extends FactionEntity {
      * @return {@link Set} of members.
      */
     @NotNull
-    Set<UUID> getMembers();
+    Set<UUID> getMemberIds();
 
     /**
      * Method to obtain a list of members who are online in the Faction.
      *
-     * @return {@link List} of {@link Player}.
+     * @return {@link List} of {@link FactionPlayer}.
      */
-    @NotNull
-    default List<Player> getOnlineMembers() {
+    default List<FactionPlayer> getOnlineMembers() {
         return getMembers().stream()
-                .map(Bukkit::getOfflinePlayer)
-                .filter(OfflinePlayer::isOnline)
-                .map(OfflinePlayer::getPlayer)
+                .filter(FactionPlayer::isOnline)
                 .collect(Collectors.toList());
     }
 
     /**
      * Method to obtain a list of members in the Faction.
      * <p>
-     *     Players are not guaranteed to be offline or online.
+     * Players are not guaranteed to be offline or online.
      * </p>
-     * @return {@link List} of {@link OfflinePlayer}.
+     *
+     * @return {@link List} of {@link FactionPlayer}.
      */
-    @NotNull
-    default List<OfflinePlayer> getMembersAsOfflinePlayers() {
-        return getMembers().stream()
-                .map(Bukkit::getOfflinePlayer)
+    default List<FactionPlayer> getMembers() {
+        return getMemberIds().stream()
+                .map(getAPI()::getFactionPlayer)
                 .collect(Collectors.toList());
     }
 
@@ -119,8 +113,8 @@ public interface Faction extends FactionEntity {
      * @param player to add.
      * @return {@code true} if its successful.
      */
-    default boolean addMember(@NotNull OfflinePlayer player) {
-        return addMember(player.getUniqueId());
+    default boolean addMember(@NotNull FactionPlayer player) {
+        return addMember(player.getId());
     }
 
     /**
@@ -137,8 +131,8 @@ public interface Faction extends FactionEntity {
      * @param player to remove.
      * @return {@code true} if its successful.
      */
-    default boolean removeMember(@NotNull OfflinePlayer player) {
-        return removeMember(player.getUniqueId());
+    default boolean removeMember(@NotNull FactionPlayer player) {
+        return removeMember(player.getId());
     }
 
     /**
@@ -155,8 +149,8 @@ public interface Faction extends FactionEntity {
      * @param player to test.
      * @return {@code true} if it is.
      */
-    default boolean isMember(@NotNull OfflinePlayer player) {
-        return isMember(player.getUniqueId());
+    default boolean isMember(@NotNull FactionPlayer player) {
+        return isMember(player.getId());
     }
 
     /**
@@ -173,8 +167,8 @@ public interface Faction extends FactionEntity {
      * @param player to invite.
      * @return {@code true} if the invite was successful.
      */
-    default boolean addInvite(@NotNull OfflinePlayer player) {
-        return addInvite(player.getUniqueId());
+    default boolean addInvite(@NotNull FactionPlayer player) {
+        return addInvite(player.getId());
     }
 
     /**
@@ -191,8 +185,8 @@ public interface Faction extends FactionEntity {
      * @param player to delete an invite for.
      * @return {@code true} if the revoke action was successful.
      */
-    default boolean revokeInvite(@NotNull OfflinePlayer player) {
-        return revokeInvite(player.getUniqueId());
+    default boolean revokeInvite(@NotNull FactionPlayer player) {
+        return revokeInvite(player.getId());
     }
 
     /**
@@ -204,13 +198,13 @@ public interface Faction extends FactionEntity {
     boolean hasBeenInvited(@NotNull UUID uuid);
 
     /**
-     * Method to determine if the given {@link OfflinePlayer} matches a current invite.
+     * Method to determine if the given {@link FactionPlayer} matches a current invite.
      *
      * @param player to test.
      * @return {@code true} if it does.
      */
-    default boolean hasBeenInvited(@NotNull OfflinePlayer player) {
-        return hasBeenInvited(player.getUniqueId());
+    default boolean hasBeenInvited(@NotNull FactionPlayer player) {
+        return hasBeenInvited(player.getId());
     }
 
     /**
