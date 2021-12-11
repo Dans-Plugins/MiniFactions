@@ -1,1 +1,1 @@
-mvn install:install-file -Dfile=C:\Users\dmcco\IdeaProjects\MedievalFactionsRedesign\dependencies\Ponder-v0.8.jar -DgroupId=preponderous -DartifactId=ponder -Dversion=v0.8 -Dpackaging=Jar
+mvn install:install-file -Dfile=<absolute path to JAR> -DgroupId=preponderous -DartifactId=ponder -Dversion=v0.9-alpha-1 -Dpackaging=Jar
