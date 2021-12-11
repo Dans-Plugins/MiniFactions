@@ -1,8 +1,7 @@
-package dansplugins.medievalfactionsredesigned.api.data.temp;
+package dansplugins.medievalfactionsredesigned.api.data;
 
 import dansplugins.medievalfactionsredesigned.api.definitions.PowerRecord;
 import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.api.definitions.json.Jsonify;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

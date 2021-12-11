@@ -1,7 +1,7 @@
 package dansplugins.medievalfactionsredesigned.api;
 
-import dansplugins.medievalfactionsredesigned.api.data.temp.JsonFactionPlayer;
-import dansplugins.medievalfactionsredesigned.api.data.temp.JsonPowerRecord;
+import dansplugins.medievalfactionsredesigned.api.data.JsonFactionPlayer;
+import dansplugins.medievalfactionsredesigned.api.data.JsonPowerRecord;
 import dansplugins.medievalfactionsredesigned.api.definitions.PowerRecord;
 import dansplugins.medievalfactionsredesigned.api.definitions.core.Faction;
 import dansplugins.medievalfactionsredesigned.api.definitions.core.FactionPlayer;
@@ -9,7 +9,6 @@ import dansplugins.medievalfactionsredesigned.api.definitions.core.TerritoryChun
 import dansplugins.medievalfactionsredesigned.api.exceptions.FactionPlayerRetrievalException;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;

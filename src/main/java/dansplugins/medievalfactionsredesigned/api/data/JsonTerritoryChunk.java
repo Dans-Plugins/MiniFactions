@@ -1,16 +1,13 @@
-package dansplugins.medievalfactionsredesigned.api.data.temp;
+package dansplugins.medievalfactionsredesigned.api.data;
 
-import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.api.definitions.core.Faction;
 import dansplugins.medievalfactionsredesigned.api.definitions.core.TerritoryChunk;
+import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.UUID;
 
 /**

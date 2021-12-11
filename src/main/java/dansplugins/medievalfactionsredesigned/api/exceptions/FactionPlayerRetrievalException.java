@@ -8,6 +8,11 @@ import org.jetbrains.annotations.NotNull;
  */
 public class FactionPlayerRetrievalException extends RuntimeException {
 
+    /**
+     * Exception thrown when FactionPlayer cannot be obtained from the given object.
+     *
+     * @param object to notify the console about.
+     */
     public FactionPlayerRetrievalException(@NotNull Object object) {
         super("Failed to retrieve a FactionPlayer from '" + object + "'!");
     }

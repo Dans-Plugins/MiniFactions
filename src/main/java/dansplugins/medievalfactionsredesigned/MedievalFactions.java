@@ -1,8 +1,8 @@
 package dansplugins.medievalfactionsredesigned;
 
 import dansplugins.medievalfactionsredesigned.api.MedievalFactionsAPI;
+import dansplugins.medievalfactionsredesigned.api.data.handlers.TerritoryHandler;
 import dansplugins.medievalfactionsredesigned.commands.HelpCommand;
-import dansplugins.medievalfactionsredesigned.api.data.persist.PersistentData;
 import org.bukkit.event.Listener;
 import preponderous.ponder.AbstractPonderPlugin;
 import preponderous.ponder.misc.PonderAPI_Integrator;
@@ -26,8 +26,9 @@ public class MedievalFactions extends AbstractPonderPlugin {
     private PonderAPI_Integrator ponderAPI_integrator;
     private Toolbox toolbox;
 
-    private PersistentData data = new PersistentData();
+    // private PersistentData data = new PersistentData();
     private MedievalFactionsAPI api;
+    private TerritoryHandler territoryHandler;
 
     // public methods -------------------------------------------------------------------------
 
@@ -45,6 +46,7 @@ public class MedievalFactions extends AbstractPonderPlugin {
         registerEventHandlers();
         initializeCommandService();
         api = new MedievalFactionsAPI();
+        territoryHandler = new TerritoryHandler();
     }
 
     @Override
@@ -64,6 +66,15 @@ public class MedievalFactions extends AbstractPonderPlugin {
      */
     public MedievalFactionsAPI getMedievalFactionsAPI() {
         return api;
+    }
+
+    /**
+     * Method to obtain the TerritoryHandler.
+     *
+     * @return {@link #territoryHandler}.
+     */
+    public TerritoryHandler getTerritoryHandler() {
+        return territoryHandler;
     }
 
     /**

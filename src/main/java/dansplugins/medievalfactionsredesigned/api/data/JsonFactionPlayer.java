@@ -1,10 +1,10 @@
-package dansplugins.medievalfactionsredesigned.api.data.temp;
+package dansplugins.medievalfactionsredesigned.api.data;
 
 import dansplugins.medievalfactionsredesigned.api.definitions.core.FactionPlayer;
+import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -13,6 +13,10 @@ import java.util.UUID;
  */
 public class JsonFactionPlayer implements FactionPlayer {
 
+    /**
+     * The id of the player.
+     */
+    @JsonMember(identifier = "id")
     private final UUID id;
 
     /**

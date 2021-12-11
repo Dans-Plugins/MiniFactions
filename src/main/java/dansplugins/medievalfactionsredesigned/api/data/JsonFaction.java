@@ -1,14 +1,15 @@
-package dansplugins.medievalfactionsredesigned.api.data.temp;
+package dansplugins.medievalfactionsredesigned.api.data;
 
 import dansplugins.medievalfactionsredesigned.api.definitions.PowerRecord;
+import dansplugins.medievalfactionsredesigned.api.definitions.core.Faction;
 import dansplugins.medievalfactionsredesigned.api.definitions.core.FactionPlayer;
 import dansplugins.medievalfactionsredesigned.api.definitions.core.TerritoryChunk;
 import dansplugins.medievalfactionsredesigned.api.definitions.json.JsonMember;
-import dansplugins.medievalfactionsredesigned.api.definitions.core.Faction;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Daniel Stephenson
