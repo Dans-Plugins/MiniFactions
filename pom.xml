@@ -79,7 +79,7 @@
         <dependency>
             <groupId>preponderous</groupId>
             <artifactId>ponder</artifactId>
-            <version>v0.7</version>
+            <version>v0.8</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
