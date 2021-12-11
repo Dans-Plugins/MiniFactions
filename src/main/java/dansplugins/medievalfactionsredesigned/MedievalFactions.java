@@ -41,8 +41,6 @@ public class MedievalFactions extends AbstractPonderPlugin {
         instance = this;
         ponderAPI_integrator = new PonderAPI_Integrator(this);
         toolbox = getPonderAPI().getToolbox();
-        initializeConfigService();
-        initializeConfigFile();
         registerEventHandlers();
         initializeCommandService();
         api = new MedievalFactionsAPI();
@@ -75,33 +73,6 @@ public class MedievalFactions extends AbstractPonderPlugin {
      */
     public TerritoryHandler getTerritoryHandler() {
         return territoryHandler;
-    }
-
-    /**
-     * Method to get initialize the config service with config options and values.
-     *
-     */
-    private void initializeConfigService() {
-        HashMap<String, Object> configOptions = new HashMap<>();
-        configOptions.put("debugMode", false);
-        getPonderAPI().getConfigService().initialize(configOptions);
-    }
-
-    /**
-     * Method to initialize the actual config.yml file.
-     *
-     */
-    private void initializeConfigFile() {
-        if (!(new File("./plugins/MedievalFactionsRedesigned/config.yml").exists())) {
-            getPonderAPI().getConfigService().saveMissingConfigDefaultsIfNotPresent();
-        }
-        else {
-            // pre load compatibility checks
-            if (isVersionMismatched()) {
-                getPonderAPI().getConfigService().saveMissingConfigDefaultsIfNotPresent();
-            }
-            reloadConfig();
-        }
     }
 
     /**
