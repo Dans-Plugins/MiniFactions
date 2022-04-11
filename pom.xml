@@ -6,7 +6,7 @@
 
     <groupId>dansplugins</groupId>
     <artifactId>Medieval-Factions-Redesigned</artifactId>
-    <version>v5.0-alpha-v0.1</version>
+    <version>0.1-ALPHA</version>
     <packaging>jar</packaging>
 
     <name>Medieval Factions Redesigned</name>

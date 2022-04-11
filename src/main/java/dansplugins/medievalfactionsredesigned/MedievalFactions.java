@@ -78,7 +78,7 @@ public class MedievalFactions extends PonderBukkitPlugin {
         return commandService.interpretAndExecuteCommand(sender, label, args);
     }
 
-        /**
+    /**
      * This can be used to get the version of the plugin.
      * @return A string containing the version preceded by 'v'
      */
