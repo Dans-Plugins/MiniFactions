@@ -61,6 +61,10 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -77,10 +81,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>preponderous</groupId>
-            <artifactId>ponder</artifactId>
-            <version>v0.9-alpha-1</version>
-            <scope>compile</scope>
+            <groupId>com.github.Preponderous-Software</groupId>
+            <artifactId>Ponder</artifactId>
+            <version>07e0c073e9</version>
         </dependency>
     </dependencies>
 </project>

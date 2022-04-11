@@ -2,28 +2,20 @@ package dansplugins.medievalfactionsredesigned.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import preponderous.ponder.misc.AbstractCommand;
+
+import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 
 /**
  * @author Daniel Stephenson
  * @since 10/31/2021
  */
-public class HelpCommand extends AbstractCommand {
+public class HelpCommand extends AbstractPluginCommand {
 
-    private ArrayList<String> names = new ArrayList<>(Collections.singletonList("help"));
-    private ArrayList<String> permissions = new ArrayList<>(Collections.singletonList("mf.help"));
-
-    @Override
-    public ArrayList<String> getNames() {
-        return names;
-    }
-
-    @Override
-    public ArrayList<String> getPermissions() {
-        return permissions;
+    public HelpCommand() {
+        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("epp.help")));
     }
 
     @Override
