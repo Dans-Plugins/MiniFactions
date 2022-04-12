@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dansplugins</groupId>
-    <artifactId>Medieval-Factions-Redesigned</artifactId>
+    <artifactId>MiniFactions</artifactId>
     <version>0.1-ALPHA</version>
     <packaging>jar</packaging>
 
-    <name>Medieval Factions Redesigned</name>
+    <name>MiniFactions</name>
 
     <properties>
         <java.version>1.8</java.version>
