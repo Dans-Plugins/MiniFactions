@@ -5,11 +5,11 @@
 - [ ] Alliances
 - [ ] Localization
 
-## Potential Features That May Be Expansions Instead
-- [ ] Gates
-- [ ] Warfare
-- [ ] Duels
-- [ ] Dynmap Integration
-- [ ] Laws
-- [ ] Locks
-- [ ] Vassals
+## Potential Expansions
+- [ ] MiniGates
+- [ ] MiniWarfare
+- [ ] MiniDuels
+- [ ] MiniDynmapIntegrator
+- [ ] MiniLaws
+- [ ] MiniLocks
+- [ ] MiniVassals
