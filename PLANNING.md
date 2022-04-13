@@ -13,8 +13,4 @@
 - [ ] Claim
 - [ ] Unclaim
 - [ ] CheckClaim
-- [ ] ForceCreate
-- [ ] ForceJoin
-- [ ] ForceKick
-- [ ] ForceClaim
-- [ ] ForceUnclaim
+- [ ] Force (Create, Join, Kick, Claim, Unclaim)
