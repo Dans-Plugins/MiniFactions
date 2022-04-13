@@ -5,6 +5,7 @@
 
 ## Commands To Implement
 - [x] Create
+- [ ] Disband
 - [ ] Invite
 - [ ] Join
 - [ ] Kick
@@ -13,4 +14,4 @@
 - [ ] Claim
 - [ ] Unclaim
 - [ ] CheckClaim
-- [ ] Force (Create, Join, Kick, Claim, Unclaim)
+- [ ] Force (Create, Disband, Join, Kick, Claim, Unclaim)
