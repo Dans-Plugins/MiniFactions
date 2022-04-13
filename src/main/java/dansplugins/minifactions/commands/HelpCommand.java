@@ -15,12 +15,13 @@ import java.util.Arrays;
 public class HelpCommand extends AbstractPluginCommand {
 
     public HelpCommand() {
-        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("epp.help")));
+        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("mf.help")));
     }
 
     @Override
     public boolean execute(CommandSender sender) {
-        sender.sendMessage(ChatColor.AQUA + "/mf help - View a list of helpful commands.");
+        sender.sendMessage("/mf help - View a list of helpful commands.");
+        sender.sendMessage("/mf create \"faction name\" - Create a faction that is disliked by everyone.");
         return true;
     }
 

@@ -75,8 +75,8 @@ public class LocalConfigService {
     }
 
     public void sendConfigList(CommandSender sender) {
-        sender.sendMessage(ChatColor.AQUA + "=== Config List ===");
-        sender.sendMessage(ChatColor.AQUA + "version: " + getConfig().getString("version")
+        sender.sendMessage("=== Config List ===");
+        sender.sendMessage("version: " + getConfig().getString("version")
                 + ", debugMode: " + getString("debugMode"));
     }
 

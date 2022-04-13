@@ -20,9 +20,9 @@ public class DefaultCommand extends AbstractPluginCommand {
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(ChatColor.AQUA + "Mini Factions " + MiniFactions.getInstance().getVersion());
-        commandSender.sendMessage(ChatColor.AQUA + "Developed by: Daniel Stephenson");
-        commandSender.sendMessage(ChatColor.AQUA + "Wiki: https://github.com/Preponderous-Software/EMiniFactions/wiki");
+        commandSender.sendMessage("Mini Factions " + MiniFactions.getInstance().getVersion());
+        commandSender.sendMessage("Developed by: Daniel Stephenson");
+        commandSender.sendMessage("Wiki: https://github.com/Dans-Plugins/MiniFactions/wiki");
         return true;
     }
 
