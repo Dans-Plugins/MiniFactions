@@ -7,6 +7,8 @@ import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionPlayerRetrievalException;
+import dansplugins.minifactions.data.PersistentData;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -20,18 +22,15 @@ import java.util.UUID;
 public class MiniFactionsAPI {
 
     public Faction getFactionByPlayer(FactionPlayer factionPlayer) {
-        // TODO fix this.
-        return null;
+        return PersistentData.getInstance().getFactionByPlayer(factionPlayer);
     }
 
     public Faction getFactionByChunk(TerritoryChunk territoryChunk) {
-        // TODO fix this.
-        return null;
+        return PersistentData.getInstance().getFactionByChunk(territoryChunk);
     }
 
     public PowerRecord getPlayerPowerRecord(UUID id) {
-        // TODO make this not do this.
-        return new JsonPowerRecord(id);
+        return PersistentData.getInstance().getPlayerPowerRecord(id);
     }
 
     @SuppressWarnings("deprecation")

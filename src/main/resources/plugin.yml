@@ -1,6 +1,6 @@
 name: MiniFactions
-version: v5.0-alpha-v0.1
-main: dansplugins.minifactionsredesign.MiniFactions
+version: '${project.version}'
+main: dansplugins.minifactions.MiniFactions
 api-version: 1.13
 
 commands:

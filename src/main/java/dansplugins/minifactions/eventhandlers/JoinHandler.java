@@ -13,6 +13,6 @@ public class JoinHandler implements Listener {
     @EventHandler()
     public void handle(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.sendMessage("This message was sent by ExamplePonderPlugin.");
+        player.sendMessage("This message was sent by MiniFactions.");
     }
 }

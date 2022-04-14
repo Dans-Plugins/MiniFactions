@@ -1,36 +1,30 @@
 package dansplugins.minifactions.commands;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import org.bukkit.command.CommandSender;
+
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.factories.FactionFactory;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+import dansplugins.minifactions.data.PersistentData;
 
 /**
  * @author Daniel McCoy Stephenson
  * @since April 13th, 2022
  */
-public class CreateCommand extends AbstractMFCommand {
+public class DisbandCommand extends AbstractMFCommand {
 
-    public CreateCommand() {
-        super(new ArrayList<>(Arrays.asList("create")), new ArrayList<>(Arrays.asList("mf.create")));
+    public DisbandCommand() {
+        super(new ArrayList<>(Arrays.asList("disband")), new ArrayList<>(Arrays.asList("mf.disband")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage("Usage: /mf create <name>");
-        return false;
-    }
-
-    @Override
-    public boolean execute(CommandSender commandSender, String[] args) {
         FactionPlayer player;
         try {
             player = getFactionPlayer(commandSender);
@@ -39,21 +33,26 @@ public class CreateCommand extends AbstractMFCommand {
             return false;
         }
 
+        Faction faction;
         try {
-            getAPI().getFactionByPlayer(player);
-            player.sendMessage("You are already in a faction.");
+            faction = getAPI().getFactionByPlayer(player);
+        } catch(FactionNotFoundException e) {
+            player.sendMessage("You are not in a faction.");
             return false;
-        } catch(FactionNotFoundException ignored) {}
+        }
 
-        String name = args[0];
-        
-        boolean success = FactionFactory.getInstance().createFaction(name, player.getId());
+        boolean success = PersistentData.getInstance().removeFaction(faction);
         if (success) {
-            commandSender.sendMessage("Faction created.");
+            player.sendMessage("Your faction has been disbanded.");
         }
         else {
-            commandSender.sendMessage("That name was taken.");
+            player.sendMessage("Something went wrong.");
         }
         return success;
+    }
+
+    @Override
+    public boolean execute(CommandSender commandSender, String[] strings) {
+        return execute(commandSender);
     }
 }
