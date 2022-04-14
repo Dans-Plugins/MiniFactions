@@ -9,6 +9,7 @@ import dansplugins.minifactions.commands.HelpCommand;
 import dansplugins.minifactions.commands.InfoCommand;
 import dansplugins.minifactions.commands.InviteCommand;
 import dansplugins.minifactions.commands.JoinCommand;
+import dansplugins.minifactions.commands.KickCommand;
 import dansplugins.minifactions.commands.ListCommand;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
