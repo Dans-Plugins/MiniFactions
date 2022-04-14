@@ -175,6 +175,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new ListCommand());
         commands.add(new InviteCommand());
         commands.add(new JoinCommand());
+        commands.add(new KickCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }
