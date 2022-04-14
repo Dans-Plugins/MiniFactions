@@ -16,9 +16,9 @@ import java.util.UUID;
 /**
  * @author Daniel McCoy Stephenson
  */
-public class InviteCommand extends AbstractMFCommand {
+public class KickCommand extends AbstractMFCommand {
 
-    public InviteCommand() {
+    public KickCommand() {
         super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.invite")));
     }
 
