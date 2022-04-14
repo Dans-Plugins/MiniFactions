@@ -7,6 +7,8 @@ import dansplugins.minifactions.commands.DefaultCommand;
 import dansplugins.minifactions.commands.DisbandCommand;
 import dansplugins.minifactions.commands.HelpCommand;
 import dansplugins.minifactions.commands.InfoCommand;
+import dansplugins.minifactions.commands.InviteCommand;
+import dansplugins.minifactions.commands.JoinCommand;
 import dansplugins.minifactions.commands.ListCommand;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
@@ -171,6 +173,8 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new InfoCommand());
         commands.add(new DisbandCommand());
         commands.add(new ListCommand());
+        commands.add(new InviteCommand());
+        commands.add(new JoinCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }

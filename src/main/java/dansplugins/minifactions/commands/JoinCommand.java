@@ -2,29 +2,29 @@ package dansplugins.minifactions.commands;
 
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.factories.FactionFactory;
+import dansplugins.minifactions.data.PersistentData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * @author Daniel McCoy Stephenson
- * @since April 13th, 2022
  */
-public class CreateCommand extends AbstractMFCommand {
+public class JoinCommand extends AbstractMFCommand {
 
-    public CreateCommand() {
-        super(new ArrayList<>(Arrays.asList("create")), new ArrayList<>(Arrays.asList("mf.create")));
+    public JoinCommand() {
+        super(new ArrayList<>(Arrays.asList("join")), new ArrayList<>(Arrays.asList("mf.join")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage("Usage: /mf create <name>");
-        return false;
+        commandSender.sendMessage("Usage: /mf join <faction>");
+        return true;
     }
 
     @Override
@@ -42,15 +42,23 @@ public class CreateCommand extends AbstractMFCommand {
             return false;
         } catch(FactionNotFoundException ignored) {}
 
-        String name = args[0];
-        
-        boolean success = FactionFactory.getInstance().createFaction(name, player.getId());
-        if (success) {
-            commandSender.sendMessage("Faction created.");
+        String factionName = args[0];
+
+        Faction faction;
+        try {
+            faction = PersistentData.getInstance().getFaction(factionName);
+        } catch (Exception e) {
+            player.sendMessage("That faction wasn't found.");
+            return false;
+        }
+
+        if (faction.hasBeenInvited(player)) {
+            player.sendMessage("You have joined the faction.");
+            return true;
         }
         else {
-            commandSender.sendMessage("That name was taken.");
+            player.sendMessage("You have not been invited to this faction.");
+            return false;
         }
-        return success;
     }
 }

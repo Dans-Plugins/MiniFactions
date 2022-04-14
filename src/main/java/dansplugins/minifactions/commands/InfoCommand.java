@@ -27,7 +27,6 @@ public class InfoCommand extends AbstractMFCommand {
         try {
             player = getFactionPlayer(commandSender);
         } catch(CommandSenderNotPlayerException e) {
-            commandSender.sendMessage("You are not a player.");
             return false;
         }
 
