@@ -27,6 +27,7 @@ public class FactionImpl implements Faction {
     public FactionImpl(String name, UUID leaderUUID) {
         setName(name);
         setLeader(leaderUUID);
+        addMember(leaderUUID);
         this.factionUUID = UUID.randomUUID();
     }
 
@@ -122,5 +123,17 @@ public class FactionImpl implements Faction {
     @Override
     public boolean unclaimChunk(@NotNull TerritoryChunk territoryChunk) {
         return territoryChunks.remove(territoryChunk);
-    }   
+    }
+
+    @Override
+    public String toString() {
+        String toReturn = "";
+        toReturn += "=== " + getName() + " ===" + "\n";
+        toReturn += "Members: " + getNumMembers();
+        return toReturn;
+    }
+
+    public int getNumMembers() {
+        return memberUUIDs.size();
+    }
 }

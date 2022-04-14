@@ -4,7 +4,10 @@ import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.data.handlers.TerritoryHandler;
 import dansplugins.minifactions.commands.CreateCommand;
 import dansplugins.minifactions.commands.DefaultCommand;
+import dansplugins.minifactions.commands.DisbandCommand;
 import dansplugins.minifactions.commands.HelpCommand;
+import dansplugins.minifactions.commands.InfoCommand;
+import dansplugins.minifactions.commands.ListCommand;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
@@ -165,6 +168,9 @@ public class MiniFactions extends PonderBukkitPlugin {
         ArrayList<AbstractPluginCommand> commands = new ArrayList<>();
         commands.add(new HelpCommand());
         commands.add(new CreateCommand());
+        commands.add(new InfoCommand());
+        commands.add(new DisbandCommand());
+        commands.add(new ListCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }
