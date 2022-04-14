@@ -34,7 +34,7 @@ public class PersistentData {
                 return faction;
             }
         }
-        throw new Exception("Faction '" + name + "'not found.");
+        throw new FactionNotFoundException(null);
     }
 
     public boolean addFaction(Faction faction) {

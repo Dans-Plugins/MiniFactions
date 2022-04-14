@@ -1,8 +1,5 @@
 package dansplugins.minifactions.commands;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -10,20 +7,29 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
+import preponderous.ponder.minecraft.bukkit.tools.UUIDChecker;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @author Daniel McCoy Stephenson
- * @since April 13th, 2022
  */
-public class DisbandCommand extends AbstractMFCommand {
+public class InviteCommand extends AbstractMFCommand {
 
-    public DisbandCommand() {
-        super(new ArrayList<>(Arrays.asList("disband")), new ArrayList<>(Arrays.asList("mf.disband")));
+    public InviteCommand() {
+        super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.invite")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
+        commandSender.sendMessage("Usage: /mf invite <IGN>");
+        return true;
+    }
+
+    @Override
+    public boolean execute(CommandSender commandSender, String[] args) {
         FactionPlayer player;
         try {
             player = getFactionPlayer(commandSender);
@@ -39,18 +45,28 @@ public class DisbandCommand extends AbstractMFCommand {
             return false;
         }
 
-        boolean success = PersistentData.getInstance().removeFaction(faction);
+        if (!player.getId().equals(faction.getLeader())) {
+            player.sendMessage("You are not the leader of your faction.");
+            return false;
+        }
+
+        String ign = args[0];
+
+        UUIDChecker uuidChecker = new UUIDChecker();
+        UUID targetUUID = uuidChecker.findUUIDBasedOnPlayerName(ign);
+
+        if (targetUUID.equals(player.getId())) {
+            player.sendMessage("You cannot invite yourself.");
+            return false;
+        }
+
+        boolean success = faction.addInvite(targetUUID);
         if (success) {
-            player.sendMessage("Your faction has been disbanded.");
+            player.sendMessage("That player has been invited.");
         }
         else {
             player.sendMessage("Something went wrong.");
         }
         return success;
-    }
-
-    @Override
-    public boolean execute(CommandSender commandSender, String[] strings) {
-        return execute(commandSender);
     }
 }

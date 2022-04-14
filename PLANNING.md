@@ -5,12 +5,12 @@
 
 ## Commands To Implement
 - [x] Create
-- [ ] Disband
-- [ ] Invite
-- [ ] Join
+- [x] Disband
+- [x] Invite
+- [x] Join
 - [ ] Kick
-- [ ] List
-- [ ] Info
+- [x] List
+- [x] Info
 - [ ] Claim
 - [ ] Unclaim
 - [ ] CheckClaim
