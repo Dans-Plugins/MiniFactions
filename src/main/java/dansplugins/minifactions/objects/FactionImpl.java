@@ -129,7 +129,10 @@ public class FactionImpl implements Faction {
     public String toString() {
         String toReturn = "";
         toReturn += "=== " + getName() + " ===" + "\n";
-        toReturn += "Members: " + getNumMembers();
+        toReturn += "Leader: " + getLeaderAsPlayer().getName() + "\n";
+        toReturn += "Members: " + getNumMembers() + "\n";
+        toReturn += "Power: " + getPower() + "\n";
+        toReturn += "Invited: " + invitedPlayerUUIDs.size() + "\n";
         return toReturn;
     }
 
