@@ -12,7 +12,7 @@ This Minecraft plugin aims to introduce factions into the game in a simple, easy
 $1
 
 ## Target Features
-- [ ] Social Organization
+- [x] Social Organization
 - [ ] Land Ownership
 - [ ] Configurability
 - [ ] Localization
