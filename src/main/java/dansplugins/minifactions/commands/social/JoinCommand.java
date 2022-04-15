@@ -53,6 +53,7 @@ public class JoinCommand extends AbstractMFCommand {
         }
 
         if (faction.hasBeenInvited(player)) {
+            faction.addMember(player);
             player.sendMessage("You have joined the faction.");
             return true;
         }

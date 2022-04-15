@@ -36,6 +36,9 @@ $1
 - [ ] CheckClaim
 
 ### Configurability
+- [ ] Config
+  - [ ] View
+  - [ ] Set
 - [ ] Force
   - [ ] Join
   - [ ] Invite
