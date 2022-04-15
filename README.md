@@ -12,7 +12,7 @@ This Minecraft plugin aims to introduce factions into the game in a simple, easy
 $1
 
 ## Target Features
-- [/] Social Organization
+- [ ] Social Organization
 - [ ] Land Ownership
 - [ ] Configurability
 - [ ] Localization
@@ -35,12 +35,27 @@ $1
 - [ ] CheckClaim
 
 ### Configurability
-- [ ] Force (Join, Invite, Disband, Kick, Claim, Unclaim)
+- [ ] Force
+  - [ ] Join
+  - [ ] Invite
+  - [ ] Disband
+  - [ ] Kick
+  - [ ] Claim
+  - [ ] Unclaim
+- [ ] Perm
+  - [ ] View
+  - [ ] Get
+  - [ ] Set
+
+### Localization
+- [ ] Lang
+  - [ ] Get
+  - [ ] Set
 
 ## Potential Expansions
-- Locks
-- Relations
-- Gates
-- Dynmap Integration
-- Feudalism
-- Plots
+- MiniLocks
+- MiniRelations
+- MiniGates
+- MiniDynmapIntegrator
+- MiniFeudalism
+- MiniPlots
