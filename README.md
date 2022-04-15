@@ -1,9 +1,46 @@
 # MiniFactions
 
-## Description
-Short for MinimalisticFactions, this Minecraft plugin aims to introduce factions into the game in a simple, easy to use, expandable way.
+## About
+This Minecraft plugin aims to introduce factions into the game in a simple, easy to use, expandable way.
 
-## Authors and acknowledgement
-### Developers
--  Daniel Stephenson
--  Callum Johnson
+### Characteristics
+- Simple
+- Minimal
+- Expandable
+
+### Planned Cost
+$1
+
+## Target Features
+- [/] Social Organization
+- [ ] Land Ownership
+- [ ] Configurability
+- [ ] Localization
+
+## Commands To Implement
+### Social Organization
+- [x] List
+- [x] Info
+- [x] Join
+- [ ] Leave
+- [x] Create
+- [x] Invite
+- [x] Disband
+- [ ] Transfer
+- [ ] Kick
+
+### Land Ownership
+- [ ] Claim
+- [ ] Unclaim
+- [ ] CheckClaim
+
+### Configurability
+- [ ] Force (Join, Invite, Disband, Kick, Claim, Unclaim)
+
+## Potential Expansions
+- Locks
+- Relations
+- Gates
+- Dynmap Integration
+- Feudalism
+- Plots
