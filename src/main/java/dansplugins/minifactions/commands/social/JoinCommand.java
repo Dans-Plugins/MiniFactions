@@ -1,4 +1,4 @@
-package dansplugins.minifactions.commands;
+package dansplugins.minifactions.commands.social;
 
 import org.bukkit.command.CommandSender;
 

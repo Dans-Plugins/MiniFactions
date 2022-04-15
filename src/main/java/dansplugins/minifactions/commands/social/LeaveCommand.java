@@ -1,7 +1,4 @@
-package dansplugins.minifactions.commands;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+package dansplugins.minifactions.commands.social;
 
 import org.bukkit.command.CommandSender;
 
@@ -12,14 +9,17 @@ import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
 import dansplugins.minifactions.data.PersistentData;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * @author Daniel McCoy Stephenson
- * @since April 13th, 2022
+ * @since April 14th, 2022
  */
-public class DisbandCommand extends AbstractMFCommand {
+public class LeaveCommand extends AbstractMFCommand {
 
-    public DisbandCommand() {
-        super(new ArrayList<>(Arrays.asList("disband")), new ArrayList<>(Arrays.asList("mf.disband")));
+    public LeaveCommand() {
+        super(new ArrayList<>(Arrays.asList("leave")), new ArrayList<>(Arrays.asList("mf.leave")));
     }
 
     @Override
@@ -39,9 +39,22 @@ public class DisbandCommand extends AbstractMFCommand {
             return false;
         }
 
-        boolean success = PersistentData.getInstance().removeFaction(faction);
+        if (player.getId().equals(faction.getLeader())) {
+        
+            if (faction.getMembers().size() > 1) {
+                player.sendMessage("You must kick your members or transfer your faction before leaving.");
+                return false;
+            }
+            else {
+                PersistentData.getInstance().removeFaction(faction);
+                player.sendMessage("Your faction has been disbanded since you were the only member.");
+                return true;
+            }
+        }
+
+        boolean success = faction.removeMember(player);
         if (success) {
-            player.sendMessage("Your faction has been disbanded.");
+            player.sendMessage("You have left your faction.");
         }
         else {
             player.sendMessage("Something went wrong.");
