@@ -10,7 +10,9 @@ import dansplugins.minifactions.commands.InfoCommand;
 import dansplugins.minifactions.commands.InviteCommand;
 import dansplugins.minifactions.commands.JoinCommand;
 import dansplugins.minifactions.commands.KickCommand;
+import dansplugins.minifactions.commands.LeaveCommand;
 import dansplugins.minifactions.commands.ListCommand;
+import dansplugins.minifactions.commands.TransferCommand;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
@@ -177,6 +179,8 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new InviteCommand());
         commands.add(new JoinCommand());
         commands.add(new KickCommand());
+        commands.add(new LeaveCommand());
+        commands.add(new TransferCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }

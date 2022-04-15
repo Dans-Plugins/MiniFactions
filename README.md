@@ -22,12 +22,13 @@ $1
 - [x] List
 - [x] Info
 - [x] Join
-- [ ] Leave
+- [x] Leave
 - [x] Create
 - [x] Invite
 - [x] Disband
-- [ ] Transfer
-- [ ] Kick
+- [x] Kick
+- [x] Transfer
+
 
 ### Land Ownership
 - [ ] Claim

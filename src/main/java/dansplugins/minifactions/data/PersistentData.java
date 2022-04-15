@@ -68,7 +68,7 @@ public class PersistentData {
     }
 
     public String getFactionList() {
-        String toReturn = "=== Factions ===";
+        String toReturn = "=== Factions ===" + "\n";
         for (Faction faction : factions) {
             toReturn += faction.getName() + "\n";
         }

@@ -20,7 +20,7 @@ public class DefaultCommand extends AbstractMFCommand {
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage("Mini Factions " + MiniFactions.getInstance().getVersion());
+        commandSender.sendMessage("MiniFactions " + MiniFactions.getInstance().getVersion());
         commandSender.sendMessage("Developed by: Daniel Stephenson, Callum Johnson");
         commandSender.sendMessage("Wiki: https://github.com/Dans-Plugins/MiniFactions/wiki");
         return true;

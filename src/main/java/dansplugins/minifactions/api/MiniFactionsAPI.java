@@ -1,7 +1,6 @@
 package dansplugins.minifactions.api;
 
 import dansplugins.minifactions.api.data.JsonFactionPlayer;
-import dansplugins.minifactions.api.data.JsonPowerRecord;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
