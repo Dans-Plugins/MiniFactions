@@ -8,8 +8,8 @@ This Minecraft plugin aims to introduce factions into the game in a simple, easy
 - Minimal
 - Expandable
 
-### Planned Cost
-$1
+### Donation Request
+The plan is to request $1 donations from those that download the software. Users will be able to download the plugin for no cost or donate more than $1 if they wish. The plugin will always remain open source, so individuals will be free to access the source code and create forks of the project.
 
 ## Target Features
 - [x] Social Organization
