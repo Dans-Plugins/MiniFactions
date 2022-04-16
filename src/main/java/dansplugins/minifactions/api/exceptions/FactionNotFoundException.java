@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class FactionNotFoundException extends RuntimeException {
 
     /**
-     * Exception thrown when FactionPlayer cannot be obtained from the given object.
+     * Exception thrown when a faction is not found.
      *
      * @param object to notify the console about.
      */

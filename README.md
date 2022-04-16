@@ -29,8 +29,8 @@ $1
 - [x] Kick
 - [x] Transfer
 
-
 ### Land Ownership
+- [x] Power
 - [ ] Claim
 - [ ] Unclaim
 - [ ] CheckClaim

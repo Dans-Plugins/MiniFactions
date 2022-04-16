@@ -4,6 +4,7 @@ import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.data.handlers.TerritoryHandler;
 import dansplugins.minifactions.commands.DefaultCommand;
 import dansplugins.minifactions.commands.HelpCommand;
+import dansplugins.minifactions.commands.land.PowerCommand;
 import dansplugins.minifactions.commands.social.CreateCommand;
 import dansplugins.minifactions.commands.social.DisbandCommand;
 import dansplugins.minifactions.commands.social.InfoCommand;
@@ -181,6 +182,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new KickCommand());
         commands.add(new LeaveCommand());
         commands.add(new TransferCommand());
+        commands.add(new PowerCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }

@@ -30,6 +30,7 @@ public class HelpCommand extends AbstractMFCommand {
         sender.sendMessage("/mf disband - Disband your faction.");
         sender.sendMessage("/mf kick - Kick a player from your faction.");
         sender.sendMessage("/mf transfer - Transfer your faction to another player.");
+        sender.sendMessage("/mf power - Check your power.");
         return true;
     }
 

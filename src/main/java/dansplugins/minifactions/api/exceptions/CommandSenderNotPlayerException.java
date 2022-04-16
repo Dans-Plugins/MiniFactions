@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class CommandSenderNotPlayerException extends RuntimeException {
 
     /**
-     * Exception thrown when FactionPlayer cannot be obtained from the given object.
+     * Exception thrown when a command sender is not a player.
      *
      * @param object to notify the console about.
      */

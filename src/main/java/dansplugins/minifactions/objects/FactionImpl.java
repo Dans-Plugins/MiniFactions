@@ -8,8 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
+import dansplugins.minifactions.data.PersistentData;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -19,7 +21,6 @@ public class FactionImpl implements Faction {
     private UUID factionUUID;
     private String name;
     private UUID leaderUUID;
-    private double power = 0;
     private HashSet<UUID> memberUUIDs = new HashSet<>();
     private HashSet<UUID> invitedPlayerUUIDs = new HashSet<>();
     private HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
@@ -34,16 +35,6 @@ public class FactionImpl implements Faction {
     @Override
     public @NotNull UUID getId() {
         return factionUUID;
-    }
-
-    @Override
-    public double getPower() {
-        return power;
-    }
-
-    @Override
-    public void setPower(double power) {
-        this.power = power;
     }
 
     @Override
@@ -138,5 +129,16 @@ public class FactionImpl implements Faction {
 
     public int getNumMembers() {
         return memberUUIDs.size();
+    }
+
+    public double getPower() {
+        double sum = 0;
+        for (UUID memberUUID : memberUUIDs) {
+            PowerRecord powerRecord = PersistentData.getInstance().getPowerRecord(memberUUID);
+            if (powerRecord.getId().equals(memberUUID)) {
+                sum += powerRecord.getPower();
+            }
+        }
+        return sum;
     }
 }

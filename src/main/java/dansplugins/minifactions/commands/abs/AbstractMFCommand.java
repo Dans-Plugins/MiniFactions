@@ -40,6 +40,5 @@ public abstract class AbstractMFCommand extends AbstractPluginCommand {
 
     public UUID getUUID(String playerName) {
         return uuidChecker.findUUIDBasedOnPlayerName(playerName);
-    }
-    
+    }    
 }
