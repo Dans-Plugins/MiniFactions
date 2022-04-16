@@ -24,9 +24,8 @@ public class MiniFactionsAPI {
         return PersistentData.getInstance().getFactionByPlayer(factionPlayer);
     }
 
-    public Faction getFactionByChunk(TerritoryChunk territoryChunk) {
-        // TODO: implement
-        return null;
+    public Faction getFactionByChunk(TerritoryChunk territoryChunk) throws Exception {
+        return PersistentData.getInstance().getFaction(territoryChunk.getFactionUUID());
     }
 
     public PowerRecord getPlayerPowerRecord(UUID id) {

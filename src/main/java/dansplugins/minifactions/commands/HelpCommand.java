@@ -31,6 +31,9 @@ public class HelpCommand extends AbstractMFCommand {
         sender.sendMessage("/mf kick - Kick a player from your faction.");
         sender.sendMessage("/mf transfer - Transfer your faction to another player.");
         sender.sendMessage("/mf power - Check your power.");
+        sender.sendMessage("/mf claim - Claim a chunk of territory.");
+        sender.sendMessage("/mf checkclaim - Check which faction owns a chunk of territory.");
+        sender.sendMessage("/mf unclaim - unclaim a chunk of territory.");
         return true;
     }
 

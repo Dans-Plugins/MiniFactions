@@ -7,6 +7,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -15,6 +16,9 @@ import java.util.UUID;
  * @since 10/28/2021
  */
 public class JsonTerritoryChunk implements TerritoryChunk {
+
+    @JsonMember(identifier = "factionId")
+    private final UUID factionUUID;
 
     @JsonMember(identifier = "x-coordinate")
     private final int x;
@@ -32,6 +36,7 @@ public class JsonTerritoryChunk implements TerritoryChunk {
      * Constructor to build a TerritoryChunk for JSON Injection.
      */
     public JsonTerritoryChunk() {
+        factionUUID = UUID.randomUUID();
         x = 0;
         z = 0;
         worldId = UUID.randomUUID();
@@ -45,7 +50,8 @@ public class JsonTerritoryChunk implements TerritoryChunk {
      * @param z coordinate of the chunk.
      * @param uid of the world linked to the chunk.
      */
-    public JsonTerritoryChunk(int x, int z, UUID uid) {
+    public JsonTerritoryChunk(int x, int z, UUID uid, UUID factionUUID) {
+        this.factionUUID = factionUUID;
         this.x = x;
         this.z = z;
         this.worldId = uid;
@@ -57,8 +63,8 @@ public class JsonTerritoryChunk implements TerritoryChunk {
      *
      * @param chunk {@link Chunk}   Chunk used to initialize the class with.
      */
-    public JsonTerritoryChunk(Chunk chunk) {
-        this(chunk.getX(), chunk.getZ(), chunk.getWorld().getUID());
+    public JsonTerritoryChunk(Chunk chunk, UUID factionUUID) {
+        this(chunk.getX(), chunk.getZ(), chunk.getWorld().getUID(), factionUUID);
     }
 
     /**
@@ -66,8 +72,8 @@ public class JsonTerritoryChunk implements TerritoryChunk {
      *
      * @param location {@link Location}   Location used to initialize the class with.
      */
-    public JsonTerritoryChunk(Location location) {
-        this(location.getChunk());
+    public JsonTerritoryChunk(Location location, UUID factionUUID) {
+        this(location.getChunk(), factionUUID);
     }
 
     /**
@@ -75,8 +81,18 @@ public class JsonTerritoryChunk implements TerritoryChunk {
      *
      * @param entity {@link Entity}   Entity used to initialize the class with.
      */
-    public JsonTerritoryChunk(Entity entity) {
-        this(entity.getLocation());
+    public JsonTerritoryChunk(Entity entity, UUID factionUUID) {
+        this(entity.getLocation(), factionUUID);
+    }
+
+    @Override
+    public @Nullable UUID getFactionUUID() {
+        return factionUUID;
+    }
+
+    @Override
+    public void setFactionUUID(UUID factionUUID) {
+        // ignore this functionality
     }
 
     /**
@@ -119,5 +135,4 @@ public class JsonTerritoryChunk implements TerritoryChunk {
     public @NotNull UUID getWorldId() {
         return worldId;
     }
-
 }

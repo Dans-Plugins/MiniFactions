@@ -3,12 +3,15 @@ package dansplugins.minifactions.data;
 import java.util.HashSet;
 import java.util.UUID;
 
+import org.bukkit.Chunk;
+
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.PowerRecordNotFoundException;
+import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -18,6 +21,7 @@ public class PersistentData {
     private static PersistentData instance;
     private HashSet<Faction> factions = new HashSet<>();
     private HashSet<PowerRecord> playerPowerRecords = new HashSet<>();
+    private HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
 
     private PersistentData() {
 
@@ -33,6 +37,15 @@ public class PersistentData {
     public Faction getFaction(String name) throws Exception {
         for (Faction faction : factions) {
             if (faction.getName().equals(name)) {
+                return faction;
+            }
+        }
+        throw new FactionNotFoundException(null);
+    }
+
+    public Faction getFaction(UUID factionUUID) throws Exception {
+        for (Faction faction : factions) {
+            if (faction.getId().equals(factionUUID)) {
                 return faction;
             }
         }
@@ -93,5 +106,45 @@ public class PersistentData {
         } catch(PowerRecordNotFoundException e) {
             return false;
         }
+    }
+
+    public boolean addTerritoryChunk(TerritoryChunk territoryChunk) {
+        return territoryChunks.add(territoryChunk);
+    }
+
+    public TerritoryChunk getTerritoryChunk(Chunk chunk) {
+        for (TerritoryChunk territoryChunk : territoryChunks) {
+            if (territoryChunk.getX() == chunk.getX() && territoryChunk.getZ() == chunk.getZ() && territoryChunk.getWorldId().equals(chunk.getWorld().getUID())) {
+                return territoryChunk;
+            }
+        }
+        throw new TerritoryChunkNotFoundException(null);
+    }
+
+    public TerritoryChunk getTerritoryChunk(int x, int z, UUID worldUUID) {
+        for (TerritoryChunk territoryChunk : territoryChunks) {
+            if (territoryChunk.getX() == x && territoryChunk.getZ() == z && territoryChunk.getWorldId().equals(worldUUID)) {
+                return territoryChunk;
+            }
+        }
+        throw new TerritoryChunkNotFoundException(null);
+    }
+
+    public boolean doesTerritoryChunkExist(Chunk chunk) {
+        try {
+            getTerritoryChunk(chunk.getX(), chunk.getZ(), chunk.getWorld().getUID());
+            return true;
+        } catch(TerritoryChunkNotFoundException e) {
+            return false;
+        }
+    }
+
+    public boolean isTerritoryChunkClaimed(TerritoryChunk territoryChunk) {
+        for (Faction faction : factions) {
+            if (faction.ownsChunk(territoryChunk)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

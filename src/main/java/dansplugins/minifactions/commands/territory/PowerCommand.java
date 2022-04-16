@@ -1,4 +1,4 @@
-package dansplugins.minifactions.commands.land;
+package dansplugins.minifactions.commands.territory;
 
 import org.bukkit.command.CommandSender;
 

@@ -23,7 +23,7 @@ public class FactionImpl implements Faction {
     private UUID leaderUUID;
     private HashSet<UUID> memberUUIDs = new HashSet<>();
     private HashSet<UUID> invitedPlayerUUIDs = new HashSet<>();
-    private HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
+    private HashSet<UUID> territoryChunkUUIDs = new HashSet<>();
 
     public FactionImpl(String name, UUID leaderUUID) {
         setName(name);
@@ -103,17 +103,18 @@ public class FactionImpl implements Faction {
 
     @Override
     public boolean ownsChunk(@NotNull TerritoryChunk territoryChunk) {
-        return territoryChunks.contains(territoryChunk);
+        return territoryChunkUUIDs.contains(territoryChunk.getId());
     }
 
     @Override
     public boolean claimChunk(@NotNull TerritoryChunk territoryChunk) {
-        return territoryChunks.add(territoryChunk);
+        return territoryChunkUUIDs.add(territoryChunk.getId());
     }
 
     @Override
     public boolean unclaimChunk(@NotNull TerritoryChunk territoryChunk) {
-        return territoryChunks.remove(territoryChunk);
+        territoryChunk.setFactionUUID(null);
+        return territoryChunkUUIDs.remove(territoryChunk.getId());
     }
 
     @Override
@@ -124,6 +125,7 @@ public class FactionImpl implements Faction {
         toReturn += "Members: " + getNumMembers() + "\n";
         toReturn += "Power: " + getPower() + "\n";
         toReturn += "Invited: " + invitedPlayerUUIDs.size() + "\n";
+        toReturn += "Territory Size: " + territoryChunkUUIDs.size();
         return toReturn;
     }
 
