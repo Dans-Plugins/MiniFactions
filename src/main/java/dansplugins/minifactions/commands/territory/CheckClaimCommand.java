@@ -49,11 +49,6 @@ public class CheckClaimCommand extends AbstractMFCommand {
         }
 
         UUID landholderUUID = territoryChunk.getFactionUUID();
-        if (landholderUUID.equals(getAPI().getFactionByPlayer(player).getId())) {
-            player.sendMessage("This territory is claimed by your faction.");
-            return true;
-        }
-
         Faction landholder;
         try {
             landholder = PersistentData.getInstance().getFaction(landholderUUID);
