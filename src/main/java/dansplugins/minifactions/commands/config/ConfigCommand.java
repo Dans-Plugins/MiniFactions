@@ -1,9 +1,6 @@
 package dansplugins.minifactions.commands.config;
 
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
-import preponderous.ponder.misc.ArgumentParser;
-
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.services.LocalConfigService;
@@ -34,7 +31,7 @@ public class ConfigCommand extends AbstractPluginCommand {
         }
         else if (args[0].equalsIgnoreCase("set")) {
             if (args.length < 3) {
-                sender.sendMessage("Usage: /mf config set (option) (value)");
+                sender.sendMessage("Usage: /mf config set <option> <value>");
                 return false;
             }
             String option = args[1];

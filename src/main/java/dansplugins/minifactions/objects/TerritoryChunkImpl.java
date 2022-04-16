@@ -1,5 +1,6 @@
 package dansplugins.minifactions.objects;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Chunk;
@@ -26,6 +27,10 @@ public class TerritoryChunkImpl implements TerritoryChunk {
         x = chunk.getX();
         z = chunk.getZ();
         worldUUID = chunk.getWorld().getUID();
+    }
+
+    public TerritoryChunkImpl(Map<String, String> territoryChunkData) {
+        fromJSON(territoryChunkData);   
     }
 
     @Override

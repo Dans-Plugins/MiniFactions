@@ -17,7 +17,6 @@ import dansplugins.minifactions.MiniFactions;
  * @author Daniel McCoy Stephenson
  */
 public class LocalConfigService {
-
     private static LocalConfigService instance;
     private boolean altered = false;
 

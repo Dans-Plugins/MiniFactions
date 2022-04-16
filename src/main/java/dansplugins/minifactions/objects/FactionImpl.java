@@ -1,6 +1,7 @@
 package dansplugins.minifactions.objects;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,6 +31,10 @@ public class FactionImpl implements Faction {
         setLeader(leaderUUID);
         addMember(leaderUUID);
         this.factionUUID = UUID.randomUUID();
+    }
+
+    public FactionImpl(Map<String, String> factionData) {
+        fromJSON(factionData);   
     }
 
     @Override

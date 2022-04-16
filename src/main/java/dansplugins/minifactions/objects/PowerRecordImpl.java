@@ -1,5 +1,6 @@
 package dansplugins.minifactions.objects;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,10 @@ public class PowerRecordImpl implements PowerRecord {
     public PowerRecordImpl(UUID playerUUID, double initialPower) {
         this.playerUUID = playerUUID;
         this.power = initialPower;
+    }
+
+    public PowerRecordImpl(Map<String, String> powerRecordData) {
+        fromJSON(powerRecordData);   
     }
 
     @Override

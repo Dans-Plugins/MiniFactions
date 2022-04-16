@@ -1,6 +1,9 @@
 package dansplugins.minifactions.data;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Chunk;
@@ -20,7 +23,7 @@ import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
 public class PersistentData {
     private static PersistentData instance;
     private HashSet<Faction> factions = new HashSet<>();
-    private HashSet<PowerRecord> playerPowerRecords = new HashSet<>();
+    private HashSet<PowerRecord> powerRecords = new HashSet<>();
     private HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
 
     private PersistentData() {
@@ -88,11 +91,11 @@ public class PersistentData {
     }
 
     public boolean addPowerRecord(PowerRecord powerRecord) {
-        return playerPowerRecords.add(powerRecord);
+        return powerRecords.add(powerRecord);
     }
 
     public PowerRecord getPowerRecord(UUID playerUUID) {
-        for (PowerRecord powerRecord : playerPowerRecords) {
+        for (PowerRecord powerRecord : powerRecords) {
             if (powerRecord.getId().equals(playerUUID)) {
                 return powerRecord;
             }
@@ -156,5 +159,41 @@ public class PersistentData {
             }
         }
         return false;
+    }
+
+    public List<Map<String, String>> getFactionsAsJson() {
+        List<Map<String, String>> data = new ArrayList<>();
+        for (Faction faction : factions) {
+            data.add(faction.toJSON());
+        }
+        return data;
+    }
+
+    public List<Map<String, String>> getPowerRecordsAsJson() {
+        List<Map<String, String>> data = new ArrayList<>();
+        for (PowerRecord powerRecord : powerRecords) {
+            data.add(powerRecord.toJSON());
+        }
+        return data;
+    }
+
+    public List<Map<String, String>> getTerritoryChunksAsJson() {
+        List<Map<String, String>> data = new ArrayList<>();
+        for (TerritoryChunk territoryChunk : territoryChunks) {
+            data.add(territoryChunk.toJSON());
+        }
+        return data;
+    }
+
+    public void clearFactions() {
+        factions.clear();
+    }
+
+    public void clearPowerRecords() {
+        powerRecords.clear();
+    }
+
+    public void clearTerritoryChunks() {
+        territoryChunks.clear();
     }
 }
