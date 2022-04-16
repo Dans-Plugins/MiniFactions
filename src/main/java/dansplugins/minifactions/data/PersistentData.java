@@ -8,6 +8,7 @@ import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
+import dansplugins.minifactions.api.exceptions.PowerRecordNotFoundException;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -16,6 +17,7 @@ import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 public class PersistentData {
     private static PersistentData instance;
     private HashSet<Faction> factions = new HashSet<>();
+    private HashSet<PowerRecord> playerPowerRecords = new HashSet<>();
 
     private PersistentData() {
 
@@ -59,10 +61,6 @@ public class PersistentData {
         throw new FactionNotFoundException(null);
     }
 
-    public PowerRecord getPlayerPowerRecord(UUID id) {
-        return null;
-    }
-
     public boolean removeFaction(Faction faction) {
         return factions.remove(faction);
     }
@@ -73,5 +71,27 @@ public class PersistentData {
             toReturn += faction.getName() + "\n";
         }
         return toReturn;
+    }
+
+    public boolean addPowerRecord(PowerRecord powerRecord) {
+        return playerPowerRecords.add(powerRecord);
+    }
+
+    public PowerRecord getPowerRecord(UUID playerUUID) {
+        for (PowerRecord powerRecord : playerPowerRecords) {
+            if (powerRecord.getId().equals(playerUUID)) {
+                return powerRecord;
+            }
+        }
+        throw new PowerRecordNotFoundException(null);
+    }
+
+    public boolean hasPowerRecord(UUID playerUUID) {
+        try {
+            getPowerRecord(playerUUID);
+            return true;
+        } catch(PowerRecordNotFoundException e) {
+            return false;
+        }
     }
 }

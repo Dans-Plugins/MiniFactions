@@ -2,7 +2,6 @@ package dansplugins.minifactions.api.definitions.core;
 
 import dansplugins.minifactions.api.definitions.FactionEntity;
 import dansplugins.minifactions.api.definitions.MessageRecipient;
-import dansplugins.minifactions.api.definitions.PowerRecord;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
  * @author Callum Johnson
  * @since 07/11/2021 - 11:32
  */
-public interface Faction extends FactionEntity, PowerRecord, MessageRecipient {
+public interface Faction extends FactionEntity, MessageRecipient {
 
     /**
      * Method to get the name of the Faction.

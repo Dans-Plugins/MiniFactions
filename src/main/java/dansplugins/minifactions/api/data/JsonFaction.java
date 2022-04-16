@@ -1,6 +1,5 @@
 package dansplugins.minifactions.api.data;
 
-import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
@@ -214,31 +213,6 @@ public class JsonFaction implements Faction {
                 '}';
     }
 
-    // Test Harness
-
-    /**
-     * Method to get the power related to this record.
-     *
-     * @return double power.
-     */
-    @Override
-    public double getPower() {
-        return getMembers().stream()
-                .map(FactionPlayer::getPowerRecord)
-                .mapToDouble(PowerRecord::getPower)
-                .sum();
-    }
-
-    /**
-     * Method to set the power related to this record.
-     *
-     * @param power to set.
-     */
-    @Override
-    public void setPower(double power) {
-        // Ignore this functionality.
-    }
-
     /**
      * Method to send the recipient a message.
      *
@@ -250,5 +224,4 @@ public class JsonFaction implements Faction {
             onlineMember.sendMessage(message);
         }
     }
-
 }

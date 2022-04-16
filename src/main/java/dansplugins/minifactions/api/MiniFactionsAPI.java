@@ -25,11 +25,12 @@ public class MiniFactionsAPI {
     }
 
     public Faction getFactionByChunk(TerritoryChunk territoryChunk) {
-        return PersistentData.getInstance().getFactionByChunk(territoryChunk);
+        // TODO: implement
+        return null;
     }
 
     public PowerRecord getPlayerPowerRecord(UUID id) {
-        return PersistentData.getInstance().getPlayerPowerRecord(id);
+        return PersistentData.getInstance().getPowerRecord(id);
     }
 
     @SuppressWarnings("deprecation")
