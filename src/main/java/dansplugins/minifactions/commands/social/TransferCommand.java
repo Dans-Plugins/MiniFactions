@@ -71,7 +71,7 @@ public class TransferCommand extends AbstractMFCommand {
         }
 
         faction.setLeader(targetUUID);
-        player.sendMessage("Your faction has been transferred.");
+        faction.sendMessage("The faction has been transferred to " + uuidChecker.findPlayerNameBasedOnUUID(targetUUID) + ".");
         return true;
     }
 }

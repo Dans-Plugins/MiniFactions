@@ -39,6 +39,8 @@ public class DisbandCommand extends AbstractMFCommand {
             return false;
         }
 
+        faction.sendMessage(player.getName() + " is disbanding the faction.");
+
         boolean success = PersistentData.getInstance().removeFaction(faction);
         if (success) {
             player.sendMessage("Your faction has been disbanded.");

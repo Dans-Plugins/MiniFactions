@@ -3,12 +3,14 @@ package dansplugins.minifactions.commands.abs;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
+import dansplugins.minifactions.api.exceptions.PlayerOfflineException;
 import dansplugins.minifactions.objects.FactionPlayerImpl;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.tools.UUIDChecker;
@@ -40,5 +42,13 @@ public abstract class AbstractMFCommand extends AbstractPluginCommand {
 
     public UUID getUUID(String playerName) {
         return uuidChecker.findUUIDBasedOnPlayerName(playerName);
-    }    
+    }
+
+    public void sendMessageToPlayerByUUID(UUID playerUUID, String message) {
+        Player player = Bukkit.getPlayer(playerUUID);
+        if (player == null) {
+            return;
+        }
+        player.sendMessage(message);
+    }
 }
