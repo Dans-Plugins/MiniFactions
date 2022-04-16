@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 /**
  * @author Daniel McCoy Stephenson
+ * @since April 15th, 2022
  */
 public class ConfigCommand extends AbstractPluginCommand {
 
@@ -33,7 +34,7 @@ public class ConfigCommand extends AbstractPluginCommand {
         }
         else if (args[0].equalsIgnoreCase("set")) {
             if (args.length < 3) {
-                sender.sendMessage("Usage: /c config set (option) (value)");
+                sender.sendMessage("Usage: /mf config set (option) (value)");
                 return false;
             }
             String option = args[1];

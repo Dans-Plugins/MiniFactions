@@ -12,6 +12,7 @@ import dansplugins.minifactions.factories.PowerRecordFactory;
  * @author Daniel McCoy Stephenson
  */
 public class JoinHandler implements Listener {
+    
     @EventHandler()
     public void handle(PlayerJoinEvent event) {
         Player player = event.getPlayer();

@@ -45,6 +45,8 @@ public class LocalConfigService {
         if (!isSet("initialPower")) { getConfig().set("initialPower", 50.0); }
         if (!isSet("territoryCostsPower")) { getConfig().set("territoryCostsPower", true); }
         if (!isSet("minimumPowerCost")) { getConfig().set("minimumPowerCost", 1.0); }
+        if (!isSet("losePowerOnDeath")) { getConfig().set("losePowerOnDeath", true); }
+        if (!isSet("percentagePowerLostOnDeath")) { getConfig().set("percentagePowerLostOnDeath", 0.10); }
 
         getConfig().options().copyDefaults(true);
         MiniFactions.getInstance().saveConfig();
@@ -59,11 +61,13 @@ public class LocalConfigService {
                 getConfig().set(option, Integer.parseInt(value));
                 sender.sendMessage(ChatColor.GREEN + "Integer set.");
             } else if (option.equalsIgnoreCase("debugMode")
-                    || option.equalsIgnoreCase("territoryCostsPower")) {
+                    || option.equalsIgnoreCase("territoryCostsPower")
+                    || option.equalsIgnoreCase("losePowerOnDeath")) {
                 getConfig().set(option, Boolean.parseBoolean(value));
                 sender.sendMessage(ChatColor.GREEN + "Boolean set.");
             } else if (option.equalsIgnoreCase("initialPower")
-                    || option.equals("minimumPowerCost")) {
+                    || option.equalsIgnoreCase("minimumPowerCost")
+                    || option.equalsIgnoreCase("percentagePowerLostOnDeath")) {
                 getConfig().set(option, Double.parseDouble(value));
                 sender.sendMessage(ChatColor.GREEN + "Double set.");
             } else {
@@ -85,7 +89,9 @@ public class LocalConfigService {
                 + ", debugMode: " + getBoolean("debugMode")
                 + ", initialPower: " + getDouble("initialPower")
                 + ", territoryCostsPower: " + getBoolean("territoryCostsPower")
-                + ", minimumPowerCost: " + getDouble("minimumPowerCost"));
+                + ", minimumPowerCost: " + getDouble("minimumPowerCost")
+                + ", losePowerOnDeath: " + getBoolean("losePowerOnDeath")
+                + ", percentagePowerLostOnDeath: " + getDouble("percentagePowerLostOnDeath"));
     }
 
     public boolean hasBeenAltered() {

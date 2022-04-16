@@ -18,6 +18,7 @@ import dansplugins.minifactions.commands.territory.CheckClaimCommand;
 import dansplugins.minifactions.commands.territory.ClaimCommand;
 import dansplugins.minifactions.commands.territory.PowerCommand;
 import dansplugins.minifactions.commands.territory.UnclaimCommand;
+import dansplugins.minifactions.eventhandlers.DeathHandler;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
@@ -165,7 +166,8 @@ public class MiniFactions extends PonderBukkitPlugin {
     private void registerEventHandlers() {
         EventHandlerRegistry eventHandlerRegistry = new EventHandlerRegistry();
         ArrayList<Listener> listeners = new ArrayList<>(Arrays.asList(
-                new JoinHandler()
+                new JoinHandler(),
+                new DeathHandler()
         ));
         eventHandlerRegistry.registerEventHandlers(listeners, this);
     }

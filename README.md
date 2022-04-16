@@ -37,8 +37,8 @@ $1
 
 ### Configurability
 - [ ] Config
-  - [ ] View
-  - [ ] Set
+  - [x] View
+  - [x] Set
 - [ ] Force
   - [ ] Join
   - [ ] Invite
