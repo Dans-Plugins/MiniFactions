@@ -13,7 +13,7 @@ $1
 
 ## Target Features
 - [x] Social Organization
-- [ ] Land Ownership
+- [ ] Territory
 - [ ] Configurability
 - [ ] Localization
 
@@ -29,7 +29,7 @@ $1
 - [x] Kick
 - [x] Transfer
 
-### Land Ownership
+### Territory
 - [x] Power
 - [ ] Claim
 - [ ] Unclaim

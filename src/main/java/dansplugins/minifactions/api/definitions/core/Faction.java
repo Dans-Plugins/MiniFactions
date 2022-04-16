@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 /**
  * @author Callum Johnson
  * @since 07/11/2021 - 11:32
+ * @brief This interface defines a faction which is a group of players that can claim land.
  */
 public interface Faction extends FactionEntity, MessageRecipient {
 

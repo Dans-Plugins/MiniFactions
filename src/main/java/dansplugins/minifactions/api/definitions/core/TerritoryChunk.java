@@ -1,6 +1,7 @@
 package dansplugins.minifactions.api.definitions.core;
 
 import dansplugins.minifactions.api.definitions.FactionEntity;
+import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.WorldNotLoadedException;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -12,8 +13,21 @@ import java.util.UUID;
 /**
  * @author Callum Johnson
  * @since 08/11/2021 - 07:57
+ * @brief This interface defines a chunk that has previously been claimed by a faction.
  */
 public interface TerritoryChunk extends FactionEntity {
+
+    /**
+     * Method to obtain the UUID of the faction that owns this territory.
+     * @return The UUID of the faction.
+     */
+    @Nullable UUID getFactionUUID();
+
+    /**
+     * Method to set the faction UUID.
+     * @param factionUUID
+     */
+    void setFactionUUID(UUID factionUUID);
 
     /**
      * Method to obtain the 'X' coordinate of the TerritoryChunk.
@@ -70,7 +84,15 @@ public interface TerritoryChunk extends FactionEntity {
      */
     @Nullable
     default Faction getFaction() {
-        return getAPI().getFactionByChunk(this);
+        try {
+            return getAPI().getFactionByChunk(this);
+        } catch (Exception e) {
+            throw new FactionNotFoundException(null);
+        }
+    }
+
+    default boolean isClaimed() {
+        return getFactionUUID() != null;
     }
 
 }

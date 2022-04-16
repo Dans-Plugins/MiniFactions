@@ -15,6 +15,7 @@ import java.util.Objects;
 /**
  * @author Callum Johnson
  * @since 08/11/2021 - 08:22
+ * @brief This interface defines a player who interacts with the plugin.
  */
 public interface FactionPlayer extends FactionEntity, MessageRecipient {
 
