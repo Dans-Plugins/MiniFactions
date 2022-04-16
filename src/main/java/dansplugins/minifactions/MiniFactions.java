@@ -1,6 +1,8 @@
 package dansplugins.minifactions;
 
 import dansplugins.minifactions.api.MiniFactionsAPI;
+import dansplugins.minifactions.api.data.handlers.FactionHandler;
+import dansplugins.minifactions.api.data.handlers.PowerRecordHandler;
 import dansplugins.minifactions.api.data.handlers.TerritoryHandler;
 import dansplugins.minifactions.commands.DefaultCommand;
 import dansplugins.minifactions.commands.HelpCommand;
@@ -44,6 +46,8 @@ public class MiniFactions extends PonderBukkitPlugin {
     private final String pluginVersion = "v" + getDescription().getVersion();
     private final CommandService commandService = new CommandService(getPonder());
     private MiniFactionsAPI api;
+    private FactionHandler factionHandler;
+    private PowerRecordHandler powerRecordHandler;
     private TerritoryHandler territoryHandler;
 
     /**
@@ -64,6 +68,8 @@ public class MiniFactions extends PonderBukkitPlugin {
         registerEventHandlers();
         initializeCommandService();
         api = new MiniFactionsAPI();
+        factionHandler = new FactionHandler();
+        powerRecordHandler = new PowerRecordHandler();
         territoryHandler = new TerritoryHandler();
     }
 
@@ -72,7 +78,9 @@ public class MiniFactions extends PonderBukkitPlugin {
      */
     @Override
     public void onDisable() {
-
+        factionHandler.save();
+        powerRecordHandler.save();
+        territoryHandler.save();
     }
 
     /**
@@ -129,6 +137,24 @@ public class MiniFactions extends PonderBukkitPlugin {
      */
     public MiniFactionsAPI getMiniFactionsAPI() {
         return api;
+    }
+
+    /**
+     * Method to obtain the FactionHandler.
+     *
+     * @return {@link #factionHandler}.
+     */
+    public FactionHandler getFactionHandler() {
+        return factionHandler;
+    }
+
+/**
+     * Method to obtain the PowerRecordHandler.
+     *
+     * @return {@link #powerRecordHandler}.
+     */
+    public PowerRecordHandler getPowerRecordHandler() {
+        return powerRecordHandler;
     }
 
     /**
