@@ -75,6 +75,7 @@ public class PersistentData {
     }
 
     public boolean removeFaction(Faction faction) {
+        faction.unclaimAllChunks();
         return factions.remove(faction);
     }
 
@@ -110,6 +111,15 @@ public class PersistentData {
 
     public boolean addTerritoryChunk(TerritoryChunk territoryChunk) {
         return territoryChunks.add(territoryChunk);
+    }
+
+    public TerritoryChunk getTerritoryChunk(UUID territoryChunkUUID) {
+        for (TerritoryChunk territoryChunk : territoryChunks) {
+            if (territoryChunk.getId().equals(territoryChunkUUID)) {
+                return territoryChunk;
+            }
+        }
+        throw new TerritoryChunkNotFoundException(null);
     }
 
     public TerritoryChunk getTerritoryChunk(Chunk chunk) {

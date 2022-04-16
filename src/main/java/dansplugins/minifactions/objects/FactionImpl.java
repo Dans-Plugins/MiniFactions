@@ -118,6 +118,15 @@ public class FactionImpl implements Faction {
     }
 
     @Override
+    public void unclaimAllChunks() {
+        for (UUID territoryChunkUUID : territoryChunkUUIDs) {
+            TerritoryChunk territoryChunk = PersistentData.getInstance().getTerritoryChunk(territoryChunkUUID);
+            territoryChunk.setFactionUUID(null);
+        }
+        territoryChunkUUIDs.clear();
+    }
+
+    @Override
     public String toString() {
         String toReturn = "";
         toReturn += "=== " + getName() + " ===" + "\n";

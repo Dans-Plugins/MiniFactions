@@ -34,14 +34,6 @@ public class CheckClaimCommand extends AbstractMFCommand {
             return false;
         }
 
-        Faction faction;
-        try {
-            faction = getAPI().getFactionByPlayer(player);
-        } catch(FactionNotFoundException e) {
-            player.sendMessage("You are not in a faction.");
-            return false;
-        }
-
         Chunk chunk = player.getPlayer().getLocation().getChunk();
 
         TerritoryChunk territoryChunk;
@@ -58,7 +50,7 @@ public class CheckClaimCommand extends AbstractMFCommand {
         }
 
         UUID landholderUUID = territoryChunk.getFactionUUID();
-        if (landholderUUID.equals(faction.getId())) {
+        if (landholderUUID.equals(getAPI().getFactionByPlayer(player).getId())) {
             player.sendMessage("This territory is claimed by your faction.");
             return true;
         }
