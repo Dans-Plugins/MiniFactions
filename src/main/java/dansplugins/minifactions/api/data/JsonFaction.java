@@ -191,6 +191,11 @@ public class JsonFaction implements Faction {
         return ownsChunk(chunk) && claims.remove(chunk.getId());
     }
 
+    @Override
+    public int getNumTerritoryChunks() {
+        return claims.size();
+    }
+
     /**
      * Method to obtain the Id of the FactionEntity.
      *

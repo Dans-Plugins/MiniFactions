@@ -5,6 +5,7 @@ import java.util.UUID;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.PowerRecordImpl;
+import dansplugins.minifactions.services.LocalConfigService;
 
 public class PowerRecordFactory {
     private static PowerRecordFactory instance;
@@ -24,7 +25,8 @@ public class PowerRecordFactory {
         if (PersistentData.getInstance().hasPowerRecord(playerUUID)) {
             return false;
         }
-        PowerRecord powerRecord = new PowerRecordImpl(playerUUID);
+        double initialPower = LocalConfigService.getInstance().getDouble("initialPower");
+        PowerRecord powerRecord = new PowerRecordImpl(playerUUID, initialPower);
         return PersistentData.getInstance().addPowerRecord(powerRecord);
     }
 }

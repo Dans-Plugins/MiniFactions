@@ -42,6 +42,10 @@ public class LocalConfigService {
 
         // save config options
         if (!isSet("debugMode")) { getConfig().set("debugMode", false); }
+        if (!isSet("initialPower")) { getConfig().set("initialPower", 50.0); }
+        if (!isSet("territoryCostsPower")) { getConfig().set("territoryCostsPower", true); }
+        if (!isSet("minimumPowerCost")) { getConfig().set("minimumPowerCost", 1.0); }
+      
 
         getConfig().options().copyDefaults(true);
         MiniFactions.getInstance().saveConfig();
@@ -55,10 +59,12 @@ public class LocalConfigService {
             } else if (option.equalsIgnoreCase("A")) {
                 getConfig().set(option, Integer.parseInt(value));
                 sender.sendMessage(ChatColor.GREEN + "Integer set.");
-            } else if (option.equalsIgnoreCase("debugMode")) {
+            } else if (option.equalsIgnoreCase("debugMode")
+                    || option.equalsIgnoreCase("territoryCostsPower")) {
                 getConfig().set(option, Boolean.parseBoolean(value));
                 sender.sendMessage(ChatColor.GREEN + "Boolean set.");
-            } else if (option.equalsIgnoreCase("C")) {
+            } else if (option.equalsIgnoreCase("initialPower")
+                    || option.equals("minimumPowerCost")) {
                 getConfig().set(option, Double.parseDouble(value));
                 sender.sendMessage(ChatColor.GREEN + "Double set.");
             } else {
@@ -77,7 +83,10 @@ public class LocalConfigService {
     public void sendConfigList(CommandSender sender) {
         sender.sendMessage("=== Config List ===");
         sender.sendMessage("version: " + getConfig().getString("version")
-                + ", debugMode: " + getString("debugMode"));
+                + ", debugMode: " + getBoolean("debugMode")
+                + ", initialPower: " + getDouble("initialPower")
+                + ", territoryCostsPower: " + getBoolean("territoryCostsPower")
+                + ", minimumPowerCost: " + getDouble("minimumPowerCost"));
     }
 
     public boolean hasBeenAltered() {

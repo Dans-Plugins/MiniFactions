@@ -1,6 +1,5 @@
 package dansplugins.minifactions.objects;
 
-import java.util.Random;
 import java.util.UUID;
 
 import org.jetbrains.annotations.NotNull;
@@ -10,10 +9,6 @@ import dansplugins.minifactions.api.definitions.PowerRecord;
 public class PowerRecordImpl implements PowerRecord {
     private UUID playerUUID;
     private double power;
-
-    public PowerRecordImpl(UUID playerUUID) {
-        this(playerUUID, new Random().nextDouble() * 100);
-    }
 
     public PowerRecordImpl(UUID playerUUID, double initialPower) {
         this.playerUUID = playerUUID;
