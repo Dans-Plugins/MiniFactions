@@ -55,6 +55,11 @@ public class TransferCommand extends AbstractMFCommand {
         UUIDChecker uuidChecker = new UUIDChecker();
         UUID targetUUID = uuidChecker.findUUIDBasedOnPlayerName(ign);
 
+        if (targetUUID == null) {
+            player.sendMessage("That player wasn't found.");
+            return false;
+        }
+
         if (targetUUID.equals(player.getId())) {
             player.sendMessage("You cannot transfer yourself.");
             return false;
