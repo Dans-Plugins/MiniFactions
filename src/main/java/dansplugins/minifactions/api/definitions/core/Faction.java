@@ -236,4 +236,9 @@ public interface Faction extends FactionEntity, MessageRecipient {
      */
     void unclaimAllChunks();
 
+    /**
+     * Method to get the number of territory chunks that this faction owns.
+     */
+    int getNumTerritoryChunks();
+
 }

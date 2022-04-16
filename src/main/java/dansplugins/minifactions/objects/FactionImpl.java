@@ -127,14 +127,19 @@ public class FactionImpl implements Faction {
     }
 
     @Override
+    public int getNumTerritoryChunks() {
+        return territoryChunkUUIDs.size();
+    }
+
+    @Override
     public String toString() {
         String toReturn = "";
         toReturn += "=== " + getName() + " ===" + "\n";
         toReturn += "Leader: " + getLeaderAsPlayer().getName() + "\n";
         toReturn += "Members: " + getNumMembers() + "\n";
         toReturn += "Power: " + getPower() + "\n";
-        toReturn += "Invited: " + invitedPlayerUUIDs.size() + "\n";
-        toReturn += "Territory Size: " + territoryChunkUUIDs.size();
+        toReturn += "Invited: " + getNumMembers() + "\n";
+        toReturn += "Territory Size: " + getNumTerritoryChunks();
         return toReturn;
     }
 
