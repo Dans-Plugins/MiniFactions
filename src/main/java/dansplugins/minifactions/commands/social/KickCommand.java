@@ -68,6 +68,7 @@ public class KickCommand extends AbstractMFCommand {
         boolean success = faction.removeMember(targetUUID);
         if (success) {
             player.sendMessage("That player has been kicked.");
+            sendMessageToPlayerByUUID(targetUUID, "You have been kicked by to " + faction.getName() + ".");
         }
         else {
             player.sendMessage("That player wasn't found.");

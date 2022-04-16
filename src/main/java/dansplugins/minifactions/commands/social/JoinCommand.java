@@ -54,7 +54,7 @@ public class JoinCommand extends AbstractMFCommand {
 
         if (faction.hasBeenInvited(player)) {
             faction.addMember(player);
-            player.sendMessage("You have joined the faction.");
+            faction.sendMessage(player.getName() + " has joined the faction.");
             faction.revokeInvite(player);
             return true;
         }
