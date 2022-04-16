@@ -231,4 +231,9 @@ public interface Faction extends FactionEntity, MessageRecipient {
      */
     boolean unclaimChunk(@NotNull TerritoryChunk chunk);
 
+    /**
+     * Method to unclaim all chunks for this faction.
+     */
+    void unclaimAllChunks();
+
 }

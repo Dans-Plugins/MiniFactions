@@ -13,7 +13,7 @@ $1
 
 ## Target Features
 - [x] Social Organization
-- [ ] Territory
+- [x] Territory
 - [ ] Configurability
 - [ ] Localization
 
@@ -31,9 +31,9 @@ $1
 
 ### Territory
 - [x] Power
-- [ ] Claim
-- [ ] Unclaim
-- [ ] CheckClaim
+- [x] Claim
+- [x] Unclaim
+- [x] CheckClaim
 
 ### Configurability
 - [ ] Config
