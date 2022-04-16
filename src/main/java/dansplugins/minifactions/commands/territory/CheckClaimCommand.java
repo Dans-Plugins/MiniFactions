@@ -21,7 +21,7 @@ import java.util.UUID;
 public class CheckClaimCommand extends AbstractMFCommand {
 
     public CheckClaimCommand() {
-        super(new ArrayList<>(Arrays.asList("checkclaim")), new ArrayList<>(Arrays.asList("mf.checkclaim")));
+        super(new ArrayList<>(Arrays.asList("checkclaim", "cc")), new ArrayList<>(Arrays.asList("mf.checkclaim")));
     }
 
     @Override

@@ -19,12 +19,12 @@ import java.util.UUID;
 public class KickCommand extends AbstractMFCommand {
 
     public KickCommand() {
-        super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.invite")));
+        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.kick")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage("Usage: /mf invite <IGN>");
+        commandSender.sendMessage("Usage: /mf kick <IGN>");
         return true;
     }
 
