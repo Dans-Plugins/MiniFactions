@@ -224,4 +224,9 @@ public class JsonFaction implements Faction {
             onlineMember.sendMessage(message);
         }
     }
+
+    @Override
+    public void unclaimAllChunks() {
+        claims.clear();
+    }
 }
