@@ -9,7 +9,6 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
-import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.factories.TerritoryChunkFactory;
