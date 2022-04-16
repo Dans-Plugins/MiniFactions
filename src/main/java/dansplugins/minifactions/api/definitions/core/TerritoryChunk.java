@@ -2,6 +2,7 @@ package dansplugins.minifactions.api.definitions.core;
 
 import dansplugins.minifactions.api.definitions.FactionEntity;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
+import dansplugins.minifactions.api.exceptions.TerritoryChunkNotClaimedException;
 import dansplugins.minifactions.api.exceptions.WorldNotLoadedException;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -84,6 +85,9 @@ public interface TerritoryChunk extends FactionEntity {
      */
     @Nullable
     default Faction getFaction() {
+        if (!isClaimed()) {
+            throw new TerritoryChunkNotClaimedException(null);
+        }
         try {
             return getAPI().getFactionByChunk(this);
         } catch (Exception e) {
@@ -94,5 +98,4 @@ public interface TerritoryChunk extends FactionEntity {
     default boolean isClaimed() {
         return getFactionUUID() != null;
     }
-
 }
