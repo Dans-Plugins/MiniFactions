@@ -45,7 +45,6 @@ public class LocalConfigService {
         if (!isSet("initialPower")) { getConfig().set("initialPower", 50.0); }
         if (!isSet("territoryCostsPower")) { getConfig().set("territoryCostsPower", true); }
         if (!isSet("minimumPowerCost")) { getConfig().set("minimumPowerCost", 1.0); }
-      
 
         getConfig().options().copyDefaults(true);
         MiniFactions.getInstance().saveConfig();

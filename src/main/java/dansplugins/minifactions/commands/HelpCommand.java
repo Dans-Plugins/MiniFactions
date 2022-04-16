@@ -34,6 +34,7 @@ public class HelpCommand extends AbstractMFCommand {
         sender.sendMessage("/mf claim - Claim a chunk of territory.");
         sender.sendMessage("/mf checkclaim - Check which faction owns a chunk of territory.");
         sender.sendMessage("/mf unclaim - unclaim a chunk of territory.");
+        sender.sendMessage("/mf config - View or set config options.");
         return true;
     }
 
