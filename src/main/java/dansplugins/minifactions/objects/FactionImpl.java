@@ -138,7 +138,7 @@ public class FactionImpl implements Faction {
         toReturn += "Leader: " + getLeaderAsPlayer().getName() + "\n";
         toReturn += "Members: " + getNumMembers() + "\n";
         toReturn += "Power: " + getPower() + "\n";
-        toReturn += "Invited: " + getNumMembers() + "\n";
+        toReturn += "Invited: " + invitedPlayerUUIDs.size() + "\n";
         toReturn += "Territory Size: " + getNumTerritoryChunks();
         return toReturn;
     }
