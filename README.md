@@ -36,9 +36,16 @@ $1
 - [x] CheckClaim
 
 ### Configurability
-- [ ] Config
+- [x] Config
   - [x] View
   - [x] Set
+- [ ] Flags
+  - [ ] View
+  - [ ] Set
+- [ ] Perm
+  - [ ] View
+  - [ ] Get
+  - [ ] Set
 - [ ] Force
   - [ ] Join
   - [ ] Invite
@@ -46,10 +53,6 @@ $1
   - [ ] Kick
   - [ ] Claim
   - [ ] Unclaim
-- [ ] Perm
-  - [ ] View
-  - [ ] Get
-  - [ ] Set
 
 ### Localization
 - [ ] Lang
