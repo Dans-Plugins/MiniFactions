@@ -2,6 +2,7 @@ package dansplugins.minifactions;
 
 import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.data.handlers.TerritoryHandler;
+import dansplugins.minifactions.bstats.Metrics;
 import dansplugins.minifactions.commands.DefaultCommand;
 import dansplugins.minifactions.commands.HelpCommand;
 import dansplugins.minifactions.commands.config.ConfigCommand;
@@ -22,7 +23,6 @@ import dansplugins.minifactions.commands.territory.UnclaimCommand;
 import dansplugins.minifactions.eventhandlers.DeathHandler;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
-
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -67,6 +67,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         initializeCommandService();
         api = new MiniFactionsAPI();
         territoryHandler = new TerritoryHandler();
+        handlebStatsIntegration();
     }
 
     /**
@@ -197,5 +198,10 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new ConfigCommand());
         commands.add(new ForceCommand());
         commandService.initialize(commands, "That command wasn't found.");
+    }
+
+    private void handlebStatsIntegration() {
+        int pluginId = 14969;
+        new Metrics(this, pluginId);
     }
 }
