@@ -11,9 +11,13 @@ import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.objects.FactionPlayerImpl;
+import dansplugins.minifactions.utils.MFLogger;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.tools.UUIDChecker;
 
+/**
+ * @author Daniel McCoy Stephenson
+ */
 public abstract class AbstractMFCommand extends AbstractPluginCommand {
     private static MiniFactionsAPI api = new MiniFactionsAPI();
     private UUIDChecker uuidChecker = new UUIDChecker();
@@ -49,5 +53,17 @@ public abstract class AbstractMFCommand extends AbstractPluginCommand {
             return;
         }
         player.sendMessage(message);
+    }
+
+    public void print(String message) {
+        MFLogger.getInstance().print(message);
+    }
+
+    public void debug(String message) {
+        MFLogger.getInstance().debug(message);
+    }
+
+    public void error(String message) {
+        MFLogger.getInstance().error(message);
     }
 }
