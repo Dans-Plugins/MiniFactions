@@ -22,9 +22,6 @@ public class TerritoryChunkFactory {
     }
 
     public boolean createTerritoryChunk(Chunk chunk, Faction faction) {
-        if (PersistentData.getInstance().doesTerritoryChunkExist(chunk)) {
-            return false;
-        }
         TerritoryChunk territoryChunk = new TerritoryChunkImpl(chunk, faction.getId());
         boolean success = PersistentData.getInstance().addTerritoryChunk(territoryChunk);
         faction.claimChunk(territoryChunk);

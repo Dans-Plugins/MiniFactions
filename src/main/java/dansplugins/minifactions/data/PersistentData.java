@@ -15,6 +15,7 @@ import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.PowerRecordNotFoundException;
 import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
+import dansplugins.minifactions.factories.PowerRecordFactory;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -100,7 +101,8 @@ public class PersistentData {
                 return powerRecord;
             }
         }
-        throw new PowerRecordNotFoundException(null);
+        PowerRecordFactory.getInstance().createPowerRecord(playerUUID);
+        return getPowerRecord(playerUUID);
     }
 
     public boolean hasPowerRecord(UUID playerUUID) {

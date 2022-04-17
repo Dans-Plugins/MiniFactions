@@ -27,14 +27,13 @@ public class ForceCommand extends AbstractPluginCommand {
 
     @Override
     public boolean execute(CommandSender sender) {
-        sender.sendMessage("Usage: /mf force < help | join | invite | disband | kick | claim | unclaim >");
+        sender.sendMessage("Usage: /mf force < help | join >");
         return false;
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        String subCommand = args[0];
-        boolean success = commandService.interpretAndExecuteCommand(sender, subCommand, args);
+        boolean success = commandService.interpretAndExecuteCommand(sender, "force", args);
         return success;
     }
 

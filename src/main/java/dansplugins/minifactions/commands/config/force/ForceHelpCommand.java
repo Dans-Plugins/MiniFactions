@@ -17,7 +17,7 @@ public class ForceHelpCommand extends AbstractMFCommand {
     public boolean execute(CommandSender sender) {
         sender.sendMessage("=== MiniFactions Force Commands ===");
         sender.sendMessage("/mf force help - View a list of force commands.");
-        sender.sendMessage("/mf force join - Force a player to join a faction.");
+        sender.sendMessage("/mf force join <ign> <faction> - Force a player to join a faction.");
         return true;
     }
 
