@@ -13,15 +13,15 @@ import dansplugins.minifactions.commands.abs.AbstractMFCommand;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.FactionPlayerImpl;
 
-public class ForceJoinCommand extends AbstractMFCommand {
+public class ForceInviteCommand extends AbstractMFCommand {
 
-    public ForceJoinCommand() {
-        super(new ArrayList<>(Arrays.asList("join")), new ArrayList<>(Arrays.asList("mf.force.join")));
+    public ForceInviteCommand() {
+        super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.force.invite")));
     }
 
     @Override
     public boolean execute(CommandSender sender) {
-        sender.sendMessage("Usage: /mf force join <ign> <faction>");
+        sender.sendMessage("Usage: /mf force invite <ign> <faction>");
         return false;
     }
 
@@ -52,8 +52,8 @@ public class ForceJoinCommand extends AbstractMFCommand {
             return false;
         }
         
-        faction.addMember(factionPlayer);
-        faction.sendMessage(factionPlayer.getName() + " was forced to join the faction.");
+        faction.addInvite(factionPlayer);
+        faction.sendMessage(factionPlayer.getName() + " was forcefully invited to the faction.");
         return false;
     }
 }

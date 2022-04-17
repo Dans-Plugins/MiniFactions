@@ -10,26 +10,22 @@ import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.FactionPlayerImpl;
 
-public class ForceJoinCommand extends AbstractMFCommand {
+public class ForceKickCommand extends AbstractMFCommand {
 
-    public ForceJoinCommand() {
-        super(new ArrayList<>(Arrays.asList("join")), new ArrayList<>(Arrays.asList("mf.force.join")));
+    public ForceKickCommand() {
+        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.force.kick")));
     }
 
     @Override
     public boolean execute(CommandSender sender) {
-        sender.sendMessage("Usage: /mf force join <ign> <faction>");
+        sender.sendMessage("Usage: /mf force kick <ign>");
         return false;
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        if (args.length < 2) {
-            return execute(sender);
-        }
         String ign = args[0];
         UUID targetUUID = getUUID(ign);
 
@@ -40,20 +36,17 @@ public class ForceJoinCommand extends AbstractMFCommand {
 
         FactionPlayer factionPlayer = new FactionPlayerImpl(targetUUID);
 
-        String factionName = args[1];
         Faction faction;
         try {
-            faction = PersistentData.getInstance().getFaction(factionName);
-        } catch (FactionNotFoundException e) {
-            factionPlayer.sendMessage("That faction wasn't found.");
-            return false;
-        } catch (Exception ignored) {
-            factionPlayer.sendMessage("Something went wrong.");
+            faction = getAPI().getFactionByPlayer(factionPlayer);
+        } catch(FactionNotFoundException e) {
+            sender.sendMessage("That player isn't in a faction.");
             return false;
         }
         
-        faction.addMember(factionPlayer);
-        faction.sendMessage(factionPlayer.getName() + " was forced to join the faction.");
+        faction.removeMember(factionPlayer);
+        faction.sendMessage(factionPlayer.getName() + " was forcefully kicked from the faction.");
+        factionPlayer.sendMessage("You were forcefully kicked from the faction.");
         return false;
     }
 }
