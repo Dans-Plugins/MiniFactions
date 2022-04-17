@@ -83,7 +83,7 @@
         <dependency>
             <groupId>com.github.Preponderous-Software</groupId>
             <artifactId>Ponder</artifactId>
-            <version>07e0c073e9</version>
+            <version>1.1-SNAPSHOT-4-16-2022</version>
         </dependency>
     </dependencies>
 </project>
