@@ -59,3 +59,6 @@ The plan is to request $1 donations from those that download the software. Users
 - [ ] Lang
   - [ ] Get
   - [ ] Set
+
+## bStats
+[Check out the bStats page here!](https://bstats.org/plugin/bukkit/MiniFactions/14969)
