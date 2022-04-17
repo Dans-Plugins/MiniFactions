@@ -119,7 +119,7 @@ public class ClaimCommand extends AbstractMFCommand {
             try {
                 player.sendMessage("This territory is claimed by " + territoryChunk.getFaction().getName() + ".");
             } catch(TerritoryChunkNotClaimedException e) {
-                player.sendMessage("This territory isn't");
+                player.sendMessage("This territory is not claimed, but it was expected to be.");
             }
             
         }

@@ -5,8 +5,13 @@ import preponderous.ponder.minecraft.bukkit.services.CommandService;
 
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.commands.config.force.ForceClaimCommand;
+import dansplugins.minifactions.commands.config.force.ForceDisbandCommand;
 import dansplugins.minifactions.commands.config.force.ForceHelpCommand;
+import dansplugins.minifactions.commands.config.force.ForceInviteCommand;
 import dansplugins.minifactions.commands.config.force.ForceJoinCommand;
+import dansplugins.minifactions.commands.config.force.ForceKickCommand;
+import dansplugins.minifactions.commands.config.force.ForceUnclaimCommand;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,14 +32,13 @@ public class ForceCommand extends AbstractPluginCommand {
 
     @Override
     public boolean execute(CommandSender sender) {
-        sender.sendMessage("Usage: /mf force < help | join >");
+        sender.sendMessage("Usage: /mf force <help | join | disband |...>");
         return false;
     }
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
-        boolean success = commandService.interpretAndExecuteCommand(sender, "force", args);
-        return success;
+        return commandService.interpretAndExecuteCommand(sender, "force", args);
     }
 
     /**
@@ -49,6 +53,11 @@ public class ForceCommand extends AbstractPluginCommand {
         ArrayList<AbstractPluginCommand> commands = new ArrayList<>();
         commands.add(new ForceHelpCommand());
         commands.add(new ForceJoinCommand());
+        commands.add(new ForceInviteCommand());
+        commands.add(new ForceDisbandCommand());
+        commands.add(new ForceKickCommand());
+        commands.add(new ForceClaimCommand());
+        commands.add(new ForceUnclaimCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }

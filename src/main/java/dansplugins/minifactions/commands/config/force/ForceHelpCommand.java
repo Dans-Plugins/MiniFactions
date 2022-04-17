@@ -18,6 +18,11 @@ public class ForceHelpCommand extends AbstractMFCommand {
         sender.sendMessage("=== MiniFactions Force Commands ===");
         sender.sendMessage("/mf force help - View a list of force commands.");
         sender.sendMessage("/mf force join <ign> <faction> - Force a player to join a faction.");
+        sender.sendMessage("/mf force invite <ign> <faction> - Forcecefully invite a player to a faction.");
+        sender.sendMessage("/mf force kick <ign> - Forcefully kick a player from their faction.");
+        sender.sendMessage("/mf force disband <faction> - Forcefully disband a faction.");
+        sender.sendMessage("/mf force claim <faction> - Forcefully claim territory for a faction.");
+        sender.sendMessage("/mf force unclaim <faction> - Forcefully unclaim territory for a faction.");
         return true;
     }
 
@@ -25,5 +30,4 @@ public class ForceHelpCommand extends AbstractMFCommand {
     public boolean execute(CommandSender sender, String[] args) {
         return execute(sender);
     }
-    
 }
