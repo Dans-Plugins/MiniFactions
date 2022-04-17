@@ -5,6 +5,7 @@ import dansplugins.minifactions.api.data.handlers.TerritoryHandler;
 import dansplugins.minifactions.commands.DefaultCommand;
 import dansplugins.minifactions.commands.HelpCommand;
 import dansplugins.minifactions.commands.config.ConfigCommand;
+import dansplugins.minifactions.commands.config.ForceCommand;
 import dansplugins.minifactions.commands.social.CreateCommand;
 import dansplugins.minifactions.commands.social.DisbandCommand;
 import dansplugins.minifactions.commands.social.InfoCommand;
@@ -21,6 +22,7 @@ import dansplugins.minifactions.commands.territory.UnclaimCommand;
 import dansplugins.minifactions.eventhandlers.DeathHandler;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
+
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -193,6 +195,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new CheckClaimCommand());
         commands.add(new UnclaimCommand());
         commands.add(new ConfigCommand());
+        commands.add(new ForceCommand());
         commandService.initialize(commands, "That command wasn't found.");
     }
 }

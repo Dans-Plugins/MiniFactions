@@ -9,6 +9,7 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
+import dansplugins.minifactions.api.exceptions.TerritoryChunkNotClaimedException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.factories.TerritoryChunkFactory;
@@ -115,7 +116,12 @@ public class ClaimCommand extends AbstractMFCommand {
             player.sendMessage("This territory is already claimed by your faction.");
         }
         else {
-            player.sendMessage("This territory is claimed by " + territoryChunk.getFaction().getName() + ".");
+            try {
+                player.sendMessage("This territory is claimed by " + territoryChunk.getFaction().getName() + ".");
+            } catch(TerritoryChunkNotClaimedException e) {
+                player.sendMessage("This territory isn't");
+            }
+            
         }
     }
 }

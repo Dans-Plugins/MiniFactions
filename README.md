@@ -46,8 +46,9 @@ The plan is to request $1 donations from those that download the software. Users
   - [ ] View
   - [ ] Get
   - [ ] Set
-- [ ] Force
-  - [ ] Join
+- [x] Force
+  - [x] Help
+  - [x] Join
   - [ ] Invite
   - [ ] Disband
   - [ ] Kick
