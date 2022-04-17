@@ -49,11 +49,11 @@ The plan is to request $1 donations from those that download the software. Users
 - [x] Force
   - [x] Help
   - [x] Join
-  - [ ] Invite
-  - [ ] Disband
-  - [ ] Kick
-  - [ ] Claim
-  - [ ] Unclaim
+  - [x] Invite
+  - [x] Disband
+  - [x] Kick
+  - [x] Claim
+  - [x] Unclaim
 
 ### Localization
 - [ ] Lang
