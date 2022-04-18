@@ -15,13 +15,16 @@ import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.PowerRecordNotFoundException;
 import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
+import dansplugins.minifactions.data.abs.FactionData;
+import dansplugins.minifactions.data.abs.PowerData;
+import dansplugins.minifactions.data.abs.TerritoryData;
 import dansplugins.minifactions.factories.PowerRecordFactory;
 
 /**
  * @author Daniel McCoy Stephenson
  * @since April 13th, 2022
  */
-public class PersistentData {
+public class PersistentData implements FactionData, PowerData, TerritoryData {
     private static PersistentData instance;
     private HashSet<Faction> factions = new HashSet<>();
     private HashSet<PowerRecord> powerRecords = new HashSet<>();
@@ -38,6 +41,7 @@ public class PersistentData {
         return instance;
     }
 
+    @Override
     public Faction getFaction(String name) throws Exception {
         for (Faction faction : factions) {
             if (faction.getName().equals(name)) {
@@ -47,6 +51,7 @@ public class PersistentData {
         throw new FactionNotFoundException(null);
     }
 
+    @Override
     public Faction getFaction(UUID factionUUID) throws Exception {
         for (Faction faction : factions) {
             if (faction.getId().equals(factionUUID)) {
@@ -56,10 +61,12 @@ public class PersistentData {
         throw new FactionNotFoundException(null);
     }
 
+    @Override
     public boolean addFaction(Faction faction) {
         return factions.add(faction);
     }
 
+    @Override
     public Faction getFactionByPlayer(FactionPlayer factionPlayer) {
         for (Faction faction : factions) {
             if (faction.isMember(factionPlayer)) {
@@ -69,6 +76,7 @@ public class PersistentData {
         throw new FactionNotFoundException(null);
     }
 
+    @Override
     public Faction getFactionByChunk(TerritoryChunk territoryChunk) {
         for (Faction faction : factions) {
             if (faction.getId().equals(territoryChunk.getFaction().getId())) {
@@ -78,11 +86,13 @@ public class PersistentData {
         throw new FactionNotFoundException(null);
     }
 
+    @Override
     public boolean removeFaction(Faction faction) {
         faction.unclaimAllChunks();
         return factions.remove(faction);
     }
 
+    @Override
     public String getFactionList() {
         String toReturn = "=== Factions ===" + "\n";
         for (Faction faction : factions) {
@@ -91,10 +101,12 @@ public class PersistentData {
         return toReturn;
     }
 
+    @Override
     public boolean addPowerRecord(PowerRecord powerRecord) {
         return powerRecords.add(powerRecord);
     }
 
+    @Override
     public PowerRecord getPowerRecord(UUID playerUUID) {
         for (PowerRecord powerRecord : powerRecords) {
             if (powerRecord.getId().equals(playerUUID)) {
@@ -105,6 +117,7 @@ public class PersistentData {
         return getPowerRecord(playerUUID);
     }
 
+    @Override
     public boolean hasPowerRecord(UUID playerUUID) {
         try {
             getPowerRecord(playerUUID);
@@ -114,10 +127,12 @@ public class PersistentData {
         }
     }
 
+    @Override
     public boolean addTerritoryChunk(TerritoryChunk territoryChunk) {
         return territoryChunks.add(territoryChunk);
     }
 
+    @Override
     public TerritoryChunk getTerritoryChunk(UUID territoryChunkUUID) {
         for (TerritoryChunk territoryChunk : territoryChunks) {
             if (territoryChunk.getId().equals(territoryChunkUUID)) {
@@ -127,6 +142,7 @@ public class PersistentData {
         throw new TerritoryChunkNotFoundException(null);
     }
 
+    @Override
     public TerritoryChunk getTerritoryChunk(Chunk chunk) {
         for (TerritoryChunk territoryChunk : territoryChunks) {
             if (territoryChunk.getX() == chunk.getX() && territoryChunk.getZ() == chunk.getZ() && territoryChunk.getWorldId().equals(chunk.getWorld().getUID())) {
@@ -136,6 +152,7 @@ public class PersistentData {
         throw new TerritoryChunkNotFoundException(null);
     }
 
+    @Override
     public TerritoryChunk getTerritoryChunk(int x, int z, UUID worldUUID) {
         for (TerritoryChunk territoryChunk : territoryChunks) {
             if (territoryChunk.getX() == x && territoryChunk.getZ() == z && territoryChunk.getWorldId().equals(worldUUID)) {
@@ -145,6 +162,7 @@ public class PersistentData {
         throw new TerritoryChunkNotFoundException(null);
     }
 
+    @Override
     public boolean doesTerritoryChunkExist(Chunk chunk) {
         try {
             getTerritoryChunk(chunk.getX(), chunk.getZ(), chunk.getWorld().getUID());
@@ -154,6 +172,7 @@ public class PersistentData {
         }
     }
 
+    @Override
     public boolean isTerritoryChunkClaimed(TerritoryChunk territoryChunk) {
         for (Faction faction : factions) {
             if (faction.ownsChunk(territoryChunk)) {
@@ -163,6 +182,7 @@ public class PersistentData {
         return false;
     }
 
+    @Override
     public List<Map<String, String>> getFactionsAsJson() {
         List<Map<String, String>> data = new ArrayList<>();
         for (Faction faction : factions) {
@@ -171,6 +191,7 @@ public class PersistentData {
         return data;
     }
 
+    @Override
     public List<Map<String, String>> getPowerRecordsAsJson() {
         List<Map<String, String>> data = new ArrayList<>();
         for (PowerRecord powerRecord : powerRecords) {
@@ -179,6 +200,7 @@ public class PersistentData {
         return data;
     }
 
+    @Override
     public List<Map<String, String>> getTerritoryChunksAsJson() {
         List<Map<String, String>> data = new ArrayList<>();
         for (TerritoryChunk territoryChunk : territoryChunks) {
@@ -187,14 +209,17 @@ public class PersistentData {
         return data;
     }
 
+    @Override
     public void clearFactions() {
         factions.clear();
     }
 
+    @Override
     public void clearPowerRecords() {
         powerRecords.clear();
     }
 
+    @Override
     public void clearTerritoryChunks() {
         territoryChunks.clear();
     }
