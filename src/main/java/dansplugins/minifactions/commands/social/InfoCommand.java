@@ -10,6 +10,7 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
+import dansplugins.minifactions.data.PersistentData;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -44,7 +45,26 @@ public class InfoCommand extends AbstractMFCommand {
 
     @Override
     public boolean execute(CommandSender commandSender, String[] args) {
-        return execute(commandSender);
-    }
+        FactionPlayer player;
+        try {
+            player = getFactionPlayer(commandSender);
+        } catch(CommandSenderNotPlayerException e) {
+            return false;
+        }
 
+        String factionName = args[1];
+        Faction faction;
+        try {
+            faction = PersistentData.getInstance().getFaction(factionName);
+        } catch (FactionNotFoundException e) {
+            player.sendMessage("That faction wasn't found.");
+            return false;
+        } catch (Exception ignored) {
+            player.sendMessage("Something went wrong.");
+            return false;
+        }
+
+        player.sendMessage(faction.toString());
+        return true;
+    }
 }
