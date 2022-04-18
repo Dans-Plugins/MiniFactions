@@ -10,6 +10,7 @@ import dansplugins.minifactions.data.PersistentData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -35,7 +36,18 @@ public class PowerCommand extends AbstractMFCommand {
     }
 
     @Override
-    public boolean execute(CommandSender commandSender, String[] strings) {
-        return execute(commandSender);
+    public boolean execute(CommandSender sender, String[] args) {
+        String ign = args[0];
+        UUID targetUUID = getUUID(ign);
+
+        if (targetUUID == null) {
+            sender.sendMessage("That player wasn't found.");
+            return false;
+        }
+
+        PowerRecord powerRecord = PersistentData.getInstance().getPowerRecord(targetUUID);
+
+        sender.sendMessage("That player's current power is " + powerRecord.getPower());
+        return true;
     }
 }
