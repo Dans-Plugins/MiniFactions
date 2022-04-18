@@ -1,4 +1,4 @@
-package dansplugins.minifactions.data.abs;
+package dansplugins.minifactions.api.data.abs;
 
 import java.util.List;
 import java.util.Map;

@@ -8,6 +8,9 @@ import java.util.UUID;
 
 import org.bukkit.Chunk;
 
+import dansplugins.minifactions.api.data.abs.FactionData;
+import dansplugins.minifactions.api.data.abs.PowerData;
+import dansplugins.minifactions.api.data.abs.TerritoryData;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
@@ -15,9 +18,6 @@ import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.PowerRecordNotFoundException;
 import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
-import dansplugins.minifactions.data.abs.FactionData;
-import dansplugins.minifactions.data.abs.PowerData;
-import dansplugins.minifactions.data.abs.TerritoryData;
 import dansplugins.minifactions.factories.PowerRecordFactory;
 
 /**
