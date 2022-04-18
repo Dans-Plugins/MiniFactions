@@ -65,9 +65,11 @@ public class InviteCommand extends AbstractMFCommand {
             return false;
         }
 
+        String targetName = uuidChecker.findPlayerNameBasedOnUUID(targetUUID);
+
         boolean success = faction.addInvite(targetUUID);
         if (success) {
-            player.sendMessage("That player has been invited.");
+            faction.sendMessage(targetName + " has been invited to the faction.");
             sendMessageToPlayerByUUID(targetUUID, "You have been invited to " + faction.getName() + ".");
         }
         else {
