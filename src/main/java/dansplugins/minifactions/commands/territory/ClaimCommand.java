@@ -104,7 +104,8 @@ public class ClaimCommand extends AbstractMFCommand {
     private double getPowerCost(FactionPlayer player) {
         double minimum = LocalConfigService.getInstance().getDouble("minimumPowerCost");
         int numTerritoryChunks = player.getFaction().getNumTerritoryChunks();
-        double cost = numTerritoryChunks * 0.10;
+        double chunkRequirementFactor = LocalConfigService.getInstance().getDouble("chunkRequirementFactor");
+        double cost = numTerritoryChunks * chunkRequirementFactor;
         if (cost < minimum) {
             cost = minimum;
         }

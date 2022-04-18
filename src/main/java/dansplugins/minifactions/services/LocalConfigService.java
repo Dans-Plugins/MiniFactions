@@ -46,6 +46,7 @@ public class LocalConfigService {
         if (!isSet("minimumPowerCost")) { getConfig().set("minimumPowerCost", 1.0); }
         if (!isSet("losePowerOnDeath")) { getConfig().set("losePowerOnDeath", true); }
         if (!isSet("percentagePowerLostOnDeath")) { getConfig().set("percentagePowerLostOnDeath", 0.10); }
+        if (!isSet("chunkRequirementFactor")) { getConfig().set("chunkRequirementFactor", 0.10); }
 
         getConfig().options().copyDefaults(true);
         MiniFactions.getInstance().saveConfig();
@@ -66,7 +67,8 @@ public class LocalConfigService {
                 sender.sendMessage(ChatColor.GREEN + "Boolean set.");
             } else if (option.equalsIgnoreCase("initialPower")
                     || option.equalsIgnoreCase("minimumPowerCost")
-                    || option.equalsIgnoreCase("percentagePowerLostOnDeath")) {
+                    || option.equalsIgnoreCase("percentagePowerLostOnDeath")
+                    || option.equalsIgnoreCase("chunkRequirementFactor")) {
                 getConfig().set(option, Double.parseDouble(value));
                 sender.sendMessage(ChatColor.GREEN + "Double set.");
             } else {
@@ -90,7 +92,9 @@ public class LocalConfigService {
                 + ", territoryCostsPower: " + getBoolean("territoryCostsPower")
                 + ", minimumPowerCost: " + getDouble("minimumPowerCost")
                 + ", losePowerOnDeath: " + getBoolean("losePowerOnDeath")
-                + ", percentagePowerLostOnDeath: " + getDouble("percentagePowerLostOnDeath"));
+                + ", percentagePowerLostOnDeath: " + getDouble("percentagePowerLostOnDeath")
+                + ", chunkRequirementFactor: " + getDouble("chunkRequirementFactor")
+                );
     }
 
     public boolean hasBeenAltered() {
