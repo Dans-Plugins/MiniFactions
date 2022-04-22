@@ -19,12 +19,12 @@ import java.util.UUID;
 public class KickCommand extends AbstractMFCommand {
 
     public KickCommand() {
-        super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.invite")));
+        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.kick")));
     }
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage("Usage: /mf invite <IGN>");
+        commandSender.sendMessage("Usage: /mf kick <IGN>");
         return true;
     }
 
@@ -55,6 +55,11 @@ public class KickCommand extends AbstractMFCommand {
         UUIDChecker uuidChecker = new UUIDChecker();
         UUID targetUUID = uuidChecker.findUUIDBasedOnPlayerName(ign);
 
+        if (targetUUID == null) {
+            player.sendMessage("That player wasn't found.");
+            return false;
+        }
+
         if (targetUUID.equals(player.getId())) {
             player.sendMessage("You cannot kick yourself.");
             return false;
@@ -63,6 +68,7 @@ public class KickCommand extends AbstractMFCommand {
         boolean success = faction.removeMember(targetUUID);
         if (success) {
             player.sendMessage("That player has been kicked.");
+            sendMessageToPlayerByUUID(targetUUID, "You have been kicked by to " + faction.getName() + ".");
         }
         else {
             player.sendMessage("That player wasn't found.");

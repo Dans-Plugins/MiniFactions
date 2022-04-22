@@ -22,9 +22,6 @@ public class PowerRecordFactory {
     }
 
     public boolean createPowerRecord(UUID playerUUID) {
-        if (PersistentData.getInstance().hasPowerRecord(playerUUID)) {
-            return false;
-        }
         double initialPower = LocalConfigService.getInstance().getDouble("initialPower");
         PowerRecord powerRecord = new PowerRecordImpl(playerUUID, initialPower);
         return PersistentData.getInstance().addPowerRecord(powerRecord);

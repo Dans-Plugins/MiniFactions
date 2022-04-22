@@ -14,7 +14,7 @@ public class CommandSenderNotPlayerException extends RuntimeException {
      * @param object to notify the console about.
      */
     public CommandSenderNotPlayerException(@NotNull Object object) {
-        super("A command sender wasn't a player!");
+        super("A command sender was not a player!");
     }
 
 }

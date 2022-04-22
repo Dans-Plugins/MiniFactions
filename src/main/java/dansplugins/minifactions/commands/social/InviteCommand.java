@@ -55,14 +55,22 @@ public class InviteCommand extends AbstractMFCommand {
         UUIDChecker uuidChecker = new UUIDChecker();
         UUID targetUUID = uuidChecker.findUUIDBasedOnPlayerName(ign);
 
+        if (targetUUID == null) {
+            player.sendMessage("That player wasn't found.");
+            return false;
+        }
+
         if (targetUUID.equals(player.getId())) {
             player.sendMessage("You cannot invite yourself.");
             return false;
         }
 
+        String targetName = uuidChecker.findPlayerNameBasedOnUUID(targetUUID);
+
         boolean success = faction.addInvite(targetUUID);
         if (success) {
-            player.sendMessage("That player has been invited.");
+            faction.sendMessage(targetName + " has been invited to the faction.");
+            sendMessageToPlayerByUUID(targetUUID, "You have been invited to " + faction.getName() + ".");
         }
         else {
             player.sendMessage("Something went wrong.");

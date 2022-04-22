@@ -4,9 +4,11 @@ import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.data.handlers.FactionHandler;
 import dansplugins.minifactions.api.data.handlers.PowerRecordHandler;
 import dansplugins.minifactions.api.data.handlers.TerritoryHandler;
+import dansplugins.minifactions.bstats.Metrics;
 import dansplugins.minifactions.commands.DefaultCommand;
 import dansplugins.minifactions.commands.HelpCommand;
 import dansplugins.minifactions.commands.config.ConfigCommand;
+import dansplugins.minifactions.commands.config.ForceCommand;
 import dansplugins.minifactions.commands.social.CreateCommand;
 import dansplugins.minifactions.commands.social.DisbandCommand;
 import dansplugins.minifactions.commands.social.InfoCommand;
@@ -71,6 +73,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         factionHandler = new FactionHandler();
         powerRecordHandler = new PowerRecordHandler();
         territoryHandler = new TerritoryHandler();
+        handlebStatsIntegration();
     }
 
     /**
@@ -219,6 +222,12 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new CheckClaimCommand());
         commands.add(new UnclaimCommand());
         commands.add(new ConfigCommand());
+        commands.add(new ForceCommand());
         commandService.initialize(commands, "That command wasn't found.");
+    }
+
+    private void handlebStatsIntegration() {
+        int pluginId = 14969;
+        new Metrics(this, pluginId);
     }
 }

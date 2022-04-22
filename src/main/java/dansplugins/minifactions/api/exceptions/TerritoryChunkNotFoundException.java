@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class TerritoryChunkNotFoundException extends RuntimeException {
 
     /**
-     * Exception thrown when a power record cannot be found.
+     * Exception thrown when a territory chunk cannot be found.
      *
      * @param object to notify the console about.
      */

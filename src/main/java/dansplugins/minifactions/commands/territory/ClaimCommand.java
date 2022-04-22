@@ -9,6 +9,7 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
+import dansplugins.minifactions.api.exceptions.TerritoryChunkNotClaimedException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.factories.TerritoryChunkFactory;
@@ -103,7 +104,8 @@ public class ClaimCommand extends AbstractMFCommand {
     private double getPowerCost(FactionPlayer player) {
         double minimum = LocalConfigService.getInstance().getDouble("minimumPowerCost");
         int numTerritoryChunks = player.getFaction().getNumTerritoryChunks();
-        double cost = numTerritoryChunks * 0.10;
+        double chunkRequirementFactor = LocalConfigService.getInstance().getDouble("chunkRequirementFactor");
+        double cost = numTerritoryChunks * chunkRequirementFactor;
         if (cost < minimum) {
             cost = minimum;
         }
@@ -115,7 +117,12 @@ public class ClaimCommand extends AbstractMFCommand {
             player.sendMessage("This territory is already claimed by your faction.");
         }
         else {
-            player.sendMessage("This territory is claimed by " + territoryChunk.getFaction().getName() + ".");
+            try {
+                player.sendMessage("This territory is claimed by " + territoryChunk.getFaction().getName() + ".");
+            } catch(TerritoryChunkNotClaimedException e) {
+                player.sendMessage("This territory is not claimed, but it was expected to be.");
+            }
+            
         }
     }
 }

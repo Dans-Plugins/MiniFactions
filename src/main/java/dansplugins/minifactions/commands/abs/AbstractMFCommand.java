@@ -3,6 +3,7 @@ package dansplugins.minifactions.commands.abs;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -10,12 +11,16 @@ import dansplugins.minifactions.api.MiniFactionsAPI;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.objects.FactionPlayerImpl;
+import dansplugins.minifactions.utils.MFLogger;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.tools.UUIDChecker;
 
+/**
+ * @author Daniel McCoy Stephenson
+ */
 public abstract class AbstractMFCommand extends AbstractPluginCommand {
-    static MiniFactionsAPI api = new MiniFactionsAPI();
-    UUIDChecker uuidChecker = new UUIDChecker();
+    private static MiniFactionsAPI api = new MiniFactionsAPI();
+    private UUIDChecker uuidChecker = new UUIDChecker();
 
     public AbstractMFCommand(ArrayList<String> names, ArrayList<String> permissions) {
         super(names, permissions);
@@ -40,5 +45,25 @@ public abstract class AbstractMFCommand extends AbstractPluginCommand {
 
     public UUID getUUID(String playerName) {
         return uuidChecker.findUUIDBasedOnPlayerName(playerName);
-    }    
+    }
+
+    public void sendMessageToPlayerByUUID(UUID playerUUID, String message) {
+        Player player = Bukkit.getPlayer(playerUUID);
+        if (player == null) {
+            return;
+        }
+        player.sendMessage(message);
+    }
+
+    public void print(String message) {
+        MFLogger.getInstance().print(message);
+    }
+
+    public void debug(String message) {
+        MFLogger.getInstance().debug(message);
+    }
+
+    public void error(String message) {
+        MFLogger.getInstance().error(message);
+    }
 }
