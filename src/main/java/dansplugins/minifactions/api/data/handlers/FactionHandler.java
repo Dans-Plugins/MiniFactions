@@ -5,7 +5,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.data.JsonFaction;
+import dansplugins.minifactions.api.data.abs.FactionData;
 import dansplugins.minifactions.api.definitions.core.Faction;
+import dansplugins.minifactions.api.definitions.core.FactionPlayer;
+import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionFileException;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +27,7 @@ import java.util.UUID;
  * @author Daniel McCoy Stephenson
  * @since April 16th, 2022
  */
-public class FactionHandler {
+public class FactionHandler implements FactionData {
 
     /**
      * File linked to the faction data.
@@ -118,5 +122,53 @@ public class FactionHandler {
             ex.printStackTrace();
             this.data = new HashMap<>();
         }
+    }
+
+    @Override
+    public Faction getFaction(String name) throws Exception {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public boolean addFaction(Faction faction) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public Faction getFactionByPlayer(FactionPlayer factionPlayer) {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public Faction getFactionByChunk(TerritoryChunk territoryChunk) {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public boolean removeFaction(Faction faction) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public String getFactionList() {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public List<Map<String, String>> getFactionsAsJson() {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public void clearFactions() {
+        // TODO: implement
+        
     }
 }

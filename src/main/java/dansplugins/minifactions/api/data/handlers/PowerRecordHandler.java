@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.data.JsonPowerRecord;
+import dansplugins.minifactions.api.data.abs.PowerData;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.exceptions.PowerRecordFileException;
 
@@ -16,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,7 +25,7 @@ import java.util.UUID;
  * @author Daniel McCoy Stephenson
  * @since April 16th, 2022
  */
-public class PowerRecordHandler {
+public class PowerRecordHandler implements PowerData {
 
     /**
      * File linked to the power record data.
@@ -118,5 +120,29 @@ public class PowerRecordHandler {
             ex.printStackTrace();
             this.data = new HashMap<>();
         }
+    }
+
+    @Override
+    public boolean addPowerRecord(PowerRecord powerRecord) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public boolean hasPowerRecord(UUID playerUUID) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public List<Map<String, String>> getPowerRecordsAsJson() {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public void clearPowerRecords() {
+        // TODO: implement
+        
     }
 }

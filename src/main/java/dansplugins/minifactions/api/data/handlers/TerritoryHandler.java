@@ -5,8 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.data.JsonTerritoryChunk;
+import dansplugins.minifactions.api.data.abs.TerritoryData;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.TerritoryFileException;
+
+import org.bukkit.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,7 +26,7 @@ import java.util.UUID;
  * @author Callum Johnson
  * @since 11/12/2021 - 21:57
  */
-public class TerritoryHandler {
+public class TerritoryHandler implements TerritoryData {
 
     /**
      * File linked to the territory data.
@@ -117,5 +121,53 @@ public class TerritoryHandler {
             ex.printStackTrace();
             this.data = new HashMap<>();
         }
+    }
+
+    @Override
+    public boolean addTerritoryChunk(TerritoryChunk territoryChunk) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public TerritoryChunk getTerritoryChunk(UUID territoryChunkUUID) {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public TerritoryChunk getTerritoryChunk(Chunk chunk) {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public TerritoryChunk getTerritoryChunk(int x, int z, UUID worldUUID) {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public boolean doesTerritoryChunkExist(Chunk chunk) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public boolean isTerritoryChunkClaimed(TerritoryChunk territoryChunk) {
+        // TODO: implement
+        return false;
+    }
+
+    @Override
+    public List<Map<String, String>> getTerritoryChunksAsJson() {
+        // TODO: implement
+        return null;
+    }
+
+    @Override
+    public void clearTerritoryChunks() {
+        // TODO: implement
+        
     }
 }
