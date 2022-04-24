@@ -8,14 +8,10 @@ import java.util.UUID;
 
 import org.bukkit.Chunk;
 
-import dansplugins.minifactions.api.data.abs.FactionData;
 import dansplugins.minifactions.api.data.abs.PowerData;
 import dansplugins.minifactions.api.data.abs.TerritoryData;
 import dansplugins.minifactions.api.definitions.PowerRecord;
-import dansplugins.minifactions.api.definitions.core.Faction;
-import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
-import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.PowerRecordNotFoundException;
 import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
 import dansplugins.minifactions.factories.PowerRecordFactory;
@@ -24,9 +20,8 @@ import dansplugins.minifactions.factories.PowerRecordFactory;
  * @author Daniel McCoy Stephenson
  * @since April 13th, 2022
  */
-public class PersistentData implements FactionData, PowerData, TerritoryData {
+public class PersistentData implements PowerData, TerritoryData {
     private static PersistentData instance;
-    private HashSet<Faction> factions = new HashSet<>();
     private HashSet<PowerRecord> powerRecords = new HashSet<>();
     private HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
 
@@ -39,66 +34,6 @@ public class PersistentData implements FactionData, PowerData, TerritoryData {
             instance = new PersistentData();
         }
         return instance;
-    }
-
-    @Override
-    public Faction getFaction(String name) throws Exception {
-        for (Faction faction : factions) {
-            if (faction.getName().equals(name)) {
-                return faction;
-            }
-        }
-        throw new FactionNotFoundException(null);
-    }
-
-    @Override
-    public Faction getFaction(UUID factionUUID) throws Exception {
-        for (Faction faction : factions) {
-            if (faction.getId().equals(factionUUID)) {
-                return faction;
-            }
-        }
-        throw new FactionNotFoundException(null);
-    }
-
-    @Override
-    public boolean addFaction(Faction faction) {
-        return factions.add(faction);
-    }
-
-    @Override
-    public Faction getFactionByPlayer(FactionPlayer factionPlayer) {
-        for (Faction faction : factions) {
-            if (faction.isMember(factionPlayer)) {
-                return faction;
-            }
-        }
-        throw new FactionNotFoundException(null);
-    }
-
-    @Override
-    public Faction getFactionByChunk(TerritoryChunk territoryChunk) {
-        for (Faction faction : factions) {
-            if (faction.getId().equals(territoryChunk.getFaction().getId())) {
-                return faction;
-            }
-        }
-        throw new FactionNotFoundException(null);
-    }
-
-    @Override
-    public boolean removeFaction(Faction faction) {
-        faction.unclaimAllChunks();
-        return factions.remove(faction);
-    }
-
-    @Override
-    public String getFactionList() {
-        String toReturn = "=== Factions ===" + "\n";
-        for (Faction faction : factions) {
-            toReturn += faction.getName() + "\n";
-        }
-        return toReturn;
     }
 
     @Override
@@ -174,21 +109,8 @@ public class PersistentData implements FactionData, PowerData, TerritoryData {
 
     @Override
     public boolean isTerritoryChunkClaimed(TerritoryChunk territoryChunk) {
-        for (Faction faction : factions) {
-            if (faction.ownsChunk(territoryChunk)) {
-                return true;
-            }
-        }
+        // TODO: implement
         return false;
-    }
-
-    @Override
-    public List<Map<String, String>> getFactionsAsJson() {
-        List<Map<String, String>> data = new ArrayList<>();
-        for (Faction faction : factions) {
-            data.add(faction.toJSON());
-        }
-        return data;
     }
 
     @Override
@@ -207,11 +129,6 @@ public class PersistentData implements FactionData, PowerData, TerritoryData {
             data.add(territoryChunk.toJSON());
         }
         return data;
-    }
-
-    @Override
-    public void clearFactions() {
-        factions.clear();
     }
 
     @Override

@@ -2,12 +2,12 @@ package dansplugins.minifactions.commands.social;
 
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +46,7 @@ public class JoinCommand extends AbstractMFCommand {
 
         Faction faction;
         try {
-            faction = PersistentData.getInstance().getFaction(factionName);
+            faction = MiniFactions.getInstance().getFactionHandler().getFaction(factionName);
         } catch (Exception e) {
             player.sendMessage("That faction wasn't found.");
             return false;

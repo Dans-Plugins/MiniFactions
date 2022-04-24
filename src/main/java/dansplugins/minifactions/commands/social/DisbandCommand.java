@@ -5,12 +5,12 @@ import java.util.Arrays;
 
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -41,7 +41,7 @@ public class DisbandCommand extends AbstractMFCommand {
 
         faction.sendMessage(player.getName() + " is disbanding the faction.");
 
-        boolean success = PersistentData.getInstance().removeFaction(faction);
+        boolean success = MiniFactions.getInstance().getFactionHandler().removeFaction(faction);
         if (success) {
             player.sendMessage("Your faction has been disbanded.");
         }

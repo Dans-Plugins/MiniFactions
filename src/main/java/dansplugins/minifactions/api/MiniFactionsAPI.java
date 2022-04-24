@@ -1,5 +1,6 @@
 package dansplugins.minifactions.api;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.data.JsonFactionPlayer;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -21,11 +22,11 @@ import java.util.UUID;
 public class MiniFactionsAPI {
 
     public Faction getFactionByPlayer(FactionPlayer factionPlayer) {
-        return PersistentData.getInstance().getFactionByPlayer(factionPlayer);
+        return MiniFactions.getInstance().getFactionHandler().getFactionByPlayer(factionPlayer);
     }
 
     public Faction getFactionByChunk(TerritoryChunk territoryChunk) throws Exception {
-        return PersistentData.getInstance().getFaction(territoryChunk.getFactionUUID());
+        return MiniFactions.getInstance().getFactionHandler().getFaction(territoryChunk.getFactionUUID());
     }
 
     public PowerRecord getPlayerPowerRecord(UUID id) {

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
@@ -38,7 +39,7 @@ public class ForceUnclaimCommand extends AbstractMFCommand {
         String factionName = args[0];
         Faction faction;
         try {
-            faction = PersistentData.getInstance().getFaction(factionName);
+            faction = MiniFactions.getInstance().getFactionHandler().getFaction(factionName);
         } catch (FactionNotFoundException e) {
             sender.sendMessage("That faction wasn't found.");
             return false;

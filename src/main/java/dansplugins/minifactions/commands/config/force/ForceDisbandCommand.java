@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 public class ForceDisbandCommand extends AbstractMFCommand {
 
@@ -27,7 +27,7 @@ public class ForceDisbandCommand extends AbstractMFCommand {
         String factionName = args[0];
         Faction faction;
         try {
-            faction = PersistentData.getInstance().getFaction(factionName);
+            faction = MiniFactions.getInstance().getFactionHandler().getFaction(factionName);
         } catch (FactionNotFoundException e) {
             sender.sendMessage("That faction wasn't found.");
             return false;
@@ -38,7 +38,7 @@ public class ForceDisbandCommand extends AbstractMFCommand {
         
         faction.sendMessage("The faction is forcefully getting disbanded.");
 
-        boolean success = PersistentData.getInstance().removeFaction(faction);
+        boolean success = MiniFactions.getInstance().getFactionHandler().removeFaction(faction);
         if (success) {
             sender.sendMessage("That faction has been disbanded.");
         }

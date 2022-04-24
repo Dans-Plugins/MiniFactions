@@ -3,6 +3,7 @@ package dansplugins.minifactions.commands.territory;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
@@ -51,7 +52,7 @@ public class CheckClaimCommand extends AbstractMFCommand {
         UUID landholderUUID = territoryChunk.getFactionUUID();
         Faction landholder;
         try {
-            landholder = PersistentData.getInstance().getFaction(landholderUUID);
+            landholder = MiniFactions.getInstance().getFactionHandler().getFaction(landholderUUID);
         } catch (Exception e) {
             // this shouldn't happen
             return false;

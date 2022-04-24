@@ -2,8 +2,8 @@ package dansplugins.minifactions.commands.social;
 
 import org.bukkit.command.CommandSender;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +19,7 @@ public class ListCommand extends AbstractMFCommand {
 
     @Override
     public boolean execute(CommandSender commandSender) {
-        commandSender.sendMessage(PersistentData.getInstance().getFactionList());
+        commandSender.sendMessage(MiniFactions.getInstance().getFactionHandler().getFactionList());
         return true;
     }
 

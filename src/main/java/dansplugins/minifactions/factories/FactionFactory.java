@@ -2,8 +2,8 @@ package dansplugins.minifactions.factories;
 
 import java.util.UUID;
 
+import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
-import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.FactionImpl;
 
 public class FactionFactory {
@@ -25,13 +25,13 @@ public class FactionFactory {
             return false;
         }
         Faction faction = new FactionImpl(name, creatorUUID);
-        PersistentData.getInstance().addFaction(faction);
+        MiniFactions.getInstance().getFactionHandler().addFaction(faction);
         return true;
     }
 
     private boolean isNameTaken(String name) {
         try {
-            PersistentData.getInstance().getFaction(name);
+            MiniFactions.getInstance().getFactionHandler().getFaction(name);
             return true;
         } catch (Exception e) {
             return false;
