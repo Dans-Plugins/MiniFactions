@@ -1,5 +1,6 @@
 package dansplugins.minifactions.commands.social;
 
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -18,8 +19,8 @@ import java.util.UUID;
  */
 public class InviteCommand extends AbstractMFCommand {
 
-    public InviteCommand() {
-        super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.invite")));
+    public InviteCommand(MFLogger mfLogger) {
+        super(new ArrayList<>(Arrays.asList("invite")), new ArrayList<>(Arrays.asList("mf.invite")), mfLogger);
     }
 
     @Override

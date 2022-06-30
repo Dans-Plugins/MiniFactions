@@ -4,34 +4,30 @@ import java.util.UUID;
 
 import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
+import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.FactionImpl;
 
 public class FactionFactory {
-    private static FactionFactory instance;
+    private final MiniFactions miniFactions;
+    private final PersistentData persistentData;
 
-    private FactionFactory() {
-
-    }
-
-    public static FactionFactory getInstance() {
-        if (instance == null) {
-            instance = new FactionFactory();
-        }
-        return instance;
+    public FactionFactory(MiniFactions miniFactions, PersistentData persistentData) {
+        this.miniFactions = miniFactions;
+        this.persistentData = persistentData;
     }
 
     public boolean createFaction(String name, UUID creatorUUID) {
         if (isNameTaken(name)) {
             return false;
         }
-        Faction faction = new FactionImpl(name, creatorUUID);
-        MiniFactions.getInstance().getFactionHandler().addFaction(faction);
+        Faction faction = new FactionImpl(name, creatorUUID, persistentData);
+        miniFactions.getFactionHandler().addFaction(faction);
         return true;
     }
 
     private boolean isNameTaken(String name) {
         try {
-            MiniFactions.getInstance().getFactionHandler().getFaction(name);
+            miniFactions.getFactionHandler().getFaction(name);
             return true;
         } catch (Exception e) {
             return false;

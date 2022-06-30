@@ -1,5 +1,9 @@
 package dansplugins.minifactions.commands.territory;
 
+import dansplugins.minifactions.data.PersistentData;
+import dansplugins.minifactions.factories.TerritoryChunkFactory;
+import dansplugins.minifactions.services.ConfigService;
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 
@@ -11,9 +15,6 @@ import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.api.exceptions.TerritoryChunkNotClaimedException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
-import dansplugins.minifactions.factories.TerritoryChunkFactory;
-import dansplugins.minifactions.services.LocalConfigService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,9 +23,15 @@ import java.util.Arrays;
  * @author Daniel McCoy Stephenson
  */
 public class ClaimCommand extends AbstractMFCommand {
+    private final PersistentData persistentData;
+    private final ConfigService configService;
+    private final TerritoryChunkFactory territoryChunkFactory;
 
-    public ClaimCommand() {
-        super(new ArrayList<>(Arrays.asList("claim")), new ArrayList<>(Arrays.asList("mf.claim")));
+    public ClaimCommand(MFLogger mfLogger, PersistentData persistentData, ConfigService configService, TerritoryChunkFactory territoryChunkFactory) {
+        super(new ArrayList<>(Arrays.asList("claim")), new ArrayList<>(Arrays.asList("mf.claim")), mfLogger);
+        this.persistentData = persistentData;
+        this.configService = configService;
+        this.territoryChunkFactory = territoryChunkFactory;
     }
 
     @Override
@@ -50,13 +57,13 @@ public class ClaimCommand extends AbstractMFCommand {
         }
 
         Chunk chunk = player.getPlayer().getLocation().getChunk();
-        if (PersistentData.getInstance().doesTerritoryChunkExist(chunk)) {
-            TerritoryChunk territoryChunk = PersistentData.getInstance().getTerritoryChunk(chunk);
+        if (persistentData.doesTerritoryChunkExist(chunk)) {
+            TerritoryChunk territoryChunk = persistentData.getTerritoryChunk(chunk);
             if (territoryChunk.isClaimed()) {
                 sendPlayerOwnerInfo(territoryChunk, player, faction);
                 return false;
             }
-            if (LocalConfigService.getInstance().getBoolean("territoryCostsPower")) {
+            if (configService.getBoolean("territoryCostsPower")) {
                 boolean success = handlePowerCost(player);
                 if (!success) {
                     return false;
@@ -65,13 +72,13 @@ public class ClaimCommand extends AbstractMFCommand {
             territoryChunk.setFactionUUID(faction.getId());
         }
         else {
-            if (LocalConfigService.getInstance().getBoolean("territoryCostsPower")) { // TODO: fix duplication here
+            if (configService.getBoolean("territoryCostsPower")) { // TODO: fix duplication here
                 boolean success = handlePowerCost(player);
                 if (!success) {
                     return false;
                 }
             }
-            TerritoryChunkFactory.getInstance().createTerritoryChunk(chunk, faction);
+            territoryChunkFactory.createTerritoryChunk(chunk, faction);
         }
         player.sendMessage("Claimed.");
         return true;
@@ -84,7 +91,7 @@ public class ClaimCommand extends AbstractMFCommand {
 
     private boolean handlePowerCost(FactionPlayer player) {
         double powerCost = getPowerCost(player);
-        PowerRecord powerRecord = PersistentData.getInstance().getPowerRecord(player.getId());
+        PowerRecord powerRecord = persistentData.getPowerRecord(player.getId());
         if (powerRecord.hasEnoughPower(powerCost)) {
             powerRecord.removePower(powerCost);
             player.sendMessage("You have lost " + powerCost + " power.");
@@ -102,9 +109,9 @@ public class ClaimCommand extends AbstractMFCommand {
      * @return
      */
     private double getPowerCost(FactionPlayer player) {
-        double minimum = LocalConfigService.getInstance().getDouble("minimumPowerCost");
+        double minimum = configService.getDouble("minimumPowerCost");
         int numTerritoryChunks = player.getFaction().getNumTerritoryChunks();
-        double chunkRequirementFactor = LocalConfigService.getInstance().getDouble("chunkRequirementFactor");
+        double chunkRequirementFactor = configService.getDouble("chunkRequirementFactor");
         double cost = numTerritoryChunks * chunkRequirementFactor;
         if (cost < minimum) {
             cost = minimum;

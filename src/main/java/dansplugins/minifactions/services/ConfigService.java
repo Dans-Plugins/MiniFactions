@@ -16,27 +16,21 @@ import dansplugins.minifactions.MiniFactions;
 /**
  * @author Daniel McCoy Stephenson
  */
-public class LocalConfigService {
-    private static LocalConfigService instance;
+public class ConfigService {
+    private final MiniFactions miniFactions;
+
     private boolean altered = false;
 
-    private LocalConfigService() {
-
-    }
-
-    public static LocalConfigService getInstance() {
-        if (instance == null) {
-            instance = new LocalConfigService();
-        }
-        return instance;
+    public ConfigService(MiniFactions miniFactions) {
+        this.miniFactions = miniFactions;
     }
 
     public void saveMissingConfigDefaultsIfNotPresent() {
         // set version
         if (!getConfig().isString("version")) {
-            getConfig().addDefault("version", MiniFactions.getInstance().getVersion());
+            getConfig().addDefault("version", miniFactions.getVersion());
         } else {
-            getConfig().set("version", MiniFactions.getInstance().getVersion());
+            getConfig().set("version", miniFactions.getVersion());
         }
 
         // save config options
@@ -49,7 +43,7 @@ public class LocalConfigService {
         if (!isSet("chunkRequirementFactor")) { getConfig().set("chunkRequirementFactor", 0.10); }
 
         getConfig().options().copyDefaults(true);
-        MiniFactions.getInstance().saveConfig();
+        miniFactions.saveConfig();
     }
 
     public void setConfigOption(String option, String value, CommandSender sender) {
@@ -77,7 +71,7 @@ public class LocalConfigService {
             }
 
             // save
-            MiniFactions.getInstance().saveConfig();
+            miniFactions.saveConfig();
             altered = true;
         } else {
             sender.sendMessage(ChatColor.RED + "That config option wasn't found.");
@@ -102,7 +96,7 @@ public class LocalConfigService {
     }
 
     public FileConfiguration getConfig() {
-        return MiniFactions.getInstance().getConfig();
+        return miniFactions.getConfig();
     }
 
     public boolean isSet(String option) {

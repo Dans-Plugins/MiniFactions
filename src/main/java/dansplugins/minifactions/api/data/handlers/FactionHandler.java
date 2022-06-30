@@ -34,6 +34,7 @@ import java.util.UUID;
  * @since April 16th, 2022
  */
 public class FactionHandler implements FactionData {
+    private final MiniFactions miniFactions;
 
     /**
      * File linked to the faction data.
@@ -49,9 +50,11 @@ public class FactionHandler implements FactionData {
      * Constructor to initialise {@link #file} and then populate {@link #data}.
      *
      * @see #load()
+     * @param miniFactions
      */
-    public FactionHandler() {
-        file = new File(MiniFactions.getInstance().getDataFolder(), "factions.json");
+    public FactionHandler(MiniFactions miniFactions) {
+        this.miniFactions = miniFactions;
+        file = new File(this.miniFactions.getDataFolder(), "factions.json");
         try {
             if (!file.exists()) {
                 if (!file.createNewFile()) {
@@ -100,7 +103,7 @@ public class FactionHandler implements FactionData {
      * 
      */
     public void save() {
-        final File file = new File(MiniFactions.getInstance().getDataFolder(), "factions.json");
+        final File file = new File(miniFactions.getDataFolder(), "factions.json");
         final OutputStreamWriter outputStreamWriter;
         try {
             outputStreamWriter = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);

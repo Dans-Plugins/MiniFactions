@@ -41,9 +41,10 @@ public class PowerRecordHandler implements PowerData {
      * Constructor to initialise {@link #file} and then populate {@link #data}.
      *
      * @see #load()
+     * @param miniFactions
      */
-    public PowerRecordHandler() {
-        file = new File(MiniFactions.getInstance().getDataFolder(), "powerRecords.json");
+    public PowerRecordHandler(MiniFactions miniFactions) {
+        file = new File(miniFactions.getDataFolder(), "powerRecords.json");
         try {
             if (!file.exists()) {
                 if (!file.createNewFile()) {

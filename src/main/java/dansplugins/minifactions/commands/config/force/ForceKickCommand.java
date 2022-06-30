@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -14,8 +15,8 @@ import dansplugins.minifactions.objects.FactionPlayerImpl;
 
 public class ForceKickCommand extends AbstractMFCommand {
 
-    public ForceKickCommand() {
-        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.force.kick")));
+    public ForceKickCommand(MFLogger mfLogger) {
+        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.force.kick")), mfLogger);
     }
 
     @Override

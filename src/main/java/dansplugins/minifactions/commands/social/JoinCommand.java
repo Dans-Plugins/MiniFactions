@@ -1,8 +1,9 @@
 package dansplugins.minifactions.commands.social;
 
+import dansplugins.minifactions.MiniFactions;
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
-import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
@@ -16,9 +17,11 @@ import java.util.Arrays;
  * @author Daniel McCoy Stephenson
  */
 public class JoinCommand extends AbstractMFCommand {
+    private final MiniFactions miniFactions;
 
-    public JoinCommand() {
-        super(new ArrayList<>(Arrays.asList("join")), new ArrayList<>(Arrays.asList("mf.join")));
+    public JoinCommand(MFLogger mfLogger, MiniFactions miniFactions) {
+        super(new ArrayList<>(Arrays.asList("join")), new ArrayList<>(Arrays.asList("mf.join")), mfLogger);
+        this.miniFactions = miniFactions;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class JoinCommand extends AbstractMFCommand {
 
         Faction faction;
         try {
-            faction = MiniFactions.getInstance().getFactionHandler().getFaction(factionName);
+            faction = miniFactions.getFactionHandler().getFaction(factionName);
         } catch (Exception e) {
             player.sendMessage("That faction wasn't found.");
             return false;

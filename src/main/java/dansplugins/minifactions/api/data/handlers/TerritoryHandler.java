@@ -27,6 +27,7 @@ import java.util.UUID;
  * @since 11/12/2021 - 21:57
  */
 public class TerritoryHandler implements TerritoryData {
+    private final MiniFactions miniFactions;
 
     /**
      * File linked to the territory data.
@@ -42,9 +43,11 @@ public class TerritoryHandler implements TerritoryData {
      * Constructor to initialise {@link #file} and then populate {@link #data}.
      *
      * @see #load()
+     * @param miniFactions
      */
-    public TerritoryHandler() {
-        file = new File(MiniFactions.getInstance().getDataFolder(), "territoryChunks.json");
+    public TerritoryHandler(MiniFactions miniFactions) {
+        this.miniFactions = miniFactions;
+        file = new File(this.miniFactions.getDataFolder(), "territoryChunks.json");
         try {
             if (!file.exists()) {
                 if (!file.createNewFile()) {

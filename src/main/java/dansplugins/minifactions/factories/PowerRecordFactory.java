@@ -5,25 +5,20 @@ import java.util.UUID;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.PowerRecordImpl;
-import dansplugins.minifactions.services.LocalConfigService;
+import dansplugins.minifactions.services.ConfigService;
 
 public class PowerRecordFactory {
-    private static PowerRecordFactory instance;
+    private final ConfigService configService;
+    private final PersistentData persistentData;
 
-    private PowerRecordFactory() {
-
-    }
-
-    public static PowerRecordFactory getInstance() {
-        if (instance == null) {
-            instance = new PowerRecordFactory();
-        }
-        return instance;
+    public PowerRecordFactory(ConfigService configService, PersistentData persistentData) {
+        this.configService = configService;
+        this.persistentData = persistentData;
     }
 
     public boolean createPowerRecord(UUID playerUUID) {
-        double initialPower = LocalConfigService.getInstance().getDouble("initialPower");
+        double initialPower = configService.getDouble("initialPower");
         PowerRecord powerRecord = new PowerRecordImpl(playerUUID, initialPower);
-        return PersistentData.getInstance().addPowerRecord(powerRecord);
+        return persistentData.addPowerRecord(powerRecord);
     }
 }

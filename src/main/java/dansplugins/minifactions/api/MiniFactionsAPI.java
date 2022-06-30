@@ -7,8 +7,8 @@ import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.FactionPlayerRetrievalException;
-import dansplugins.minifactions.data.PersistentData;
 
+import dansplugins.minifactions.data.PersistentData;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -20,17 +20,24 @@ import java.util.UUID;
  * @since 08/11/2021 - 08:08
  */
 public class MiniFactionsAPI {
+    private final MiniFactions miniFactions;
+    private final PersistentData persistentData;
+
+    public MiniFactionsAPI(MiniFactions miniFactions, PersistentData persistentData) {
+        this.miniFactions = miniFactions;
+        this.persistentData = persistentData;
+    }
 
     public Faction getFactionByPlayer(FactionPlayer factionPlayer) {
-        return MiniFactions.getInstance().getFactionHandler().getFactionByPlayer(factionPlayer);
+        return miniFactions.getFactionHandler().getFactionByPlayer(factionPlayer);
     }
 
     public Faction getFactionByChunk(TerritoryChunk territoryChunk) throws Exception {
-        return MiniFactions.getInstance().getFactionHandler().getFaction(territoryChunk.getFactionUUID());
+        return miniFactions.getFactionHandler().getFaction(territoryChunk.getFactionUUID());
     }
 
     public PowerRecord getPlayerPowerRecord(UUID id) {
-        return PersistentData.getInstance().getPowerRecord(id);
+        return persistentData.getPowerRecord(id);
     }
 
     @SuppressWarnings("deprecation")

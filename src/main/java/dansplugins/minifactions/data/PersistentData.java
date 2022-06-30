@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import dansplugins.minifactions.services.ConfigService;
 import org.bukkit.Chunk;
 
 import dansplugins.minifactions.api.data.abs.PowerData;
@@ -21,19 +22,13 @@ import dansplugins.minifactions.factories.PowerRecordFactory;
  * @since April 13th, 2022
  */
 public class PersistentData implements PowerData, TerritoryData {
-    private static PersistentData instance;
-    private HashSet<PowerRecord> powerRecords = new HashSet<>();
-    private HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
+    private final PowerRecordFactory powerRecordFactory;
 
-    private PersistentData() {
+    private final HashSet<PowerRecord> powerRecords = new HashSet<>();
+    private final HashSet<TerritoryChunk> territoryChunks = new HashSet<>();
 
-    }
-
-    public static PersistentData getInstance() {
-        if (instance == null) {
-            instance = new PersistentData();
-        }
-        return instance;
+    public PersistentData(ConfigService configService) {
+        powerRecordFactory = new PowerRecordFactory(configService, this);
     }
 
     @Override
@@ -48,7 +43,7 @@ public class PersistentData implements PowerData, TerritoryData {
                 return powerRecord;
             }
         }
-        PowerRecordFactory.getInstance().createPowerRecord(playerUUID);
+        powerRecordFactory.createPowerRecord(playerUUID);
         return getPowerRecord(playerUUID);
     }
 
@@ -139,5 +134,9 @@ public class PersistentData implements PowerData, TerritoryData {
     @Override
     public void clearTerritoryChunks() {
         territoryChunks.clear();
+    }
+
+    public PowerRecordFactory getPowerRecordFactory() {
+        return powerRecordFactory;
     }
 }

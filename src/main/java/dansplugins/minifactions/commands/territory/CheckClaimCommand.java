@@ -1,16 +1,17 @@
 package dansplugins.minifactions.commands.territory;
 
+import dansplugins.minifactions.MiniFactions;
+import dansplugins.minifactions.data.PersistentData;
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.Chunk;
 import org.bukkit.command.CommandSender;
 
-import dansplugins.minifactions.MiniFactions;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.TerritoryChunkNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,9 +21,13 @@ import java.util.UUID;
  * @author Daniel McCoy Stephenson
  */
 public class CheckClaimCommand extends AbstractMFCommand {
+    private final PersistentData persistentData;
+    private final MiniFactions miniFactions;
 
-    public CheckClaimCommand() {
-        super(new ArrayList<>(Arrays.asList("checkclaim", "cc")), new ArrayList<>(Arrays.asList("mf.checkclaim")));
+    public CheckClaimCommand(MFLogger mfLogger, PersistentData persistentData, MiniFactions miniFactions) {
+        super(new ArrayList<>(Arrays.asList("checkclaim", "cc")), new ArrayList<>(Arrays.asList("mf.checkclaim")), mfLogger);
+        this.persistentData = persistentData;
+        this.miniFactions = miniFactions;
     }
 
     @Override
@@ -38,7 +43,7 @@ public class CheckClaimCommand extends AbstractMFCommand {
 
         TerritoryChunk territoryChunk;
         try {
-            territoryChunk = PersistentData.getInstance().getTerritoryChunk(chunk);
+            territoryChunk = persistentData.getTerritoryChunk(chunk);
         } catch(TerritoryChunkNotFoundException e) {
             player.sendMessage("This territory has never been claimed.");
             return true;
@@ -52,7 +57,7 @@ public class CheckClaimCommand extends AbstractMFCommand {
         UUID landholderUUID = territoryChunk.getFactionUUID();
         Faction landholder;
         try {
-            landholder = MiniFactions.getInstance().getFactionHandler().getFaction(landholderUUID);
+            landholder = miniFactions.getFactionHandler().getFaction(landholderUUID);
         } catch (Exception e) {
             // this shouldn't happen
             return false;
