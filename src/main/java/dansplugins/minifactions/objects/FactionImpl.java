@@ -19,6 +19,8 @@ import dansplugins.minifactions.data.PersistentData;
  * @since April 13th, 2022
  */
 public class FactionImpl implements Faction {
+    private final PersistentData persistentData;
+    
     private UUID factionUUID;
     private String name;
     private UUID leaderUUID;
@@ -26,14 +28,16 @@ public class FactionImpl implements Faction {
     private HashSet<UUID> invitedPlayerUUIDs = new HashSet<>();
     private HashSet<UUID> territoryChunkUUIDs = new HashSet<>();
 
-    public FactionImpl(String name, UUID leaderUUID) {
+    public FactionImpl(String name, UUID leaderUUID, PersistentData persistentData) {
+        this.persistentData = persistentData;
         setName(name);
         setLeader(leaderUUID);
         addMember(leaderUUID);
         this.factionUUID = UUID.randomUUID();
     }
 
-    public FactionImpl(Map<String, String> factionData) {
+    public FactionImpl(Map<String, String> factionData, PersistentData persistentData) {
+        this.persistentData = persistentData;
         fromJSON(factionData);   
     }
 
@@ -125,7 +129,7 @@ public class FactionImpl implements Faction {
     @Override
     public void unclaimAllChunks() {
         for (UUID territoryChunkUUID : territoryChunkUUIDs) {
-            TerritoryChunk territoryChunk = PersistentData.getInstance().getTerritoryChunk(territoryChunkUUID);
+            TerritoryChunk territoryChunk = persistentData.getTerritoryChunk(territoryChunkUUID);
             territoryChunk.setFactionUUID(null);
         }
         territoryChunkUUIDs.clear();
@@ -155,7 +159,7 @@ public class FactionImpl implements Faction {
     public double getPower() {
         double sum = 0;
         for (UUID memberUUID : memberUUIDs) {
-            PowerRecord powerRecord = PersistentData.getInstance().getPowerRecord(memberUUID);
+            PowerRecord powerRecord = persistentData.getPowerRecord(memberUUID);
             if (powerRecord.getId().equals(memberUUID)) {
                 sum += powerRecord.getPower();
             }

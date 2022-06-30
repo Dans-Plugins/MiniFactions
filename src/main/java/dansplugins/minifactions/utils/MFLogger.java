@@ -10,18 +10,13 @@ import dansplugins.minifactions.MiniFactions;
  * @since April 17th, 2022
  */
 public class MFLogger {
-    private static MFLogger instance;
-    private static Logger logger = MiniFactions.getInstance().getLogger();
+    private final MiniFactions miniFactions;
 
-    private MFLogger() {
-        
-    }
+    private static Logger logger;
 
-    public static MFLogger getInstance() {
-        if (instance == null) {
-            instance = new MFLogger();
-        }
-        return instance;
+    public MFLogger(MiniFactions miniFactions) {
+        this.miniFactions = miniFactions;
+        logger = miniFactions.getLogger();
     }
 
     public void print(String message) {
@@ -29,7 +24,7 @@ public class MFLogger {
     }
 
     public void debug(String message) {
-        if (MiniFactions.getInstance().isDebugEnabled()) {
+        if (miniFactions.isDebugEnabled()) {
             logger.info("[MF] [DEBUG]" + message);
         }
     }

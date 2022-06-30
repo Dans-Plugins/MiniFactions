@@ -1,5 +1,9 @@
 package dansplugins.minifactions.commands.config;
 
+import dansplugins.minifactions.MiniFactions;
+import dansplugins.minifactions.data.PersistentData;
+import dansplugins.minifactions.factories.TerritoryChunkFactory;
+import dansplugins.minifactions.utils.MFLogger;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
 
@@ -23,10 +27,19 @@ import java.util.Set;
  * @since April 15th, 2022
  */
 public class ForceCommand extends AbstractPluginCommand {
+    private final MFLogger mfLogger;
+    private final MiniFactions miniFactions;
+    private final PersistentData persistentData;
+    private final TerritoryChunkFactory territoryChunkFactory;
+
     private CommandService commandService;
 
-    public ForceCommand() {
+    public ForceCommand(MFLogger mfLogger, MiniFactions miniFactions, PersistentData persistentData, TerritoryChunkFactory territoryChunkFactory) {
         super(new ArrayList<>(Arrays.asList("force")), new ArrayList<>(Arrays.asList("mf.force")));
+        this.mfLogger = mfLogger;
+        this.miniFactions = miniFactions;
+        this.persistentData = persistentData;
+        this.territoryChunkFactory = territoryChunkFactory;
         initializeCommandService();
     }
 
@@ -51,13 +64,13 @@ public class ForceCommand extends AbstractPluginCommand {
         commandService = new CommandService(coreCommands);
 
         ArrayList<AbstractPluginCommand> commands = new ArrayList<>();
-        commands.add(new ForceHelpCommand());
-        commands.add(new ForceJoinCommand());
-        commands.add(new ForceInviteCommand());
-        commands.add(new ForceDisbandCommand());
-        commands.add(new ForceKickCommand());
-        commands.add(new ForceClaimCommand());
-        commands.add(new ForceUnclaimCommand());
+        commands.add(new ForceHelpCommand(mfLogger));
+        commands.add(new ForceJoinCommand(mfLogger, miniFactions));
+        commands.add(new ForceInviteCommand(mfLogger, miniFactions));
+        commands.add(new ForceDisbandCommand(mfLogger, miniFactions));
+        commands.add(new ForceKickCommand(mfLogger));
+        commands.add(new ForceClaimCommand(mfLogger, miniFactions, persistentData, territoryChunkFactory));
+        commands.add(new ForceUnclaimCommand(mfLogger, miniFactions, persistentData));
         commandService.initialize(commands, "That command wasn't found.");
     }
 }

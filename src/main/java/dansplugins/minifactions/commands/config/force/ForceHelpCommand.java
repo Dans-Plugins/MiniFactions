@@ -3,14 +3,15 @@ package dansplugins.minifactions.commands.config.force;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
 
 public class ForceHelpCommand extends AbstractMFCommand {
 
-    public ForceHelpCommand() {
-        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("mf.force.help")));
+    public ForceHelpCommand(MFLogger mfLogger) {
+        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("mf.force.help")), mfLogger);
     }
 
     @Override

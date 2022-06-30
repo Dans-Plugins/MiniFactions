@@ -1,5 +1,6 @@
 package dansplugins.minifactions.commands.social;
 
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -18,8 +19,8 @@ import java.util.UUID;
  */
 public class KickCommand extends AbstractMFCommand {
 
-    public KickCommand() {
-        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.kick")));
+    public KickCommand(MFLogger mfLogger) {
+        super(new ArrayList<>(Arrays.asList("kick")), new ArrayList<>(Arrays.asList("mf.kick")), mfLogger);
     }
 
     @Override

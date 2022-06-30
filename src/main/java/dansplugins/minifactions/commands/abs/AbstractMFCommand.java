@@ -19,11 +19,14 @@ import preponderous.ponder.minecraft.bukkit.tools.UUIDChecker;
  * @author Daniel McCoy Stephenson
  */
 public abstract class AbstractMFCommand extends AbstractPluginCommand {
-    private static MiniFactionsAPI api = new MiniFactionsAPI();
+    private final MFLogger mfLogger;
+
+    private static MiniFactionsAPI api = new MiniFactionsAPI(miniFactions, persistentData);
     private UUIDChecker uuidChecker = new UUIDChecker();
 
-    public AbstractMFCommand(ArrayList<String> names, ArrayList<String> permissions) {
+    public AbstractMFCommand(ArrayList<String> names, ArrayList<String> permissions, MFLogger mfLogger) {
         super(names, permissions);
+        this.mfLogger = mfLogger;
     }
 
     abstract public boolean execute(CommandSender commandSender);
@@ -56,14 +59,14 @@ public abstract class AbstractMFCommand extends AbstractPluginCommand {
     }
 
     public void print(String message) {
-        MFLogger.getInstance().print(message);
+        mfLogger.print(message);
     }
 
     public void debug(String message) {
-        MFLogger.getInstance().debug(message);
+        mfLogger.debug(message);
     }
 
     public void error(String message) {
-        MFLogger.getInstance().error(message);
+        mfLogger.error(message);
     }
 }

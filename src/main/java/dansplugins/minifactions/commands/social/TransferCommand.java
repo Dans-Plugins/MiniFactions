@@ -1,5 +1,6 @@
 package dansplugins.minifactions.commands.social;
 
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -18,8 +19,8 @@ import java.util.UUID;
  */
 public class TransferCommand extends AbstractMFCommand {
 
-    public TransferCommand() {
-        super(new ArrayList<>(Arrays.asList("transfer")), new ArrayList<>(Arrays.asList("mf.transfer")));
+    public TransferCommand(MFLogger mfLogger) {
+        super(new ArrayList<>(Arrays.asList("transfer")), new ArrayList<>(Arrays.asList("mf.transfer")), mfLogger);
     }
 
     @Override

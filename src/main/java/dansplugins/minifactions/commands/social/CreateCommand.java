@@ -1,12 +1,13 @@
 package dansplugins.minifactions.commands.social;
 
+import dansplugins.minifactions.factories.FactionFactory;
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.factories.FactionFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +17,11 @@ import java.util.Arrays;
  * @since April 13th, 2022
  */
 public class CreateCommand extends AbstractMFCommand {
+    private final FactionFactory factionFactory;
 
-    public CreateCommand() {
-        super(new ArrayList<>(Arrays.asList("create")), new ArrayList<>(Arrays.asList("mf.create")));
+    public CreateCommand(MFLogger mfLogger, FactionFactory factionFactory) {
+        super(new ArrayList<>(Arrays.asList("create")), new ArrayList<>(Arrays.asList("mf.create")), mfLogger);
+        this.factionFactory = factionFactory;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class CreateCommand extends AbstractMFCommand {
 
         String name = args[0];
         
-        boolean success = FactionFactory.getInstance().createFaction(name, player.getId());
+        boolean success = factionFactory.createFaction(name, player.getId());
         if (success) {
             commandSender.sendMessage("Faction created.");
         }

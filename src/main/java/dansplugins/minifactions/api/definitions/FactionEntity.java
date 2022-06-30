@@ -27,7 +27,7 @@ public interface FactionEntity extends Jsonify {
      * @return {@link MiniFactionsAPI} instance.
      */
     default MiniFactionsAPI getAPI() {
-        return MiniFactions.getInstance().getMiniFactionsAPI();
+        return miniFactions.getMiniFactionsAPI(); // TODO: figure out another way to get the API
     }
 
 }

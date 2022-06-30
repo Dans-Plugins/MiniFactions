@@ -1,5 +1,7 @@
 package dansplugins.minifactions.commands.social;
 
+import dansplugins.minifactions.MiniFactions;
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -7,7 +9,6 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,9 +18,11 @@ import java.util.Arrays;
  * @since April 14th, 2022
  */
 public class LeaveCommand extends AbstractMFCommand {
+    private final MiniFactions miniFactions;
 
-    public LeaveCommand() {
-        super(new ArrayList<>(Arrays.asList("leave")), new ArrayList<>(Arrays.asList("mf.leave")));
+    public LeaveCommand(MFLogger mfLogger, MiniFactions miniFactions) {
+        super(new ArrayList<>(Arrays.asList("leave")), new ArrayList<>(Arrays.asList("mf.leave")), mfLogger);
+        this.miniFactions = miniFactions;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class LeaveCommand extends AbstractMFCommand {
                 return false;
             }
             else {
-                PersistentData.getInstance().removeFaction(faction);
+                miniFactions.getFactionHandler().removeFaction(faction);
                 player.sendMessage("Your faction has been disbanded since you were the only member.");
                 return true;
             }

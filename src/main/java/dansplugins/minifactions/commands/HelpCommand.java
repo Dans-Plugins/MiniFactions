@@ -1,5 +1,6 @@
 package dansplugins.minifactions.commands;
 
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
@@ -13,8 +14,8 @@ import java.util.Arrays;
  */
 public class HelpCommand extends AbstractMFCommand {
 
-    public HelpCommand() {
-        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("mf.help")));
+    public HelpCommand(MFLogger mfLogger) {
+        super(new ArrayList<>(Arrays.asList("help")), new ArrayList<>(Arrays.asList("mf.help")), mfLogger);
     }
 
     @Override

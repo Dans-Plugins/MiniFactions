@@ -3,6 +3,8 @@ package dansplugins.minifactions.commands.social;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import dansplugins.minifactions.MiniFactions;
+import dansplugins.minifactions.utils.MFLogger;
 import org.bukkit.command.CommandSender;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
@@ -10,16 +12,17 @@ import dansplugins.minifactions.api.definitions.core.FactionPlayer;
 import dansplugins.minifactions.api.exceptions.CommandSenderNotPlayerException;
 import dansplugins.minifactions.api.exceptions.FactionNotFoundException;
 import dansplugins.minifactions.commands.abs.AbstractMFCommand;
-import dansplugins.minifactions.data.PersistentData;
 
 /**
  * @author Daniel McCoy Stephenson
  * @since April 13th, 2022
  */
 public class InfoCommand extends AbstractMFCommand {
+    private final MiniFactions miniFactions;
 
-    public InfoCommand() {
-        super(new ArrayList<>(Arrays.asList("info")), new ArrayList<>(Arrays.asList("mf.info")));
+    public InfoCommand(MFLogger mfLogger, MiniFactions miniFactions) {
+        super(new ArrayList<>(Arrays.asList("info")), new ArrayList<>(Arrays.asList("mf.info")), mfLogger);
+        this.miniFactions = miniFactions;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class InfoCommand extends AbstractMFCommand {
         String factionName = args[1];
         Faction faction;
         try {
-            faction = PersistentData.getInstance().getFaction(factionName);
+            faction = miniFactions.getFactionHandler().getFaction(factionName);
         } catch (FactionNotFoundException e) {
             player.sendMessage("That faction wasn't found.");
             return false;

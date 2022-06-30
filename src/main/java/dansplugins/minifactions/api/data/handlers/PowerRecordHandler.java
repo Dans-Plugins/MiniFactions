@@ -4,12 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import dansplugins.minifactions.MiniFactions;
-import dansplugins.minifactions.api.data.JsonTerritoryChunk;
-import dansplugins.minifactions.api.data.abs.TerritoryData;
-import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
-import dansplugins.minifactions.api.exceptions.TerritoryFileException;
+import dansplugins.minifactions.api.data.JsonPowerRecord;
+import dansplugins.minifactions.api.data.abs.PowerData;
+import dansplugins.minifactions.api.definitions.PowerRecord;
+import dansplugins.minifactions.api.exceptions.PowerRecordFileException;
 
-import org.bukkit.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,14 +22,13 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * @author Callum Johnson
- * @since 11/12/2021 - 21:57
+ * @author Daniel McCoy Stephenson
+ * @since April 16th, 2022
  */
-public class TerritoryHandler implements TerritoryData {
-    private final MiniFactions miniFactions;
+public class PowerRecordHandler implements PowerData {
 
     /**
-     * File linked to the territory data.
+     * File linked to the power record data.
      */
     private final File file;
 
@@ -45,51 +43,50 @@ public class TerritoryHandler implements TerritoryData {
      * @see #load()
      * @param miniFactions
      */
-    public TerritoryHandler(MiniFactions miniFactions) {
-        this.miniFactions = miniFactions;
-        file = new File(this.miniFactions.getDataFolder(), "territoryChunks.json");
+    public PowerRecordHandler(MiniFactions miniFactions) {
+        file = new File(miniFactions.getDataFolder(), "powerRecords.json");
         try {
             if (!file.exists()) {
                 if (!file.createNewFile()) {
                     System.out.println("Failed to load '" + file.getName() + "'!");
-                    throw new TerritoryFileException("Unable to create new file.");
+                    throw new PowerRecordFileException("Unable to create new file.");
                 }
             }
         } catch (IOException exception) {
-            throw new TerritoryFileException("IOException experienced:\t" + exception.getMessage());
+            throw new PowerRecordFileException("IOException experienced:\t" + exception.getMessage());
         }
         load();
     }
 
     /**
-     * Method to obtain a chunk from its Id.
+     * Method to obtain a powerrecord from its Id.
      * <p>
      *     Due to the nature of Json and GSON specifically, unchecked is dampened
      *     we hard-cast the data to a 'String:String' data-set.
      * </p>
      *
-     * @param chunkId to get a chunk for.
-     * @return {@link TerritoryChunk} if found, or {@code null} if it isn't.
+     * @param powerRecordId to get a powerrecord for.
+     * @return {@link PowerRecord} if found, or {@code null} if it isn't.
      */
     @SuppressWarnings("unchecked")
     @Nullable
-    public TerritoryChunk getChunk(@NotNull UUID chunkId) {
-        if (!data.containsKey(chunkId) && !data.containsKey(chunkId.toString())) {
+    public PowerRecord getPowerRecord(@NotNull UUID powerRecordId) {
+        if (!data.containsKey(powerRecordId) && !data.containsKey(powerRecordId.toString())) {
             return null;
         }
 
-        Object object = data.getOrDefault(chunkId, null);
+        Object object = data.getOrDefault(powerRecordId, null);
         if (object == null) {
-            data.getOrDefault(chunkId.toString(), null);
+            data.getOrDefault(powerRecordId.toString(), null);
         }
         if (object == null) {
             return null;
         }
 
-        final TerritoryChunk chunk = new JsonTerritoryChunk();
-        chunk.fromJSON((Map<String, String>) object);
+        final PowerRecord powerrecord = new JsonPowerRecord(powerRecordId);
+        powerrecord.fromJSON((Map<String, String>) object);
 
-        return chunk;
+        return powerrecord;
     }
 
     /**
@@ -100,7 +97,7 @@ public class TerritoryHandler implements TerritoryData {
     }
 
     /**
-     * Method to load the data for territory handling.
+     * Method to load the data for powerrecord handling.
      */
     private void load() {
         try {
@@ -127,49 +124,25 @@ public class TerritoryHandler implements TerritoryData {
     }
 
     @Override
-    public boolean addTerritoryChunk(TerritoryChunk territoryChunk) {
+    public boolean addPowerRecord(PowerRecord powerRecord) {
         // TODO: implement
         return false;
     }
 
     @Override
-    public TerritoryChunk getTerritoryChunk(UUID territoryChunkUUID) {
-        // TODO: implement
-        return null;
-    }
-
-    @Override
-    public TerritoryChunk getTerritoryChunk(Chunk chunk) {
-        // TODO: implement
-        return null;
-    }
-
-    @Override
-    public TerritoryChunk getTerritoryChunk(int x, int z, UUID worldUUID) {
-        // TODO: implement
-        return null;
-    }
-
-    @Override
-    public boolean doesTerritoryChunkExist(Chunk chunk) {
+    public boolean hasPowerRecord(UUID playerUUID) {
         // TODO: implement
         return false;
     }
 
     @Override
-    public boolean isTerritoryChunkClaimed(TerritoryChunk territoryChunk) {
-        // TODO: implement
-        return false;
-    }
-
-    @Override
-    public List<Map<String, String>> getTerritoryChunksAsJson() {
+    public List<Map<String, String>> getPowerRecordsAsJson() {
         // TODO: implement
         return null;
     }
 
     @Override
-    public void clearTerritoryChunks() {
+    public void clearPowerRecords() {
         // TODO: implement
         
     }
