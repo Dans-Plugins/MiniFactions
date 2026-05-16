@@ -30,7 +30,22 @@ Each player has a power level (default starting power: 50). Power:
 
 | Permission | Default | Description |
 |------------|---------|-------------|
-| `mf.help` | `true` | Access to all MiniFactions commands. |
+| `mf.help` | `true` | View the help menu. |
+| `mf.list` | `op` | List all factions. |
+| `mf.info` | `op` | View faction information. |
+| `mf.create` | `op` | Create a faction. |
+| `mf.join` | `op` | Join a faction. |
+| `mf.leave` | `op` | Leave a faction. |
+| `mf.invite` | `op` | Invite a player to your faction. |
+| `mf.kick` | `op` | Kick a player from your faction. |
+| `mf.disband` | `op` | Disband a faction. |
+| `mf.transfer` | `op` | Transfer faction ownership. |
+| `mf.power` | `op` | Check power level. |
+| `mf.claim` | `op` | Claim a chunk. |
+| `mf.unclaim` | `op` | Unclaim a chunk. |
+| `mf.checkclaim` | `op` | Check chunk ownership. |
+| `mf.config` | `op` | View or change config options. |
+| `mf.force` | `op` | Force admin actions. |
 
 ## Support
 
