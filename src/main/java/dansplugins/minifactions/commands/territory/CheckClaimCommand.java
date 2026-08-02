@@ -53,8 +53,9 @@ public class CheckClaimCommand extends AbstractMFCommand {
         try {
             landholder = PersistentData.getInstance().getFaction(landholderUUID);
         } catch (Exception e) {
-            // this shouldn't happen
-            return false;
+            player.sendMessage("This territory was claimed by a faction that no longer exists. Unclaiming it.");
+            territoryChunk.setFactionUUID(null);
+            return true;
         }
 
         player.sendMessage("This territory is claimed by " + landholder.getName());
