@@ -63,6 +63,7 @@ public class ClaimCommand extends AbstractMFCommand {
                 }
             }
             territoryChunk.setFactionUUID(faction.getId());
+            faction.claimChunk(territoryChunk);
         }
         else {
             if (LocalConfigService.getInstance().getBoolean("territoryCostsPower")) { // TODO: fix duplication here
@@ -121,6 +122,9 @@ public class ClaimCommand extends AbstractMFCommand {
                 player.sendMessage("This territory is claimed by " + territoryChunk.getFaction().getName() + ".");
             } catch(TerritoryChunkNotClaimedException e) {
                 player.sendMessage("This territory is not claimed, but it was expected to be.");
+            } catch(FactionNotFoundException e) {
+                player.sendMessage("This territory was claimed by a faction that no longer exists. Unclaiming it.");
+                territoryChunk.setFactionUUID(null);
             }
             
         }

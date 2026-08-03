@@ -56,6 +56,7 @@ public class ForceClaimCommand extends AbstractMFCommand {
                 return false;
             }
             territoryChunk.setFactionUUID(faction.getId());
+            faction.claimChunk(territoryChunk);
         }
         else {
             TerritoryChunkFactory.getInstance().createTerritoryChunk(chunk, faction);
