@@ -31,6 +31,7 @@ Each player has a power level (default starting power: 50). Power:
 | Permission | Default | Description |
 |------------|---------|-------------|
 | `mf.help` | `true` | View the help menu. |
+| `mf.default` | n/a (not currently enforced) | Bare `/mf` command; shows plugin version and developer info. |
 | `mf.list` | `op` | List all factions. |
 | `mf.info` | `op` | View faction information. |
 | `mf.create` | `op` | Create a faction. |
@@ -46,6 +47,13 @@ Each player has a power level (default starting power: 50). Power:
 | `mf.checkclaim` | `op` | Check chunk ownership. |
 | `mf.config` | `op` | View or change config options. |
 | `mf.force` | `op` | Force admin actions. |
+| `mf.force.help` | `op` | View a list of force commands. |
+| `mf.force.join` | `op` | Force a player to join a faction. |
+| `mf.force.invite` | `op` | Forcefully invite a player to a faction. |
+| `mf.force.kick` | `op` | Forcefully kick a player from their faction. |
+| `mf.force.disband` | `op` | Forcefully disband a faction. |
+| `mf.force.claim` | `op` | Forcefully claim territory for a faction. |
+| `mf.force.unclaim` | `op` | Forcefully unclaim territory for a faction. |
 
 ## Support
 
