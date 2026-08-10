@@ -13,7 +13,8 @@ commands:
 # LuckPerms can list, tab-complete and group them. Bukkit's fallback for an undeclared node is
 # op-only, so the defaults below match the behaviour that was already in effect.
 # This list is the canonical source for the permissions table in USER_GUIDE.md and the permission
-# column in COMMANDS.md; PluginYmlPermissionsTest fails the build if the three fall out of step.
+# column in COMMANDS.md, both of which have to be updated by hand when it changes.
+# PluginYmlPermissionsTest fails the build when a node named by a command class is missing here.
 permissions:
   mf.default:
     description: Bare /mf command; shows plugin version and developer info.

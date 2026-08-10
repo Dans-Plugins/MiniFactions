@@ -10,8 +10,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,7 +37,7 @@ class PluginYmlPermissionsTest {
      * The nodes that are usable by an ordinary player. Everything else is an operator action and
      * defaults to {@code op}.
      */
-    private static final Set<String> DEFAULT_TRUE_PERMISSIONS = new TreeSet<>(java.util.Arrays.asList("mf.default", "mf.help"));
+    private static final Set<String> DEFAULT_TRUE_PERMISSIONS = new TreeSet<>(Arrays.asList("mf.default", "mf.help"));
 
     @Test
     void everyPermissionUsedByACommandIsDeclaredInPluginYml() {
@@ -83,7 +85,7 @@ class PluginYmlPermissionsTest {
             Map<String, Object> parsed = new Yaml().load(pluginYml);
             Map<String, Map<String, Object>> permissions = (Map<String, Map<String, Object>>) parsed.get("permissions");
             assertNotNull(permissions, "plugin.yml declares no permissions");
-            return new java.util.TreeMap<>(permissions);
+            return new TreeMap<>(permissions);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
