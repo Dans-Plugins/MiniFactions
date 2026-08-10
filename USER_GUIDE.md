@@ -28,10 +28,13 @@ Each player has a power level (default starting power: 50). Power:
 
 ## Permissions
 
+Every node below is registered in the plugin's `plugin.yml`, so permission managers such as
+LuckPerms can list and grant them by name.
+
 | Permission | Default | Description |
 |------------|---------|-------------|
 | `mf.help` | `true` | View the help menu. |
-| `mf.default` | n/a (not currently enforced) | Bare `/mf` command; shows plugin version and developer info. |
+| `mf.default` | `true` | Bare `/mf` command; shows plugin version and developer info. |
 | `mf.list` | `op` | List all factions. |
 | `mf.info` | `op` | View faction information. |
 | `mf.create` | `op` | Create a faction. |

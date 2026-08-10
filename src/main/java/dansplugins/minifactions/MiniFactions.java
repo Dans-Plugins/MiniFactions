@@ -89,6 +89,12 @@ public class MiniFactions extends PonderBukkitPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
+            // The command service is what checks permissions for every other command, and it is
+            // only reached when a sub-command was given, so the bare command checks its own node.
+            if (!sender.hasPermission(DefaultCommand.PERMISSION)) {
+                sender.sendMessage("Sorry! In order to use this command, you need the following permission: '" + DefaultCommand.PERMISSION + "'");
+                return false;
+            }
             DefaultCommand defaultCommand = new DefaultCommand();
             return defaultCommand.execute(sender);
         }
