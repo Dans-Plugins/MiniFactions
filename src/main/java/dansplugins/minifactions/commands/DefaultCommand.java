@@ -13,9 +13,14 @@ import java.util.Arrays;
  * @author Daniel McCoy Stephenson
  */
 public class DefaultCommand extends AbstractMFCommand {
+    /**
+     * The permission required to run the bare command. This is invoked outside of the command
+     * service (see MiniFactions#onCommand), so the node is named here and checked there.
+     */
+    public static final String PERMISSION = "mf.default";
 
     public DefaultCommand() {
-        super(new ArrayList<>(Arrays.asList("default")), new ArrayList<>(Arrays.asList("mf.default")));
+        super(new ArrayList<>(Arrays.asList("default")), new ArrayList<>(Arrays.asList(PERMISSION)));
     }
 
     @Override

@@ -9,6 +9,82 @@ commands:
   factions:
   f:
 
+# Every node a command class declares is registered here so that permission managers such as
+# LuckPerms can list, tab-complete and group them. Bukkit's fallback for an undeclared node is
+# op-only, so the defaults below match the behaviour that was already in effect.
+# This list is the canonical source for the permissions table in USER_GUIDE.md and the permission
+# column in COMMANDS.md, both of which have to be updated by hand when it changes.
+# PluginYmlPermissionsTest fails the build when a node named in the main sources is missing here.
 permissions:
-  mf.help:
+  mf.default:
+    description: Bare /mf command; shows plugin version and developer info.
     default: true
+  mf.help:
+    description: View the help menu.
+    default: true
+  mf.list:
+    description: List all factions.
+    default: op
+  mf.info:
+    description: View faction information.
+    default: op
+  mf.create:
+    description: Create a faction.
+    default: op
+  mf.join:
+    description: Join a faction.
+    default: op
+  mf.leave:
+    description: Leave a faction.
+    default: op
+  mf.invite:
+    description: Invite a player to your faction.
+    default: op
+  mf.kick:
+    description: Kick a player from your faction.
+    default: op
+  mf.disband:
+    description: Disband a faction.
+    default: op
+  mf.transfer:
+    description: Transfer faction ownership.
+    default: op
+  mf.power:
+    description: Check power level.
+    default: op
+  mf.claim:
+    description: Claim a chunk.
+    default: op
+  mf.unclaim:
+    description: Unclaim a chunk.
+    default: op
+  mf.checkclaim:
+    description: Check chunk ownership.
+    default: op
+  mf.config:
+    description: View or change config options.
+    default: op
+  mf.force:
+    description: Force admin actions.
+    default: op
+  mf.force.help:
+    description: View a list of force commands.
+    default: op
+  mf.force.join:
+    description: Force a player to join a faction.
+    default: op
+  mf.force.invite:
+    description: Forcefully invite a player to a faction.
+    default: op
+  mf.force.kick:
+    description: Forcefully kick a player from their faction.
+    default: op
+  mf.force.disband:
+    description: Forcefully disband a faction.
+    default: op
+  mf.force.claim:
+    description: Forcefully claim territory for a faction.
+    default: op
+  mf.force.unclaim:
+    description: Forcefully unclaim territory for a faction.
+    default: op

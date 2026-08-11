@@ -8,7 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Every `mf.*` permission node is now registered in `plugin.yml`, not just `mf.help`. Only registered nodes are visible to permission managers such as LuckPerms, so the rest could not be listed, tab-completed or grouped there before. The registered defaults match what Bukkit was already falling back to for an unregistered node (`mf.help` and `mf.default` for everyone, all others operator-only), so no player's direct grants gain or lose access. Servers that grant a wildcard such as `mf.*` are the exception and should review their groups: permission managers expand a wildcard over the nodes plugins have registered, so a wildcard that previously reached only `mf.help` now reaches every node, including the `mf.force.*` admin actions.
 - A `Dev Release` workflow, which republishes a rolling `dev` prerelease of `main` on every non-documentation push. This is what Dan's Plugin Manager's experimental channel installs from: `/dpm get minifactions --experimental` reads `releases/tags/dev`, so without it there is nothing for that command to download. The prerelease is unreleased, unreviewed code and is marked as such.
+
+### Fixed
+
+- The bare `/mf` command now honours its `mf.default` permission. It is invoked outside the command service that checks permissions for every other command, so the node it declared was never queried. `mf.default` defaults to `true`, which is the access everyone had while it went unchecked; revoking it now actually denies the command.
 
 ## [0.2.0-SNAPSHOT-8-8-2026] – 2026-08-08
 
