@@ -25,13 +25,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Regression coverage for https://github.com/Dans-Plugins/MiniFactions/issues/68: every permission
- * node a command declares must also be registered in plugin.yml, because permission managers such
+ * node the plugin names must also be registered in plugin.yml, because permission managers such
  * as LuckPerms only see nodes that are registered there. Nothing about an undeclared node fails to
  * compile and Bukkit silently falls back to op-only, so this is the only signal available.
  */
 class PluginYmlPermissionsTest {
-    private static final Path COMMAND_SOURCES = Paths.get("src", "main", "java", "dansplugins", "minifactions", "commands");
-    private static final Pattern PERMISSION_LITERAL = Pattern.compile("\"(mf\\.[a-z.]+)\"");
+    /**
+     * The whole main source tree rather than only {@code commands}, so that a node checked from an
+     * event handler or from the plugin class itself is held to the same requirement.
+     */
+    private static final Path MAIN_SOURCES = Paths.get("src", "main", "java", "dansplugins", "minifactions");
+    /**
+     * Deliberately wider than the nodes that exist today: a node named with a capital or a digit
+     * has to be caught by this test rather than silently falling outside the pattern.
+     */
+    private static final Pattern PERMISSION_LITERAL = Pattern.compile("\"(mf\\.[A-Za-z0-9._-]+)\"");
 
     /**
      * The nodes that are usable by an ordinary player. Everything else is an operator action and
@@ -40,8 +48,8 @@ class PluginYmlPermissionsTest {
     private static final Set<String> DEFAULT_TRUE_PERMISSIONS = new TreeSet<>(Arrays.asList("mf.default", "mf.help"));
 
     @Test
-    void everyPermissionUsedByACommandIsDeclaredInPluginYml() {
-        assertEquals(permissionsUsedByCommands(), declaredPermissions().keySet());
+    void everyPermissionUsedInSourceIsDeclaredInPluginYml() {
+        assertEquals(permissionsUsedInSource(), declaredPermissions().keySet());
     }
 
     @Test
@@ -59,12 +67,12 @@ class PluginYmlPermissionsTest {
     }
 
     /**
-     * @return the {@code mf.*} nodes named by the command classes, read from their source so that a
-     *         newly added command is picked up without this test being updated.
+     * @return the {@code mf.*} nodes named anywhere in the main sources, read from the source so
+     *         that a newly added command is picked up without this test being updated.
      */
-    private Set<String> permissionsUsedByCommands() {
+    private Set<String> permissionsUsedInSource() {
         Set<String> permissions = new TreeSet<>();
-        try (Stream<Path> sources = Files.walk(COMMAND_SOURCES)) {
+        try (Stream<Path> sources = Files.walk(MAIN_SOURCES)) {
             sources.filter(path -> path.toString().endsWith(".java")).forEach(path -> {
                 Matcher matcher = PERMISSION_LITERAL.matcher(read(path));
                 while (matcher.find()) {
@@ -74,7 +82,7 @@ class PluginYmlPermissionsTest {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        assertTrue(permissions.size() > 1, "no permission nodes were found in " + COMMAND_SOURCES);
+        assertTrue(permissions.size() > 1, "no permission nodes were found in " + MAIN_SOURCES);
         return permissions;
     }
 

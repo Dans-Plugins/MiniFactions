@@ -28,6 +28,7 @@ import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
 import preponderous.ponder.minecraft.bukkit.tools.EventHandlerRegistry;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Listener;
@@ -91,8 +92,9 @@ public class MiniFactions extends PonderBukkitPlugin {
         if (args.length == 0) {
             // The command service is what checks permissions for every other command, and it is
             // only reached when a sub-command was given, so the bare command checks its own node.
+            // The message matches the one Ponder's permission checker sends for every other command.
             if (!sender.hasPermission(DefaultCommand.PERMISSION)) {
-                sender.sendMessage("Sorry! In order to use this command, you need the following permission: '" + DefaultCommand.PERMISSION + "'");
+                sender.sendMessage(ChatColor.RED + "In order to use this command, you need the following permission: '" + DefaultCommand.PERMISSION + "'");
                 return false;
             }
             DefaultCommand defaultCommand = new DefaultCommand();
