@@ -18,7 +18,7 @@ public class ForceHelpCommand extends AbstractMFCommand {
         sender.sendMessage("=== MiniFactions Force Commands ===");
         sender.sendMessage("/mf force help - View a list of force commands.");
         sender.sendMessage("/mf force join <ign> <faction> - Force a player to join a faction.");
-        sender.sendMessage("/mf force invite <ign> <faction> - Forcecefully invite a player to a faction.");
+        sender.sendMessage("/mf force invite <ign> <faction> - Forcefully invite a player to a faction.");
         sender.sendMessage("/mf force kick <ign> - Forcefully kick a player from their faction.");
         sender.sendMessage("/mf force disband <faction> - Forcefully disband a faction.");
         sender.sendMessage("/mf force claim <faction> - Forcefully claim territory for a faction.");

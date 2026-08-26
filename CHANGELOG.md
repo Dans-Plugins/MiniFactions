@@ -6,10 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Fixed
-
-- The `Dev Release` workflow now retries publishing the `dev` prerelease before giving up. The release and its tag have to be deleted and recreated for the tag to move to the new commit, and a transient API failure inside that window previously left the repository with no `dev` release at all until the workflow was re-run by hand. Each attempt now starts from a clean slate, and an exhausted retry fails loudly.
-
 ### Added
 
 - Every `mf.*` permission node is now registered in `plugin.yml`, not just `mf.help`. Only registered nodes are visible to permission managers such as LuckPerms, so the rest could not be listed, tab-completed or grouped there before. The registered defaults match what Bukkit was already falling back to for an unregistered node (`mf.help` and `mf.default` for everyone, all others operator-only), so no player's direct grants gain or lose access. Servers that grant a wildcard such as `mf.*` are the exception and should review their groups: permission managers expand a wildcard over the nodes plugins have registered, so a wildcard that previously reached only `mf.help` now reaches every node, including the `mf.force.*` admin actions.
@@ -17,7 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- `/mf help` no longer advertises a `/mf config view` sub-command that does not exist. Following that line got a player the reply "Sub-commands: show, set", the plugin contradicting its own help; the line now reads `/mf config <show | set>`, which is what both the command and `COMMANDS.md` already agreed on. The `/mf unclaim` line's description was also capitalised to match every other line in the block.
+- The `/mf force invite` help line no longer misspells "Forcefully" as "Forcecefully".
 - The bare `/mf` command now honours its `mf.default` permission. It is invoked outside the command service that checks permissions for every other command, so the node it declared was never queried. `mf.default` defaults to `true`, which is the access everyone had while it went unchecked; revoking it now actually denies the command.
+- The `Dev Release` workflow now retries publishing the `dev` prerelease before giving up. The release and its tag have to be deleted and recreated for the tag to move to the new commit, and a transient API failure inside that window previously left the repository with no `dev` release at all until the workflow was re-run by hand. Each attempt now starts from a clean slate, and an exhausted retry fails loudly.
 
 ## [0.2.0-SNAPSHOT-8-8-2026] – 2026-08-08
 
