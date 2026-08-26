@@ -33,8 +33,8 @@ public class HelpCommand extends AbstractMFCommand {
         sender.sendMessage("/mf power - Check your power.");
         sender.sendMessage("/mf claim - Claim a chunk of territory.");
         sender.sendMessage("/mf checkclaim - Check which faction owns a chunk of territory.");
-        sender.sendMessage("/mf unclaim - unclaim a chunk of territory.");
-        sender.sendMessage("/mf config <view | set> - View or set config options.");
+        sender.sendMessage("/mf unclaim - Unclaim a chunk of territory.");
+        sender.sendMessage("/mf config <show | set> - Show or set config options.");
         sender.sendMessage("/mf force <subcommand> - Force events to occur.");
         return true;
     }
