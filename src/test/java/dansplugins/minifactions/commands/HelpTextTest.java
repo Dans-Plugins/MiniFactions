@@ -14,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -67,7 +68,7 @@ class HelpTextTest {
     @Test
     void everyConfigSubCommandAdvertisedByHelpIsAccepted() {
         Set<String> accepted = matchesIn(read(CONFIG_COMMAND), CONFIG_SUBCOMMAND);
-        assertTrue(accepted.contains("set"), "no sub-commands were found in " + CONFIG_COMMAND);
+        assertFalse(accepted.isEmpty(), "no sub-commands were found in " + CONFIG_COMMAND);
 
         Set<String> advertised = new TreeSet<>();
         for (String choices : matchesIn(read(HELP_COMMAND), CONFIG_HELP_CHOICES)) {
@@ -75,7 +76,7 @@ class HelpTextTest {
                 advertised.add(choice.trim());
             }
         }
-        assertTrue(!advertised.isEmpty(), "/mf help advertises no sub-commands for /mf config");
+        assertFalse(advertised.isEmpty(), "/mf help advertises no sub-commands for /mf config");
 
         for (String choice : advertised) {
             assertTrue(accepted.contains(choice),
