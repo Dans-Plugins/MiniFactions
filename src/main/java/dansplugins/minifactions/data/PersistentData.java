@@ -108,23 +108,38 @@ public class PersistentData implements FactionData, PowerData, TerritoryData {
 
     @Override
     public PowerRecord getPowerRecord(UUID playerUUID) {
+        PowerRecord existing = findPowerRecord(playerUUID);
+        if (existing != null) {
+            return existing;
+        }
+        PowerRecordFactory.getInstance().createPowerRecord(playerUUID);
+        PowerRecord created = findPowerRecord(playerUUID);
+        if (created == null) {
+            throw new PowerRecordNotFoundException(playerUUID);
+        }
+        return created;
+    }
+
+    @Override
+    public boolean hasPowerRecord(UUID playerUUID) {
+        return findPowerRecord(playerUUID) != null;
+    }
+
+    /**
+     * Looks a power record up without creating one. This is what lets
+     * {@link #hasPowerRecord(UUID)} answer the question it is asked while
+     * {@link #getPowerRecord(UUID)} keeps creating a record on demand.
+     *
+     * @param playerUUID The UUID of the player whose record is wanted.
+     * @return The held record, or null if none is held.
+     */
+    private PowerRecord findPowerRecord(UUID playerUUID) {
         for (PowerRecord powerRecord : powerRecords) {
             if (powerRecord.getId().equals(playerUUID)) {
                 return powerRecord;
             }
         }
-        PowerRecordFactory.getInstance().createPowerRecord(playerUUID);
-        return getPowerRecord(playerUUID);
-    }
-
-    @Override
-    public boolean hasPowerRecord(UUID playerUUID) {
-        try {
-            getPowerRecord(playerUUID);
-            return true;
-        } catch(PowerRecordNotFoundException e) {
-            return false;
-        }
+        return null;
     }
 
     @Override
