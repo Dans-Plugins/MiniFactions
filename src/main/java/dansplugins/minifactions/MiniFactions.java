@@ -23,6 +23,7 @@ import dansplugins.minifactions.commands.territory.UnclaimCommand;
 import dansplugins.minifactions.eventhandlers.DeathHandler;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
+import dansplugins.minifactions.trace.TraceClient;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -36,6 +37,7 @@ import org.bukkit.event.Listener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Daniel Stephenson
@@ -48,6 +50,10 @@ public class MiniFactions extends PonderBukkitPlugin {
     private final CommandService commandService = new CommandService(getPonder());
     private MiniFactionsAPI api;
     private TerritoryHandler territoryHandler;
+
+    // A no-op until the config has been read, so a command arriving before
+    // onEnable() finishes has something safe to report to.
+    private TraceClient trace = TraceClient.disabled();
 
     /**
      * This can be used to get the instance of the main class that is managed by itself.
@@ -69,6 +75,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         api = new MiniFactionsAPI();
         territoryHandler = new TerritoryHandler();
         handlebStatsIntegration();
+        handleUsageReporting();
     }
 
     /**
@@ -76,7 +83,7 @@ public class MiniFactions extends PonderBukkitPlugin {
      */
     @Override
     public void onDisable() {
-
+        trace.close();
     }
 
     /**
@@ -89,6 +96,7 @@ public class MiniFactions extends PonderBukkitPlugin {
      */
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        trace.report("command", null, Collections.singletonMap("name", cmd.getName()));
         if (args.length == 0) {
             // The command service is what checks permissions for every other command, and it is
             // only reached when a sub-command was given, so the bare command checks its own node.
@@ -211,5 +219,18 @@ public class MiniFactions extends PonderBukkitPlugin {
     private void handlebStatsIntegration() {
         int pluginId = 14969;
         new Metrics(this, pluginId);
+    }
+
+    /**
+     * Usage reporting: one event now, one per command; see the bundled config.yml.
+     */
+    private void handleUsageReporting() {
+        LocalConfigService config = LocalConfigService.getInstance();
+        trace = TraceClient.builder(config.getUsageReportingEndpoint(), getName())
+                .key(config.getUsageReportingKey())
+                .enabled(config.isUsageReportingEnabled())
+                .logger(getLogger())
+                .build();
+        trace.report("startup", null, Collections.singletonMap("version", getDescription().getVersion()));
     }
 }
