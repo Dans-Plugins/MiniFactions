@@ -17,6 +17,11 @@ import dansplugins.minifactions.MiniFactions;
  * @author Daniel McCoy Stephenson
  */
 public class LocalConfigService {
+    private static final String USAGE_REPORTING_ENABLED_KEY = "usage-reporting.enabled";
+    private static final String USAGE_REPORTING_ENDPOINT_KEY = "usage-reporting.endpoint";
+    private static final String USAGE_REPORTING_KEY_KEY = "usage-reporting.key";
+    private static final String DEFAULT_USAGE_REPORTING_ENDPOINT = "https://trace.danielstephenson.dev";
+
     private static LocalConfigService instance;
     private boolean altered = false;
 
@@ -48,6 +53,9 @@ public class LocalConfigService {
         if (!isSet("percentagePowerLostOnDeath")) { getConfig().set("percentagePowerLostOnDeath", 0.10); }
         if (!isSet("chunkRequirementFactor")) { getConfig().set("chunkRequirementFactor", 0.10); }
 
+        // The usage-reporting block is not set here: it lives in the bundled config.yml, which
+        // Bukkit registers as this file's defaults, so copyDefaults(true) below writes it out
+        // along with everything above.
         getConfig().options().copyDefaults(true);
         MiniFactions.getInstance().saveConfig();
     }
@@ -62,7 +70,8 @@ public class LocalConfigService {
                 sender.sendMessage(ChatColor.GREEN + "Integer set.");
             } else if (option.equalsIgnoreCase("debugMode")
                     || option.equalsIgnoreCase("territoryCostsPower")
-                    || option.equalsIgnoreCase("losePowerOnDeath")) {
+                    || option.equalsIgnoreCase("losePowerOnDeath")
+                    || option.equalsIgnoreCase(USAGE_REPORTING_ENABLED_KEY)) {
                 getConfig().set(option, Boolean.parseBoolean(value));
                 sender.sendMessage(ChatColor.GREEN + "Boolean set.");
             } else if (option.equalsIgnoreCase("initialPower")
@@ -94,6 +103,7 @@ public class LocalConfigService {
                 + ", losePowerOnDeath: " + getBoolean("losePowerOnDeath")
                 + ", percentagePowerLostOnDeath: " + getDouble("percentagePowerLostOnDeath")
                 + ", chunkRequirementFactor: " + getDouble("chunkRequirementFactor")
+                + ", usage-reporting.enabled: " + isUsageReportingEnabled()
                 );
     }
 
@@ -147,5 +157,28 @@ public class LocalConfigService {
             return defaultValue;
         }
         return toReturn;
+    }
+
+    // The one-argument getters, deliberately. An existing config.yml is only rewritten when the
+    // plugin version changes, so a server that swapped in this jar under the same version has no
+    // usage-reporting block on disk. Bukkit registers the jar's config.yml as the defaults for
+    // that file, and the one-argument getters fall through to them -- but the two-argument
+    // getters return their explicit fallback instead, which for the key would be "" and would
+    // turn reporting off on every such installation. Verified against YamlConfiguration
+    // (see UsageReportingDefaultsTest), not assumed.
+
+    public boolean isUsageReportingEnabled() {
+        return getBoolean(USAGE_REPORTING_ENABLED_KEY);
+    }
+
+    public String getUsageReportingEndpoint() {
+        String endpoint = getString(USAGE_REPORTING_ENDPOINT_KEY);
+        return endpoint != null ? endpoint : DEFAULT_USAGE_REPORTING_ENDPOINT;
+    }
+
+    /** Empty when no key is configured or bundled, which the client treats as "off". */
+    public String getUsageReportingKey() {
+        String key = getString(USAGE_REPORTING_KEY_KEY);
+        return key != null ? key : "";
     }
 }

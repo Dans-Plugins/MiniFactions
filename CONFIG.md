@@ -12,3 +12,16 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 | `losePowerOnDeath` | Boolean | `true` | Whether players lose power when they die. |
 | `percentagePowerLostOnDeath` | Double | `0.10` | Fraction of power lost on death (e.g. `0.10` = 10%). |
 | `chunkRequirementFactor` | Double | `0.10` | Factor used to calculate how much power is required per claimed chunk. |
+| `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. |
+| `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
+| `usage-reporting.key` | String | the plugin's key | Identifies this plugin to the trace server so reports are attributed to it. Not a secret: it ships in the default config and can only report as MiniFactions. Empty means reporting is off regardless of `enabled`. |
+
+## Usage reporting
+
+When the plugin is enabled, and each time one of its commands is used, a small event is sent to the
+author's [trace](https://github.com/Stephenson-Software/trace-client-java) server so it is known which
+plugins are actually in use. An event carries the plugin's name, the event name (`startup` or
+`command`), and either the plugin version or the command name — nothing about players, the world, or
+the server. Sending happens off the main thread, never delays a tick, and is dropped silently if the
+server cannot be reached. Set `usage-reporting.enabled` to `false` to turn it off, either in the file
+or with `/mf config set usage-reporting.enabled false`.
