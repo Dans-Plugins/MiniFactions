@@ -96,6 +96,23 @@ class UsageReportingDefaultsTest {
         assertTrue(reloaded.getBoolean("usage-reporting.enabled"));
     }
 
+    /**
+     * The guard {@code MiniFactions.initializeConfig()} uses to write the block once more on an
+     * installation whose config.yml predates it: isSet() on the section must look at the file and
+     * not at the bundled defaults, or the guard would never fire; and after the copyDefaults save
+     * it must read as present, or the guard would fire on every enable.
+     */
+    @Test
+    void isSetOnTheSectionSeesTheFileAndNotTheBundledDefaults() {
+        YamlConfiguration onDisk = preBlockConfigWithBundledDefaults();
+        assertFalse(onDisk.isSet("usage-reporting"), "a pre-block file must read as missing even though the defaults carry the block");
+
+        onDisk.options().copyDefaults(true);
+        YamlConfiguration reloaded = YamlConfiguration.loadConfiguration(new StringReader(onDisk.saveToString()));
+        reloaded.setDefaults(bundledConfig());
+        assertTrue(reloaded.isSet("usage-reporting"), "once written, the block is seen in the file and the guard stays quiet");
+    }
+
     private static YamlConfiguration preBlockConfigWithBundledDefaults() {
         YamlConfiguration onDisk = YamlConfiguration.loadConfiguration(new StringReader(PRE_BLOCK_CONFIG));
         onDisk.setDefaults(bundledConfig());
