@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Usage reporting is now disclosed at every startup: an INFO line says that MiniFactions sends its name, version and command names to the trace server and how to turn it off, or, when it is off, why (`environment`, `server-wide config: plugins/trace/config.yml`, `config.yml` or `no key`). It can now also be turned off for every plugin on the server that reports this way with `enabled: false` in `plugins/trace/config.yml` (created by the first such plugin to enable), or for the whole server process with `TRACE_USAGE_REPORTING=off` / `DO_NOT_TRACK=1`. The `usage-reporting` block is written into an existing `config.yml` that lacks it, once, so the switch is visible on servers upgraded from before it existed. The README and `CONFIG.md` describe what is sent and every way to turn it off. Nothing about what is sent changed.
+
 ### Added
 
 - The plugin now reports usage events — `startup` on enable, `command` on each of its commands — to the author's trace server so it is known which plugins are in use. Events carry the plugin name, the event name, and the plugin version or command name; nothing about players or the server. Reporting runs off the main thread, never delays a tick, drops silently when the server is unreachable, and is turned off with `usage-reporting.enabled: false` in `config.yml`. The default config carries the plugin's key, so reporting is active out of the box unless turned off — including on servers upgraded from a version before the `usage-reporting` block existed, whose `config.yml` is only rewritten on a version change: the plugin reads the bundled defaults for any key the file lacks.
