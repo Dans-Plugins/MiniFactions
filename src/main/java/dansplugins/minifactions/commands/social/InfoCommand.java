@@ -52,7 +52,7 @@ public class InfoCommand extends AbstractMFCommand {
             return false;
         }
 
-        String factionName = args[1];
+        String factionName = args[0];
         Faction faction;
         try {
             faction = PersistentData.getInstance().getFaction(factionName);
