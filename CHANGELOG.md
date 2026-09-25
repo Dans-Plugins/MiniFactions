@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- `/mf info <faction>` now shows the named faction. It read the faction name from the second word after `info` instead of the first, so with one word it failed with an internal error rather than looking the faction up. Traced through the source; not reproduced on a live server.
+
+### Documentation
+
+- `/mf help` and `COMMANDS.md` now show the optional arguments of `/mf info [faction]` and `/mf power [player]`, which both commands accepted but neither reference mentioned.
+
 ## [0.2.0] – 2026-09-19
 
 ### Changed
