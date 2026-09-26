@@ -118,8 +118,14 @@ public class FactionImpl implements Faction {
 
     @Override
     public boolean unclaimChunk(@NotNull TerritoryChunk territoryChunk) {
+        // A chunk held by another faction is left alone: clearing its owner here would release it
+        // while that faction still tracks it.
+        if (!getId().equals(territoryChunk.getFactionUUID())) {
+            return false;
+        }
         territoryChunk.setFactionUUID(null);
-        return territoryChunkUUIDs.remove(territoryChunk.getId());
+        territoryChunkUUIDs.remove(territoryChunk.getId());
+        return true;
     }
 
     @Override

@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - `/mf info <faction>` now shows the named faction. It read the faction name from the second word after `info` instead of the first, so with one word it failed with an internal error rather than looking the faction up. Traced through the source; not reproduced on a live server.
+- `/mf unclaim` and `/mf force unclaim <faction>` no longer release a chunk held by a different faction. Unclaiming cleared the owner of whatever chunk the sender stood in, so a faction leader could free another faction's land (answered with "Something went wrong." while it happened), and the freed chunk stayed counted in its real owner's territory. Both commands now refuse with "This territory is not claimed by …" and leave the chunk as it was.
+- `/mf force unclaim <faction>` on a chunk that is not claimed now answers "This territory is not claimed by <faction>." instead of failing with an internal error, and its usage line names `/mf force unclaim` rather than `/mf force claim`.
 
 ### Documentation
 

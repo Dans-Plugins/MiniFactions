@@ -227,7 +227,8 @@ public interface Faction extends FactionEntity, MessageRecipient {
      * Method to unclaim the specified chunk for this Faction.
      *
      * @param chunk to unclaim.
-     * @return {@code true} if it successfully unclaim the chunk.
+     * @return {@code true} if it successfully unclaim the chunk, {@code false} if the chunk is not
+     *         claimed by this Faction, in which case it is left untouched.
      */
     boolean unclaimChunk(@NotNull TerritoryChunk chunk);
 

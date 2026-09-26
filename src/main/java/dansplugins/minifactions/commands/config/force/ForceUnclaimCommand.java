@@ -22,7 +22,7 @@ public class ForceUnclaimCommand extends AbstractMFCommand {
 
     @Override
     public boolean execute(CommandSender sender) {
-        sender.sendMessage("Usage: /mf force claim <faction>");
+        sender.sendMessage("Usage: /mf force unclaim <faction>");
         return false;
     }
 
@@ -54,13 +54,10 @@ public class ForceUnclaimCommand extends AbstractMFCommand {
         }
 
         TerritoryChunk territoryChunk = PersistentData.getInstance().getTerritoryChunk(chunk);
-        if (!territoryChunk.isClaimed()) {
-            player.sendMessage("This territory is not claimed by " + territoryChunk.getFaction().getName() + ".");
+        if (!faction.unclaimChunk(territoryChunk)) {
+            player.sendMessage("This territory is not claimed by " + faction.getName() + ".");
             return false;
         }
-
-        faction.unclaimChunk(territoryChunk);
-        territoryChunk.setFactionUUID(null);
 
         player.sendMessage("Unclaimed.");
         return true;
