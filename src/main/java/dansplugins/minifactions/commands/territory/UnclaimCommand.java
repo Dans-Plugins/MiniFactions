@@ -54,13 +54,11 @@ public class UnclaimCommand extends AbstractMFCommand {
             return false;
         }
 
-        boolean success = faction.unclaimChunk(territoryChunk);
-        if (success) {
-            player.sendMessage("Unclaimed.");
+        if (!faction.unclaimChunk(territoryChunk)) {
+            player.sendMessage("This territory is not claimed by your faction.");
+            return false;
         }
-        else {
-            player.sendMessage("Something went wrong.");
-        }
+        player.sendMessage("Unclaimed.");
         return true;
     }
 

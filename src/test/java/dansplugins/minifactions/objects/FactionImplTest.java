@@ -101,6 +101,43 @@ class FactionImplTest {
     }
 
     @Test
+    void unclaimChunk_releasesAChunkHeldByThisFaction() {
+        Faction faction = new FactionImpl("Holder", UUID.randomUUID());
+        TerritoryChunk chunk = new FakeTerritoryChunk();
+        chunk.setFactionUUID(faction.getId());
+        faction.claimChunk(chunk);
+
+        assertTrue(faction.unclaimChunk(chunk));
+
+        assertNull(chunk.getFactionUUID());
+        assertFalse(faction.ownsChunk(chunk));
+    }
+
+    @Test
+    void unclaimChunk_leavesAChunkHeldByAnotherFactionAlone() {
+        // /mf unclaim and /mf force unclaim both go through unclaimChunk(), which used to clear
+        // the owner of whatever chunk it was given and so released another faction's land.
+        Faction holder = new FactionImpl("Holder", UUID.randomUUID());
+        Faction other = new FactionImpl("Other", UUID.randomUUID());
+        TerritoryChunk chunk = new FakeTerritoryChunk();
+        chunk.setFactionUUID(holder.getId());
+        holder.claimChunk(chunk);
+
+        assertFalse(other.unclaimChunk(chunk));
+
+        assertEquals(holder.getId(), chunk.getFactionUUID());
+        assertTrue(holder.ownsChunk(chunk));
+    }
+
+    @Test
+    void unclaimChunk_refusesAnUnclaimedChunk() {
+        Faction faction = new FactionImpl("Holder", UUID.randomUUID());
+        TerritoryChunk chunk = new FakeTerritoryChunk();
+
+        assertFalse(faction.unclaimChunk(chunk));
+    }
+
+    @Test
     void getFaction_throwsForAnUnknownUUID() {
         assertThrows(FactionNotFoundException.class, () -> PersistentData.getInstance().getFaction(UUID.randomUUID()));
     }
