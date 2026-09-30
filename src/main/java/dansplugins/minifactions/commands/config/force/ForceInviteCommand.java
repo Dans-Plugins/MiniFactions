@@ -45,10 +45,10 @@ public class ForceInviteCommand extends AbstractMFCommand {
         try {
             faction = PersistentData.getInstance().getFaction(factionName);
         } catch (FactionNotFoundException e) {
-            factionPlayer.sendMessage("That faction wasn't found.");
+            sender.sendMessage("That faction wasn't found.");
             return false;
         } catch (Exception ignored) {
-            factionPlayer.sendMessage("Something went wrong.");
+            sender.sendMessage("Something went wrong.");
             return false;
         }
         
