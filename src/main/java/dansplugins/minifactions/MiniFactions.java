@@ -234,14 +234,14 @@ public class MiniFactions extends PonderBukkitPlugin {
      */
     private void handleUsageReporting() {
         LocalConfigService config = LocalConfigService.getInstance();
-        trace = TraceClient.builder(config.getUsageReportingEndpoint(), getName())
+        trace = TraceClient.builder(config.getUsageReportingEndpoint(), getName(), getDescription().getVersion())
                 .key(config.getUsageReportingKey())
                 .enabled(config.isUsageReportingEnabled())
                 .serverWideConfig(getDataFolder().getParentFile())
                 .logger(getLogger())
                 .build();
         announceUsageReporting();
-        trace.report("startup", null, Collections.singletonMap("version", getDescription().getVersion()));
+        trace.report("startup");
     }
 
     /**
