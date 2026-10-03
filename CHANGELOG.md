@@ -6,9 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- The supported Minecraft versions are now declared in `minecraft-versions.json` (currently 1.19.4, 1.21.11 and 26.2) and listed in the README. Every build checks that the plugin only uses Bukkit API present on each of them, and every stable release candidate is booted on a server of each before it is published.
+
 ### Changed
 
-- The vendored trace client is now 0.3.0: `plugins/trace/config.yml` can carry a `tags:` block whose entries are added to every event reported by every plugin on the server (the release gates write `ci: "true"` there so that test-server boots are left out of real-installation figures). Nothing changes for a server without a `tags:` block. Details: https://github.com/Stephenson-Software/trace-client-java/releases/tag/0.3.0
+- The vendored trace client is now 0.4.0 (by way of 0.3.0). `plugins/trace/config.yml` can carry a `tags:` block whose entries are added to every event reported by every plugin on the server (the release gates write `ci: "true"` there so that test-server boots are left out of real-installation figures); nothing changes for a server without a `tags:` block. Every event, `command` as well as `startup`, now carries the plugin version, which previously only the `startup` event did. Details: https://github.com/Stephenson-Software/trace-client-java/releases/tag/0.3.0
 
 ### Fixed
 
