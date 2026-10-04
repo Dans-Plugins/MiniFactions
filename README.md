@@ -12,7 +12,7 @@ This Minecraft plugin aims to introduce factions into the game in a simple, easy
 The plan is to request $1 donations from those that download the software. Users will be able to download the plugin for no cost or donate more than $1 if they wish. The plugin will always remain open source, so individuals will be free to access the source code and create forks of the project.
 
 ## Supported Minecraft Versions
-This plugin is supported on the Minecraft versions listed in [`minecraft-versions.json`](minecraft-versions.json): currently **1.19.4**, **1.21.11** and **26.2** (Spigot and its forks). Every stable release is booted on a real server of each of these versions before it is published, and every build checks that the plugin only uses Bukkit API that exists on all of them. Other versions from 1.19.4 onwards are expected to work but are not tested. To support another version, add it to the file: both checks pick it up.
+This plugin is supported on the Minecraft versions listed in [`minecraft-versions.json`](minecraft-versions.json): currently **1.19.4**, **1.21.11**, **26.2** and **26.3** (Spigot and its forks). Every stable release is booted on a real server of each of these versions before it is published, and every build checks that the plugin only uses Bukkit API that exists on all of them. Other versions from 1.19.4 onwards are expected to work but are not tested. To support another version, add it to the file: both checks pick it up.
 
 ## Target Features
 - [x] Social Organization
