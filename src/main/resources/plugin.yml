@@ -10,8 +10,8 @@ commands:
   f:
 
 # Every node a command class declares is registered here so that permission managers such as
-# LuckPerms can list, tab-complete and group them. Bukkit's fallback for an undeclared node is
-# op-only, so the defaults below match the behaviour that was already in effect.
+# LuckPerms can list, tab-complete and group them. The commands an ordinary player needs to make
+# and run a faction default to true; config and every force command stay op-only.
 # This list is the canonical source for the permissions table in USER_GUIDE.md and the permission
 # column in COMMANDS.md, both of which have to be updated by hand when it changes.
 # PluginYmlPermissionsTest fails the build when a node named in the main sources is missing here.
@@ -24,43 +24,43 @@ permissions:
     default: true
   mf.list:
     description: List all factions.
-    default: op
+    default: true
   mf.info:
     description: View faction information.
-    default: op
+    default: true
   mf.create:
     description: Create a faction.
-    default: op
+    default: true
   mf.join:
     description: Join a faction.
-    default: op
+    default: true
   mf.leave:
     description: Leave a faction.
-    default: op
+    default: true
   mf.invite:
     description: Invite a player to your faction.
-    default: op
+    default: true
   mf.kick:
     description: Kick a player from your faction.
-    default: op
+    default: true
   mf.disband:
     description: Disband a faction.
-    default: op
+    default: true
   mf.transfer:
     description: Transfer faction ownership.
-    default: op
+    default: true
   mf.power:
     description: Check power level.
-    default: op
+    default: true
   mf.claim:
     description: Claim a chunk.
-    default: op
+    default: true
   mf.unclaim:
     description: Unclaim a chunk.
-    default: op
+    default: true
   mf.checkclaim:
     description: Check chunk ownership.
-    default: op
+    default: true
   mf.config:
     description: View or change config options.
     default: op

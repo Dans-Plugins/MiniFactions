@@ -39,6 +39,13 @@ public class DisbandCommand extends AbstractMFCommand {
             return false;
         }
 
+        // Only the leader may disband. mf.disband now defaults to true (#102), so without this
+        // check any member could delete the faction and all of its claims.
+        if (!player.getId().equals(faction.getLeader())) {
+            player.sendMessage("You are not the leader of your faction.");
+            return false;
+        }
+
         faction.sendMessage(player.getName() + " is disbanding the faction.");
 
         boolean success = PersistentData.getInstance().removeFaction(faction);
