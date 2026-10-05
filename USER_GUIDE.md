@@ -35,19 +35,19 @@ LuckPerms can list and grant them by name.
 |------------|---------|-------------|
 | `mf.help` | `true` | View the help menu. |
 | `mf.default` | `true` | Bare `/mf` command; shows plugin version and developer info. |
-| `mf.list` | `op` | List all factions. |
-| `mf.info` | `op` | View faction information. |
-| `mf.create` | `op` | Create a faction. |
-| `mf.join` | `op` | Join a faction. |
-| `mf.leave` | `op` | Leave a faction. |
-| `mf.invite` | `op` | Invite a player to your faction. |
-| `mf.kick` | `op` | Kick a player from your faction. |
-| `mf.disband` | `op` | Disband a faction. |
-| `mf.transfer` | `op` | Transfer faction ownership. |
-| `mf.power` | `op` | Check power level. |
-| `mf.claim` | `op` | Claim a chunk. |
-| `mf.unclaim` | `op` | Unclaim a chunk. |
-| `mf.checkclaim` | `op` | Check chunk ownership. |
+| `mf.list` | `true` | List all factions. |
+| `mf.info` | `true` | View faction information. |
+| `mf.create` | `true` | Create a faction. |
+| `mf.join` | `true` | Join a faction. |
+| `mf.leave` | `true` | Leave a faction. |
+| `mf.invite` | `true` | Invite a player to your faction. |
+| `mf.kick` | `true` | Kick a player from your faction. |
+| `mf.disband` | `true` | Disband a faction. |
+| `mf.transfer` | `true` | Transfer faction ownership. |
+| `mf.power` | `true` | Check power level. |
+| `mf.claim` | `true` | Claim a chunk. |
+| `mf.unclaim` | `true` | Unclaim a chunk. |
+| `mf.checkclaim` | `true` | Check chunk ownership. |
 | `mf.config` | `op` | View or change config options. |
 | `mf.force` | `op` | Force admin actions. |
 | `mf.force.help` | `op` | View a list of force commands. |

@@ -42,10 +42,14 @@ class PluginYmlPermissionsTest {
     private static final Pattern PERMISSION_LITERAL = Pattern.compile("\"(mf\\.[A-Za-z0-9._-]+)\"");
 
     /**
-     * The nodes that are usable by an ordinary player. Everything else is an operator action and
-     * defaults to {@code op}.
+     * The nodes that are usable by an ordinary player, so that the plugin works on a server with
+     * no permissions plugin (#102). Everything else ({@code mf.config} and the {@code mf.force}
+     * family) is an operator action and defaults to {@code op}.
      */
-    private static final Set<String> DEFAULT_TRUE_PERMISSIONS = new TreeSet<>(Arrays.asList("mf.default", "mf.help"));
+    private static final Set<String> DEFAULT_TRUE_PERMISSIONS = new TreeSet<>(Arrays.asList(
+            "mf.default", "mf.help", "mf.list", "mf.info", "mf.create", "mf.join", "mf.leave",
+            "mf.invite", "mf.kick", "mf.disband", "mf.transfer", "mf.power", "mf.claim",
+            "mf.unclaim", "mf.checkclaim"));
 
     @Test
     void everyPermissionUsedInSourceIsDeclaredInPluginYml() {
