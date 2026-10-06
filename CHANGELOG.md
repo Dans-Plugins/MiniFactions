@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- The usage-reporting "Details" link (startup notice, `config.yml` and the docs) now points at https://danielstephenson.dev/usage-reporting, a public page; the previous link led to a private repository and returned 404 for everyone. The vendored trace client is now 0.6.1, which carries the same link in the `plugins/trace/config.yml` header it writes. Details: https://github.com/Stephenson-Software/trace-client-java/releases/tag/0.6.1.
+
 ### Added
 
 - The supported Minecraft versions are now declared in `minecraft-versions.json` (currently 1.19.4, 1.21.11 and 26.2) and listed in the README. Every build checks that the plugin only uses Bukkit API present on each of them, and every stable release candidate is booted on a server of each before it is published.
