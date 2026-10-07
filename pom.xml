@@ -6,7 +6,7 @@
 
     <groupId>dansplugins</groupId>
     <artifactId>MiniFactions</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>MiniFactions</name>
