@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- The plugin jar no longer bundles JUnit 4, Hamcrest or Ponder's own test classes, which reached it through Ponder and had no use on a server. They took up 434 of its 671 entries, unrelocated in the shared `junit`, `org.junit` and `org.hamcrest` packages (#110).
+
 ## [1.0.1] – 2026-10-07
 
 ### Changed
