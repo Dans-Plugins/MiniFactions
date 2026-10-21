@@ -18,6 +18,9 @@ The plan is to request $1 donations from those that download the software. Users
 ## Supported Minecraft Versions
 This plugin is supported on the Minecraft versions listed in [`minecraft-versions.json`](minecraft-versions.json): currently **1.19.4**, **1.21.11**, **26.2** and **26.3** (Spigot and its forks). Every stable release is booted on a real server of each of these versions before it is published, and every build checks that the plugin only uses Bukkit API that exists on all of them. Other versions from 1.19.4 onwards are expected to work but are not tested. To support another version, add it to the file: both checks pick it up.
 
+## Known Limitations
+Faction data is not saved yet. Factions, members, invitations, claimed chunks and power levels are kept in memory only and are lost whenever the server stops or restarts or the plugin is reloaded; only `config.yml` is kept. Saving is tracked in [#115](https://github.com/Dans-Plugins/MiniFactions/issues/115).
+
 ## Target Features
 - [x] Social Organization
 - [x] Territory

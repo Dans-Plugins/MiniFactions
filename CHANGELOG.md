@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- The README and `USER_GUIDE.md` now say, under a new "Known Limitations" section, that factions, members, invitations, claims and power levels are kept in memory only and are lost when the server stops or restarts; nothing in the plugin saves them yet (#115).
+
 ### Fixed
 
 - The plugin jar no longer bundles JUnit 4, Hamcrest or Ponder's own test classes, which reached it through Ponder and had no use on a server. They took up 434 of its 671 entries, unrelocated in the shared `junit`, `org.junit` and `org.hamcrest` packages (#110).

@@ -26,6 +26,14 @@ Each player has a power level (default starting power: 50). Power:
 - Is lost on death (10% by default).
 - Determines how much territory your faction can hold.
 
+## Known Limitations
+
+- **Faction data is not saved yet.** Factions, members, invitations, claimed chunks and power
+  levels are kept in memory only. All of them are lost whenever the server stops or restarts or
+  the plugin is reloaded, and every player starts again at the configured starting power. Only
+  `config.yml` is kept. Saving is tracked in
+  [#115](https://github.com/Dans-Plugins/MiniFactions/issues/115).
+
 ## Permissions
 
 Every node below is registered in the plugin's `plugin.yml`, so permission managers such as
