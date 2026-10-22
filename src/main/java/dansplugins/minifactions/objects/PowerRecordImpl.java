@@ -5,10 +5,13 @@ import java.util.UUID;
 
 import org.jetbrains.annotations.NotNull;
 
+import dansplugins.minifactions.api.definitions.json.JsonMember;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 
 public class PowerRecordImpl implements PowerRecord {
+    @JsonMember(identifier = "id")
     private UUID playerUUID;
+    @JsonMember(identifier = "power")
     private double power;
 
     public PowerRecordImpl(UUID playerUUID, double initialPower) {

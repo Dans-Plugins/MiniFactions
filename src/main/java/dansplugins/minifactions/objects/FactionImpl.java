@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import dansplugins.minifactions.api.definitions.json.JsonMember;
 import dansplugins.minifactions.api.definitions.PowerRecord;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
@@ -19,11 +20,17 @@ import dansplugins.minifactions.data.PersistentData;
  * @since April 13th, 2022
  */
 public class FactionImpl implements Faction {
+    @JsonMember(identifier = "id")
     private UUID factionUUID;
+    @JsonMember(identifier = "name")
     private String name;
+    @JsonMember(identifier = "leader")
     private UUID leaderUUID;
+    @JsonMember(identifier = "members")
     private HashSet<UUID> memberUUIDs = new HashSet<>();
+    @JsonMember(identifier = "invites")
     private HashSet<UUID> invitedPlayerUUIDs = new HashSet<>();
+    @JsonMember(identifier = "claims")
     private HashSet<UUID> territoryChunkUUIDs = new HashSet<>();
 
     public FactionImpl(String name, UUID leaderUUID) {

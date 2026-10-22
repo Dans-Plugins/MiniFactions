@@ -50,9 +50,12 @@ public interface Jsonify {
         final Gson gson = obtainGson();
         try {
             for (Map.Entry<String, Field> entity : fields.entrySet()) {
+                // A missing entry keeps the field's initial value instead of setting it to null.
+                if (!json.containsKey(entity.getKey())) continue;
                 final Field value = entity.getValue();
                 value.setAccessible(true);
-                value.set(this, gson.fromJson(json.get(entity.getKey()), value.getType()));
+                // The generic type, so a Set<UUID> comes back holding UUIDs rather than strings.
+                value.set(this, gson.fromJson(json.get(entity.getKey()), value.getGenericType()));
             }
         } catch (ReflectiveOperationException ex) {
             ex.printStackTrace();

@@ -23,6 +23,7 @@ import dansplugins.minifactions.commands.territory.UnclaimCommand;
 import dansplugins.minifactions.eventhandlers.DeathHandler;
 import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
+import dansplugins.minifactions.services.StorageService;
 import dansplugins.minifactions.trace.TraceClient;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
@@ -50,6 +51,7 @@ public class MiniFactions extends PonderBukkitPlugin {
     private final CommandService commandService = new CommandService(getPonder());
     private MiniFactionsAPI api;
     private TerritoryHandler territoryHandler;
+    private StorageService storageService;
 
     // A no-op until the config has been read, so a command arriving before
     // onEnable() finishes has something safe to report to.
@@ -70,6 +72,8 @@ public class MiniFactions extends PonderBukkitPlugin {
     public void onEnable() {
         instance = this;
         initializeConfig();
+        storageService = new StorageService(getDataFolder(), getLogger());
+        storageService.load();
         registerEventHandlers();
         initializeCommandService();
         api = new MiniFactionsAPI();
@@ -83,6 +87,9 @@ public class MiniFactions extends PonderBukkitPlugin {
      */
     @Override
     public void onDisable() {
+        if (storageService != null) {
+            storageService.save();
+        }
         trace.close();
     }
 

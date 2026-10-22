@@ -7,6 +7,7 @@ import org.bukkit.Chunk;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import dansplugins.minifactions.api.definitions.json.JsonMember;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
 
 /**
@@ -15,10 +16,15 @@ import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
  * @brief Once claimed, it is added to PersistentData. When unclaimed, it will remain in PersistentData but be removed from the faction that previously claimed it.
  */
 public class TerritoryChunkImpl implements TerritoryChunk {
+    @JsonMember(identifier = "id")
     private UUID territoryChunkUUID;
+    @JsonMember(identifier = "factionId")
     private UUID factionUUID;
+    @JsonMember(identifier = "x-coordinate")
     private int x;
+    @JsonMember(identifier = "z-coordinate")
     private int z;
+    @JsonMember(identifier = "worldId")
     private UUID worldUUID;
 
     public TerritoryChunkImpl(Chunk chunk, UUID factionUUID) {

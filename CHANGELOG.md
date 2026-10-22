@@ -6,9 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-### Changed
+### Fixed
 
-- The README and `USER_GUIDE.md` now say, under a new "Known Limitations" section, that factions, members, invitations, claims and power levels are kept in memory only and are lost when the server stops or restarts; nothing in the plugin saves them yet (#115).
+- Factions, members, invitations, claimed chunks and power levels are now kept across restarts. They are saved to `factions.json`, `powerRecords.json` and `territoryChunks.json` in `plugins/MiniFactions/` when the plugin is disabled and loaded when it enables; before this, nothing saved them and all of it was lost on every restart. A data file that cannot be read is logged and left untouched, and saving is refused until the next restart rather than overwriting it. The README and `USER_GUIDE.md` describe the files and the remaining limitation: changes made since the server started are lost if it crashes instead of stopping (#115).
 
 ### Fixed
 
