@@ -28,11 +28,24 @@ Each player has a power level (default starting power: 50). Power:
 
 ## Known Limitations
 
-- **Faction data is not saved yet.** Factions, members, invitations, claimed chunks and power
-  levels are kept in memory only. All of them are lost whenever the server stops or restarts or
-  the plugin is reloaded, and every player starts again at the configured starting power. Only
-  `config.yml` is kept. Saving is tracked in
-  [#115](https://github.com/Dans-Plugins/MiniFactions/issues/115).
+- **Faction data is only saved when the plugin is disabled.** Factions, members, invitations,
+  claimed chunks and power levels are written to disk when the server stops or the plugin is
+  disabled, and read back when it enables. If the server crashes or is killed instead of being
+  stopped, every change made since it started is lost.
+
+## Data Files
+
+The plugin keeps its data in `plugins/MiniFactions/`, one JSON file per kind of record:
+
+| File | Contents |
+|------|----------|
+| `factions.json` | Each faction's ID, name, leader, members, invitations and claimed chunk IDs. |
+| `powerRecords.json` | Each player's power level. |
+| `territoryChunks.json` | Each chunk that has been claimed: its world, coordinates and owning faction, if any. |
+
+If one of these files cannot be read when the plugin enables, the error is logged, its records
+are not loaded, and nothing is saved until the next restart, so the file is left as it is for you
+to fix or move aside. `territory.json` is created by the plugin but is not used.
 
 ## Permissions
 
