@@ -28,10 +28,12 @@ Each player has a power level (default starting power: 50). Power:
 
 ## Known Limitations
 
-- **Faction data is only saved when the plugin is disabled.** Factions, members, invitations,
-  claimed chunks and power levels are written to disk when the server stops or the plugin is
-  disabled, and read back when it enables. If the server crashes or is killed instead of being
-  stopped, every change made since it started is lost.
+- **A crash loses the changes made since the last save.** Factions, members, invitations,
+  claimed chunks and power levels are written to disk every `autosaveMinutes` minutes (5 by
+  default, see [CONFIG.md](CONFIG.md)) and when the server stops or the plugin is disabled, and
+  read back when it enables. If the server crashes or is killed instead of being stopped, the
+  changes made since the last autosave are lost; with `autosaveMinutes: 0`, every change made
+  since it started is lost.
 
 ## Data Files
 
