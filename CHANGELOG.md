@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Faction data is now also saved every `autosaveMinutes` minutes while the server runs (5 by default; `0` turns it off), so a crash or kill loses only the changes made since the last save instead of everything since startup. The key is written to `config.yml` with the other defaults, can be changed with `/mf config set autosaveMinutes <n>`, and is read when the plugin enables (#117).
+
 ### Fixed
 
 - Factions, members, invitations, claimed chunks and power levels are now kept across restarts. They are saved to `factions.json`, `powerRecords.json` and `territoryChunks.json` in `plugins/MiniFactions/` when the plugin is disabled and loaded when it enables; before this, nothing saved them and all of it was lost on every restart. A data file that cannot be read is logged and left untouched, and saving is refused until the next restart rather than overwriting it. The README and `USER_GUIDE.md` describe the files and the remaining limitation: changes made since the server started are lost if it crashes instead of stopping (#115).

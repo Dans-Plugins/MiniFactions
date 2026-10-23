@@ -12,6 +12,7 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 | `losePowerOnDeath` | Boolean | `true` | Whether players lose power when they die. |
 | `percentagePowerLostOnDeath` | Double | `0.10` | Fraction of power lost on death (e.g. `0.10` = 10%). |
 | `chunkRequirementFactor` | Double | `0.10` | Factor used to calculate how much power is required per claimed chunk. |
+| `autosaveMinutes` | Integer | `5` | How often, in minutes, faction data is saved while the server runs, in addition to when the plugin is disabled. `0` turns autosaving off. Read when the plugin enables, so a change takes effect after a restart. |
 | `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. |
 | `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
 | `usage-reporting.key` | String | the plugin's key | Identifies this plugin to the trace server so reports are attributed to it. Not a secret: it ships in the default config and can only report as MiniFactions. Empty means reporting is off regardless of `enabled`. |

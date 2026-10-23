@@ -74,6 +74,7 @@ public class MiniFactions extends PonderBukkitPlugin {
         initializeConfig();
         storageService = new StorageService(getDataFolder(), getLogger());
         storageService.load();
+        scheduleAutosave();
         registerEventHandlers();
         initializeCommandService();
         api = new MiniFactionsAPI();
@@ -229,6 +230,21 @@ public class MiniFactions extends PonderBukkitPlugin {
         commands.add(new ConfigCommand());
         commands.add(new ForceCommand());
         commandService.initialize(commands, "That command wasn't found.");
+    }
+
+    /**
+     * Saves faction data on a timer as well as on disable, so a crash loses at most the changes
+     * made since the last save. It runs on the main thread because {@code PersistentData} is not
+     * thread-safe, and Bukkit cancels it when the plugin is disabled.
+     */
+    private void scheduleAutosave() {
+        int minutes = LocalConfigService.getInstance().getAutosaveMinutes();
+        if (minutes <= 0) {
+            getLogger().info("Autosave is off (autosaveMinutes is " + minutes + "); faction data is saved only when the plugin is disabled.");
+            return;
+        }
+        long ticks = minutes * 60L * 20L;
+        getServer().getScheduler().runTaskTimer(this, storageService::save, ticks, ticks);
     }
 
     private void handlebStatsIntegration() {

@@ -21,6 +21,8 @@ public class LocalConfigService {
     private static final String USAGE_REPORTING_ENDPOINT_KEY = "usage-reporting.endpoint";
     private static final String USAGE_REPORTING_KEY_KEY = "usage-reporting.key";
     private static final String DEFAULT_USAGE_REPORTING_ENDPOINT = "https://trace.danielstephenson.dev";
+    static final String AUTOSAVE_MINUTES_KEY = "autosaveMinutes";
+    static final int DEFAULT_AUTOSAVE_MINUTES = 5;
 
     private static LocalConfigService instance;
     private boolean altered = false;
@@ -52,6 +54,7 @@ public class LocalConfigService {
         if (!isSet("losePowerOnDeath")) { getConfig().set("losePowerOnDeath", true); }
         if (!isSet("percentagePowerLostOnDeath")) { getConfig().set("percentagePowerLostOnDeath", 0.10); }
         if (!isSet("chunkRequirementFactor")) { getConfig().set("chunkRequirementFactor", 0.10); }
+        if (!isSet(AUTOSAVE_MINUTES_KEY)) { getConfig().set(AUTOSAVE_MINUTES_KEY, DEFAULT_AUTOSAVE_MINUTES); }
 
         // The usage-reporting block is not set here: it lives in the bundled config.yml, which
         // Bukkit registers as this file's defaults, so copyDefaults(true) below writes it out
@@ -65,7 +68,8 @@ public class LocalConfigService {
             if (option.equalsIgnoreCase("version")) {
                 sender.sendMessage(ChatColor.RED + "Cannot set version.");
                 return;
-            } else if (option.equalsIgnoreCase("A")) {
+            } else if (option.equalsIgnoreCase("A")
+                    || option.equalsIgnoreCase(AUTOSAVE_MINUTES_KEY)) {
                 getConfig().set(option, Integer.parseInt(value));
                 sender.sendMessage(ChatColor.GREEN + "Integer set.");
             } else if (option.equalsIgnoreCase("debugMode")
@@ -103,6 +107,7 @@ public class LocalConfigService {
                 + ", losePowerOnDeath: " + getBoolean("losePowerOnDeath")
                 + ", percentagePowerLostOnDeath: " + getDouble("percentagePowerLostOnDeath")
                 + ", chunkRequirementFactor: " + getDouble("chunkRequirementFactor")
+                + ", autosaveMinutes: " + getAutosaveMinutes()
                 + ", usage-reporting.enabled: " + isUsageReportingEnabled()
                 );
     }
@@ -157,6 +162,21 @@ public class LocalConfigService {
             return defaultValue;
         }
         return toReturn;
+    }
+
+    /**
+     * How often faction data is saved while the server runs; zero or less turns it off. Read only
+     * when the plugin enables.
+     */
+    public int getAutosaveMinutes() {
+        return getAutosaveMinutes(getConfig());
+    }
+
+    // A config.yml is only rewritten when the plugin version changes, so one written before this
+    // key existed may not have it yet; that gets the default rather than getInt()'s 0, which would
+    // turn autosaving off.
+    static int getAutosaveMinutes(FileConfiguration config) {
+        return config.isSet(AUTOSAVE_MINUTES_KEY) ? config.getInt(AUTOSAVE_MINUTES_KEY) : DEFAULT_AUTOSAVE_MINUTES;
     }
 
     // The one-argument getters, deliberately. An existing config.yml is only rewritten when the
