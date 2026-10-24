@@ -29,7 +29,7 @@ Each player has a power level (default starting power: 50). Power:
 - Is lost on death (10% of the player's current power by default).
 - Is not regained: unclaiming a chunk does not refund it, and nothing regenerates it.
 
-`/mf force claim` costs no power.
+Claimed chunks are kept whatever happens to power afterwards. `/mf force claim` costs no power.
 
 ## Known Limitations
 
