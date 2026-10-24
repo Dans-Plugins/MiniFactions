@@ -22,9 +22,14 @@ MiniFactions is a lightweight Spigot plugin that adds a faction system to your M
 
 Each player has a power level (default starting power: 50). Power:
 
-- Is spent when claiming chunks (`territoryCostsPower: true` by default).
-- Is lost on death (10% by default).
-- Determines how much territory your faction can hold.
+- Is spent by the faction leader each time they claim a chunk (`territoryCostsPower: true` by
+  default). A claim costs the number of chunks the faction already holds times
+  `chunkRequirementFactor` (0.10 by default), but never less than `minimumPowerCost` (1.0 by
+  default). If the leader has less power than that, the claim is refused.
+- Is lost on death (10% of the player's current power by default).
+- Is not regained: unclaiming a chunk does not refund it, and nothing regenerates it.
+
+`/mf force claim` costs no power.
 
 ## Known Limitations
 

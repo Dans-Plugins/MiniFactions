@@ -13,10 +13,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - Factions, members, invitations, claimed chunks and power levels are now kept across restarts. They are saved to `factions.json`, `powerRecords.json` and `territoryChunks.json` in `plugins/MiniFactions/` when the plugin is disabled and loaded when it enables; before this, nothing saved them and all of it was lost on every restart. A data file that cannot be read is logged and left untouched, and saving is refused until the next restart rather than overwriting it. The README and `USER_GUIDE.md` describe the files and the remaining limitation: changes made since the server started are lost if it crashes instead of stopping (#115).
-
-### Fixed
-
 - The plugin jar no longer bundles JUnit 4, Hamcrest or Ponder's own test classes, which reached it through Ponder and had no use on a server. They took up 434 of its 671 entries, unrelocated in the shared `junit`, `org.junit` and `org.hamcrest` packages (#110).
+- `USER_GUIDE.md` no longer says that power determines how much territory a faction can hold; nothing caps territory by power. It now describes what a claim actually costs (the faction's current chunk count times `chunkRequirementFactor`, at least `minimumPowerCost`, paid by the leader), that power is never regained, and that `/mf force claim` costs none. `CONFIG.md` describes `chunkRequirementFactor` and `minimumPowerCost` the same way.
 
 ## [1.0.1] – 2026-10-07
 
