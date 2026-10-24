@@ -8,10 +8,10 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 | `debugMode` | Boolean | `false` | Enables verbose debug logging to the console. |
 | `initialPower` | Double | `50.0` | Starting power level for new players. |
 | `territoryCostsPower` | Boolean | `true` | Whether claiming territory costs power. |
-| `minimumPowerCost` | Double | `1.0` | Minimum power cost to claim a chunk. |
+| `minimumPowerCost` | Double | `1.0` | The least power a claim can cost, whatever `chunkRequirementFactor` gives. |
 | `losePowerOnDeath` | Boolean | `true` | Whether players lose power when they die. |
 | `percentagePowerLostOnDeath` | Double | `0.10` | Fraction of power lost on death (e.g. `0.10` = 10%). |
-| `chunkRequirementFactor` | Double | `0.10` | Factor used to calculate how much power is required per claimed chunk. |
+| `chunkRequirementFactor` | Double | `0.10` | A claim costs the number of chunks the faction already holds times this, in power, taken from the leader who claims; never less than `minimumPowerCost`. |
 | `autosaveMinutes` | Integer | `5` | How often, in minutes, faction data is saved while the server runs, in addition to when the plugin is disabled. `0` turns autosaving off. Read when the plugin enables, so a change takes effect after a restart. |
 | `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. |
 | `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
