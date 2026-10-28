@@ -19,12 +19,15 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 
 ## Usage reporting
 
-When the plugin is enabled, and each time one of its commands is used, a small event is sent to the
+When the plugin is enabled, and when one of its commands is used, a small event is sent to the
 author's [trace](https://github.com/Stephenson-Software/trace-client-java) server so it is known which
 plugins are actually in use. An event carries the plugin's name, the event name (`startup` or
 `command`), the plugin version, and for a `command` event the command name, plus a random server ID (the
 `server-id` line in `plugins/trace/config.yml`, which identifies no person, account or IP address; deleting the
-line gets a new one) — nothing about players or the world. Sending happens off the main thread, never delays a
+line gets a new one) — nothing about players or the world. A `startup` event is always sent at once. The
+first use of a command is sent at once too; further uses of the same command within a minute are counted
+and sent together, when the minute ends, as one event carrying the count in a `coalesced` tag, and any
+count still open is sent when the plugin is disabled. Sending happens off the main thread, never delays a
 tick, and is dropped silently if the
 server cannot be reached. Set `usage-reporting.enabled` to `false` to turn it off, either in the file
 or with `/mf config set usage-reporting.enabled false`.

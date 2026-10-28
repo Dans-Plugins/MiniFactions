@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- The vendored trace client is now 0.7.0, which coalesces repeated usage events: the first use of a command is sent at once, and further uses of the same command within a minute are sent together as one event carrying the count (in a `coalesced` tag) instead of one event each. The `startup` event is never held back, and counts still open are sent when the plugin is disabled. The `config.yml` comment, `CONFIG.md` and the README now say so instead of "an event each time a command is used". The ways to turn reporting off are unchanged (#123).
+
+## [1.1.0] – 2026-10-28
+
 ### Added
 
 - Faction data is now also saved every `autosaveMinutes` minutes while the server runs (5 by default; `0` turns it off), so a crash or kill loses only the changes made since the last save instead of everything since startup. The key is written to `config.yml` with the other defaults, can be changed with `/mf config set autosaveMinutes <n>`, and is read when the plugin enables (#117).
