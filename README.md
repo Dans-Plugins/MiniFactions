@@ -75,7 +75,7 @@ Faction data is saved every 5 minutes (the `autosaveMinutes` option in [CONFIG.m
 
 ## Usage reporting
 
-Usage reporting is on by default: MiniFactions sends its name, version and command names (a `startup` event when it enables and a `command` event each time one of its commands is used) to <https://trace.danielstephenson.dev> so it is known which plugins are actually in use. Nothing about players, worlds or IPs is sent, and nothing typed after a command is sent either.
+Usage reporting is on by default: MiniFactions sends its name, version and command names (a `startup` event when it enables and a `command` event when one of its commands is used) to <https://trace.danielstephenson.dev> so it is known which plugins are actually in use. The first use of a command is sent at once; further uses of the same command within a minute are counted and sent together as one event carrying the count. Nothing about players, worlds or IPs is sent, and nothing typed after a command is sent either.
 
 Each event also carries a random server ID (the `server-id` line in `plugins/trace/config.yml`) so
 servers can be counted rather than events. It identifies no person, account or IP address; delete
