@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - The vendored trace client is now 0.7.0, which coalesces repeated usage events: the first use of a command is sent at once, and further uses of the same command within a minute are sent together as one event carrying the count (in a `coalesced` tag) instead of one event each. The `startup` event is never held back, and counts still open are sent when the plugin is disabled. The `config.yml` comment, `CONFIG.md` and the README now say so instead of "an event each time a command is used". The ways to turn reporting off are unchanged (#123).
+- Usage reporting now counts a `command` event only when a player runs the command; console, command-block and plugin-dispatched commands are no longer reported.
 
 ## [1.1.0] – 2026-10-28
 
