@@ -4,8 +4,12 @@
 
 *Real in-game output from MiniFactions 1.0.1 on a local throwaway Paper 1.21.11 test server: the commands were typed by a scripted bot client, and the chat it received is drawn as Minecraft-style chat (typed commands appear in the input bars; grey lines say what happened between commands).*
 
+## Description
+MiniFactions adds a small, simple faction system to a Spigot server. Players create a faction with `/mf create`, invite others, and claim chunks of territory with `/mf claim`. Each player has a power level that the faction leader spends to claim land and that drops on death, so territory has a cost. Faction data is saved every 5 minutes and when the server stops. See the [User Guide](USER_GUIDE.md), [COMMANDS.md](COMMANDS.md) and [CONFIG.md](CONFIG.md).
+
+MiniFactions is a separate, deliberately minimal plugin, not a lighter edition of [Medieval Factions](https://github.com/Dans-Plugins/Medieval-Factions). Both use the `/mf` and `/f` commands, so install one or the other, not both.
+
 ## About
-This Minecraft plugin aims to introduce factions into the game in a simple, easy to use, expandable way.
 
 ### Characteristics
 - Simple
@@ -88,3 +92,6 @@ To turn it off:
 - for the whole server process: the environment variable `TRACE_USAGE_REPORTING=off` or `DO_NOT_TRACK=1`
 
 Each startup logs whether reporting is on or, if it is off, why. Details: <https://danielstephenson.dev/usage-reporting>
+
+## License
+MiniFactions is open source under the [Apache License 2.0](LICENSE).
