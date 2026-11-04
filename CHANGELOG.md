@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - The `config.yml` comment, `CONFIG.md` and the README now say that a `command` event is sent only when a player uses a command, as has been the case since 1.1.1; they still said "when one of its commands is used".
-- `CONFIG.md` and the `config.yml` comment now say that a change to `usage-reporting.enabled` takes effect the next time the plugin enables. The setting is read only then, so turning it off with `/mf config set` or by editing the file leaves reporting running until a restart.
+- `CONFIG.md`, the `config.yml` comment and the README now say that a change to `usage-reporting.enabled` takes effect the next time the plugin enables. The setting is read only then, so turning it off with `/mf config set` or by editing the file leaves reporting running until a restart.
 - `CHANGELOG.md` now has sections for 1.1.1 and 1.1.2. Neither release added one, so the changes in 1.1.1 were still listed under `[Unreleased]`.
 
 ## [1.1.2] – 2026-11-04
