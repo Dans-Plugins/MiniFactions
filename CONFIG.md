@@ -13,15 +13,16 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 | `percentagePowerLostOnDeath` | Double | `0.10` | Fraction of power lost on death (e.g. `0.10` = 10%). |
 | `chunkRequirementFactor` | Double | `0.10` | A claim costs the number of chunks the faction already holds times this, in power, taken from the leader who claims; never less than `minimumPowerCost`. |
 | `autosaveMinutes` | Integer | `5` | How often, in minutes, faction data is saved while the server runs, in addition to when the plugin is disabled. `0` turns autosaving off. Read when the plugin enables, so a change takes effect after a restart. |
-| `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. |
+| `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. Read when the plugin enables, so a change takes effect after a restart. |
 | `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
 | `usage-reporting.key` | String | the plugin's key | Identifies this plugin to the trace server so reports are attributed to it. Not a secret: it ships in the default config and can only report as MiniFactions. Empty means reporting is off regardless of `enabled`. |
 
 ## Usage reporting
 
-When the plugin is enabled, and when one of its commands is used, a small event is sent to the
+When the plugin is enabled, and when a player uses one of its commands, a small event is sent to the
 author's [trace](https://github.com/Stephenson-Software/trace-client-java) server so it is known which
-plugins are actually in use. An event carries the plugin's name, the event name (`startup` or
+plugins are actually in use. Commands run from the console, a command block or another plugin are not
+reported. An event carries the plugin's name, the event name (`startup` or
 `command`), the plugin version, and for a `command` event the command name, plus a random server ID (the
 `server-id` line in `plugins/trace/config.yml`, which identifies no person, account or IP address; deleting the
 line gets a new one) — nothing about players or the world. A `startup` event is always sent at once. The
@@ -30,7 +31,8 @@ and sent together, when the minute ends, as one event carrying the count in a `c
 count still open is sent when the plugin is disabled. Sending happens off the main thread, never delays a
 tick, and is dropped silently if the
 server cannot be reached. Set `usage-reporting.enabled` to `false` to turn it off, either in the file
-or with `/mf config set usage-reporting.enabled false`.
+or with `/mf config set usage-reporting.enabled false`. It is read when the plugin enables, so events
+keep being sent until the next restart.
 
 It can also be turned off for every plugin on the server that reports this way, with `enabled: false`
 in `plugins/trace/config.yml` (created the first time such a plugin enables; plugins never turn it

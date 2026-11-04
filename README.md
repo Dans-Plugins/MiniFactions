@@ -79,7 +79,7 @@ Faction data is saved every 5 minutes (the `autosaveMinutes` option in [CONFIG.m
 
 ## Usage reporting
 
-Usage reporting is on by default: MiniFactions sends its name, version and command names (a `startup` event when it enables and a `command` event when one of its commands is used) to <https://trace.danielstephenson.dev> so it is known which plugins are actually in use. The first use of a command is sent at once; further uses of the same command within a minute are counted and sent together as one event carrying the count. Nothing about players, worlds or IPs is sent, and nothing typed after a command is sent either.
+Usage reporting is on by default: MiniFactions sends its name, version and command names (a `startup` event when it enables and a `command` event when a player uses one of its commands) to <https://trace.danielstephenson.dev> so it is known which plugins are actually in use. Commands run from the console, a command block or another plugin are not reported. The first use of a command is sent at once; further uses of the same command within a minute are counted and sent together as one event carrying the count. Nothing about players, worlds or IPs is sent, and nothing typed after a command is sent either.
 
 Each event also carries a random server ID (the `server-id` line in `plugins/trace/config.yml`) so
 servers can be counted rather than events. It identifies no person, account or IP address; delete
@@ -87,7 +87,7 @@ the line to get a new one.
 
 To turn it off:
 
-- for this plugin: `usage-reporting.enabled: false` in `plugins/MiniFactions/config.yml`
+- for this plugin: `usage-reporting.enabled: false` in `plugins/MiniFactions/config.yml` (read when the plugin enables, so it takes effect after a restart)
 - for every plugin on the server that reports this way: `enabled: false` in `plugins/trace/config.yml` (created the first time such a plugin enables)
 - for the whole server process: the environment variable `TRACE_USAGE_REPORTING=off` or `DO_NOT_TRACK=1`
 
