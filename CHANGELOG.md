@@ -6,10 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+
+- The `config.yml` comment, `CONFIG.md` and the README now say that a `command` event is sent only when a player uses a command, as has been the case since 1.1.1; they still said "when one of its commands is used".
+- `CONFIG.md` and the `config.yml` comment now say that a change to `usage-reporting.enabled` takes effect the next time the plugin enables. The setting is read only then, so turning it off with `/mf config set` or by editing the file leaves reporting running until a restart.
+- `CHANGELOG.md` now has sections for 1.1.1 and 1.1.2. Neither release added one, so the changes in 1.1.1 were still listed under `[Unreleased]`.
+
+## [1.1.2] – 2026-11-04
+
+### Changed
+
+- Added automated tests that record the current behaviour of power calculations, power record saving and loading, and territory and faction lookups. A server running 1.1.1 behaves exactly as before (#131, #132).
+
+## [1.1.1] – 2026-10-30
+
 ### Changed
 
 - The vendored trace client is now 0.7.0, which coalesces repeated usage events: the first use of a command is sent at once, and further uses of the same command within a minute are sent together as one event carrying the count (in a `coalesced` tag) instead of one event each. The `startup` event is never held back, and counts still open are sent when the plugin is disabled. The `config.yml` comment, `CONFIG.md` and the README now say so instead of "an event each time a command is used". The ways to turn reporting off are unchanged (#123).
-- Usage reporting now counts a `command` event only when a player runs the command; console, command-block and plugin-dispatched commands are no longer reported.
+- Usage reporting now counts a `command` event only when a player runs the command; console, command-block and plugin-dispatched commands are no longer reported (#126).
 
 ## [1.1.0] – 2026-10-28
 
