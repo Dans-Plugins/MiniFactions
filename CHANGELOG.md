@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- `/mf force join` now refuses a player who is already in a faction and names that faction. It used to add them anyway, leaving them in two factions, with hash order deciding which one they acted for. It also now revokes any invitation to the faction it adds them to (#136).
+- `/mf force kick` now refuses a faction's leader and points at `/mf force disband`, including when the leader is the only member. It used to remove them, leaving a faction whose leader-only commands nobody could run (#136).
+- A player kicked with `/mf kick` is now told `You have been kicked from <faction>.` instead of `You have been kicked by to <faction>.` (#138).
+- `/mf leave` now tells the faction `<player> has left the faction.` with a space after the name (#138).
 - The `config.yml` comment, `CONFIG.md` and the README now say that a `command` event is sent only when a player uses a command, as has been the case since 1.1.1; they still said "when one of its commands is used".
 - `CONFIG.md`, the `config.yml` comment and the README now say that a change to `usage-reporting.enabled` takes effect the next time the plugin enables. The setting is read only then, so turning it off with `/mf config set` or by editing the file leaves reporting running until a restart.
 - `CHANGELOG.md` now has sections for 1.1.1 and 1.1.2. Neither release added one, so the changes in 1.1.1 were still listed under `[Unreleased]`.

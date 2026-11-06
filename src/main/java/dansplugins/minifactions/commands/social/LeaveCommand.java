@@ -55,7 +55,7 @@ public class LeaveCommand extends AbstractMFCommand {
         boolean success = faction.removeMember(player);
         if (success) {
             player.sendMessage("You have left your faction.");
-            faction.sendMessage(player.getName() + "has left the faction.");
+            faction.sendMessage(player.getName() + " has left the faction.");
         }
         else {
             player.sendMessage("Something went wrong.");

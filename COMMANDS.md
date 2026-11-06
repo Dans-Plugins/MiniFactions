@@ -22,9 +22,9 @@ All commands use `/mf` or `/minifactions` or `/factions` or `/f` as the base.
 | `/mf config <show\|set> [option] [value]` | Show or set config options. | `mf.config` |
 | `/mf force <subcommand>` | Force server events to occur (admin). | `mf.force` |
 | `/mf force help` | View a list of force commands. | `mf.force.help` |
-| `/mf force join <ign> <faction>` | Force a player to join a faction. | `mf.force.join` |
+| `/mf force join <ign> <faction>` | Force a player to join a faction, revoking any invitation to it. Refused if the player is already in a faction. | `mf.force.join` |
 | `/mf force invite <ign> <faction>` | Forcefully invite a player to a faction. | `mf.force.invite` |
-| `/mf force kick <ign>` | Forcefully kick a player from their faction. | `mf.force.kick` |
+| `/mf force kick <ign>` | Forcefully kick a player from their faction. Refused for a faction's leader: use `/mf force disband`, or have the leader run `/mf transfer` first. | `mf.force.kick` |
 | `/mf force disband <faction>` | Forcefully disband a faction. | `mf.force.disband` |
 | `/mf force claim <faction>` | Forcefully claim territory for a faction. | `mf.force.claim` |
 | `/mf force unclaim <faction>` | Forcefully unclaim territory for a faction. | `mf.force.unclaim` |

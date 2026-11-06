@@ -52,7 +52,16 @@ public class ForceJoinCommand extends AbstractMFCommand {
             return false;
         }
         
+        // Membership is looked up by iterating the factions, so a second membership would decide
+        // which faction the player acts for by hash order.
+        try {
+            Faction currentFaction = getAPI().getFactionByPlayer(factionPlayer);
+            sender.sendMessage("That player is already in " + currentFaction.getName() + ".");
+            return false;
+        } catch (FactionNotFoundException ignored) {}
+
         faction.addMember(factionPlayer);
+        faction.revokeInvite(factionPlayer);
         faction.sendMessage(factionPlayer.getName() + " was forced to join the faction.");
         return false;
     }
