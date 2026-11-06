@@ -44,6 +44,13 @@ public class ForceKickCommand extends AbstractMFCommand {
             return false;
         }
         
+        // Removing the leader would leave every leader-only command unusable for the faction. A sole
+        // leader is refused too: dropping the faction and its claims is left to the explicit command.
+        if (factionPlayer.getId().equals(faction.getLeader())) {
+            sender.sendMessage("That player leads " + faction.getName() + ". Use /mf force disband " + faction.getName() + " instead.");
+            return false;
+        }
+
         faction.removeMember(factionPlayer);
         faction.sendMessage(factionPlayer.getName() + " was forcefully kicked from the faction.");
         factionPlayer.sendMessage("You were forcefully kicked from the faction.");
