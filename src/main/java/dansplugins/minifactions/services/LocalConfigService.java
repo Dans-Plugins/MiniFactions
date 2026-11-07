@@ -3,7 +3,7 @@ package dansplugins.minifactions.services;
 /*
     To add a new config option, the following methods must be altered:
     - saveMissingConfigDefaultsIfNotPresent
-    - setConfigOption()
+    - applyConfigOption()
     - sendConfigList()
  */
 
@@ -64,36 +64,76 @@ public class LocalConfigService {
     }
 
     public void setConfigOption(String option, String value, CommandSender sender) {
-        if (getConfig().isSet(option)) {
-            if (option.equalsIgnoreCase("version")) {
-                sender.sendMessage(ChatColor.RED + "Cannot set version.");
-                return;
-            } else if (option.equalsIgnoreCase("A")
-                    || option.equalsIgnoreCase(AUTOSAVE_MINUTES_KEY)) {
-                getConfig().set(option, Integer.parseInt(value));
-                sender.sendMessage(ChatColor.GREEN + "Integer set.");
-            } else if (option.equalsIgnoreCase("debugMode")
-                    || option.equalsIgnoreCase("territoryCostsPower")
-                    || option.equalsIgnoreCase("losePowerOnDeath")
-                    || option.equalsIgnoreCase(USAGE_REPORTING_ENABLED_KEY)) {
-                getConfig().set(option, Boolean.parseBoolean(value));
-                sender.sendMessage(ChatColor.GREEN + "Boolean set.");
-            } else if (option.equalsIgnoreCase("initialPower")
-                    || option.equalsIgnoreCase("minimumPowerCost")
-                    || option.equalsIgnoreCase("percentagePowerLostOnDeath")
-                    || option.equalsIgnoreCase("chunkRequirementFactor")) {
-                getConfig().set(option, Double.parseDouble(value));
-                sender.sendMessage(ChatColor.GREEN + "Double set.");
-            } else {
-                getConfig().set(option, value);
-                sender.sendMessage(ChatColor.GREEN + "String set.");
-            }
-
-            // save
+        if (applyConfigOption(getConfig(), option, value, sender)) {
             MiniFactions.getInstance().saveConfig();
             altered = true;
-        } else {
+        }
+    }
+
+    /**
+     * Stores the value if the option exists and the value suits its type; otherwise tells the
+     * sender why not and leaves the configuration as it was.
+     *
+     * @return Whether the value was stored.
+     */
+    static boolean applyConfigOption(FileConfiguration config, String option, String value, CommandSender sender) {
+        if (!config.isSet(option)) {
             sender.sendMessage(ChatColor.RED + "That config option wasn't found.");
+            return false;
+        }
+
+        // isSet() is true for a section too, and storing a value there would replace every key in it.
+        if (config.isConfigurationSection(option)) {
+            sender.sendMessage(ChatColor.RED + option + " is a section. Set one of the keys inside it instead.");
+            return false;
+        }
+
+        if (option.equalsIgnoreCase("version")) {
+            sender.sendMessage(ChatColor.RED + "Cannot set version.");
+            return false;
+        } else if (option.equalsIgnoreCase(AUTOSAVE_MINUTES_KEY)) {
+            try {
+                config.set(option, Integer.parseInt(value));
+            } catch (NumberFormatException e) {
+                sender.sendMessage(ChatColor.RED + option + " must be a whole number.");
+                return false;
+            }
+            sender.sendMessage(ChatColor.GREEN + "Integer set.");
+        } else if (option.equalsIgnoreCase("debugMode")
+                || option.equalsIgnoreCase("territoryCostsPower")
+                || option.equalsIgnoreCase("losePowerOnDeath")
+                || option.equalsIgnoreCase(USAGE_REPORTING_ENABLED_KEY)) {
+            if (!value.equalsIgnoreCase("true") && !value.equalsIgnoreCase("false")) {
+                sender.sendMessage(ChatColor.RED + option + " must be true or false.");
+                return false;
+            }
+            config.set(option, Boolean.parseBoolean(value));
+            sender.sendMessage(ChatColor.GREEN + "Boolean set.");
+        } else if (option.equalsIgnoreCase("initialPower")
+                || option.equalsIgnoreCase("minimumPowerCost")
+                || option.equalsIgnoreCase("percentagePowerLostOnDeath")
+                || option.equalsIgnoreCase("chunkRequirementFactor")) {
+            Double parsed = parseFiniteDouble(value);
+            if (parsed == null) {
+                sender.sendMessage(ChatColor.RED + option + " must be a number.");
+                return false;
+            }
+            config.set(option, parsed);
+            sender.sendMessage(ChatColor.GREEN + "Double set.");
+        } else {
+            config.set(option, value);
+            sender.sendMessage(ChatColor.GREEN + "String set.");
+        }
+        return true;
+    }
+
+    // Double.parseDouble() accepts "NaN" and "Infinity", neither of which is a usable power value.
+    private static Double parseFiniteDouble(String value) {
+        try {
+            double parsed = Double.parseDouble(value);
+            return Double.isNaN(parsed) || Double.isInfinite(parsed) ? null : parsed;
+        } catch (NumberFormatException e) {
+            return null;
         }
     }
 
