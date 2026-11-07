@@ -19,7 +19,7 @@ All commands use `/mf` or `/minifactions` or `/factions` or `/f` as the base.
 | `/mf claim` | Claim the chunk you are standing in for your faction. | `mf.claim` |
 | `/mf unclaim` | Unclaim the chunk you are standing in. | `mf.unclaim` |
 | `/mf checkclaim` (alias: `/mf cc`) | Check which faction owns the chunk you are standing in. | `mf.checkclaim` |
-| `/mf config <show\|set> [option] [value]` | Show or set config options. | `mf.config` |
+| `/mf config <show\|set> [option] [value]` | Show or set config options. A value of the wrong type is refused, as are `version` and a section such as `usage-reporting`; see `CONFIG.md`. | `mf.config` |
 | `/mf force <subcommand>` | Force server events to occur (admin). | `mf.force` |
 | `/mf force help` | View a list of force commands. | `mf.force.help` |
 | `/mf force join <ign> <faction>` | Force a player to join a faction, revoking any invitation to it. Refused if the player is already in a faction. | `mf.force.join` |

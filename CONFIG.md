@@ -17,6 +17,11 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 | `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
 | `usage-reporting.key` | String | the plugin's key | Identifies this plugin to the trace server so reports are attributed to it. Not a secret: it ships in the default config and can only report as MiniFactions. Empty means reporting is off regardless of `enabled`. |
 
+`/mf config set <option> <value>` checks the value against the type above and leaves the stored value
+unchanged if it does not fit. An Integer must be a whole number, a Double must be a finite number, and
+a Boolean must be `true` or `false`. `version` cannot be set, and neither can a section such as
+`usage-reporting`; set one of the keys inside it, such as `usage-reporting.enabled`.
+
 ## Usage reporting
 
 When the plugin is enabled, and when a player uses one of its commands, a small event is sent to the

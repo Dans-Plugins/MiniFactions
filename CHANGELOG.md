@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- `/mf config set` now checks the value before storing it. A malformed number gets a message naming the expected type, where it used to throw out of the command. A value other than `true` or `false` for a Boolean option is refused, where it used to store `false`, so `/mf config set usage-reporting.enabled yes` turned reporting off and answered "Boolean set." `NaN` and `Infinity` are refused for Double options (#137).
+- `/mf config set` now refuses a section such as `usage-reporting`. It used to store the value over the section and answer "String set.", losing the `enabled`, `endpoint` and `key` values in the file, including an `enabled: false` (#137).
 - `/mf force join` now refuses a player who is already in a faction and names that faction. It used to add them anyway, leaving them in two factions, with hash order deciding which one they acted for. It also now revokes any invitation to the faction it adds them to (#136).
 - `/mf force kick` now refuses a faction's leader and points at `/mf force disband`, including when the leader is the only member. It used to remove them, leaving a faction whose leader-only commands nobody could run (#136).
 - A player kicked with `/mf kick` is now told `You have been kicked from <faction>.` instead of `You have been kicked by to <faction>.` (#138).
