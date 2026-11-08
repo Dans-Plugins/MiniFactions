@@ -3,8 +3,12 @@ package dansplugins.minifactions.commands;
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.commands.config.force.ForceJoinCommand;
 import dansplugins.minifactions.commands.config.force.ForceKickCommand;
+import dansplugins.minifactions.commands.social.DisbandCommand;
+import dansplugins.minifactions.commands.social.InviteCommand;
+import dansplugins.minifactions.commands.social.JoinCommand;
 import dansplugins.minifactions.commands.social.KickCommand;
 import dansplugins.minifactions.commands.social.LeaveCommand;
+import dansplugins.minifactions.commands.social.TransferCommand;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.FactionImpl;
 import org.bukkit.Bukkit;
@@ -27,11 +31,13 @@ import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Regression coverage for https://github.com/Dans-Plugins/MiniFactions/issues/136 and
- * https://github.com/Dans-Plugins/MiniFactions/issues/138.
+ * https://github.com/Dans-Plugins/MiniFactions/issues/138, and a record of how {@code /mf transfer},
+ * {@code /mf invite}, {@code /mf join} and {@code /mf disband} currently behave.
  *
  * <p>The real commands run against a stub {@link Server} that answers only the calls they make, so
  * the membership changes and the messages players receive are observed rather than read from the
@@ -136,6 +142,122 @@ class MembershipCommandsTest {
 
         assertFalse(faction.isMember(member));
         assertEquals(List.of("Member has left the faction."), RECEIVED.get(leader));
+    }
+
+    // Characterization of /mf transfer, /mf invite, /mf join and /mf disband as they behave today.
+    // They live in this class because Bukkit's server can be installed only once per JVM, and the
+    // stub installed above is the one these commands' messages are observed through.
+
+    @Test
+    void transfer_makesTheMemberLeaderAndTellsTheFaction() {
+        new TransferCommand().execute(ONLINE.get(leader), new String[]{"Member"});
+
+        assertEquals(member, faction.getLeader());
+        assertTrue(faction.isMember(leader), "the old leader stays on as a member");
+        assertEquals(List.of("The faction has been transferred to Member."), RECEIVED.get(leader));
+        assertEquals(List.of("The faction has been transferred to Member."), RECEIVED.get(member));
+    }
+
+    @Test
+    void transfer_refusesARecipientOutsideTheFaction() {
+        new TransferCommand().execute(ONLINE.get(leader), new String[]{"Outsider"});
+
+        assertEquals(leader, faction.getLeader());
+        assertEquals(List.of("The recipient must be in your faction."), RECEIVED.get(leader));
+    }
+
+    @Test
+    void transfer_refusesAMemberWhoIsNotTheLeader() {
+        new TransferCommand().execute(ONLINE.get(member), new String[]{"Member"});
+
+        assertEquals(leader, faction.getLeader());
+        assertEquals(List.of("You are not the leader of your faction."), RECEIVED.get(member));
+    }
+
+    @Test
+    void invite_recordsTheInvitationAndTellsTheFactionAndThePlayer() {
+        new InviteCommand().execute(ONLINE.get(leader), new String[]{"Outsider"});
+
+        assertTrue(faction.hasBeenInvited(outsider));
+        assertFalse(faction.isMember(outsider), "an invitation does not add the player");
+        assertEquals(List.of("Outsider has been invited to the faction."), RECEIVED.get(member));
+        assertEquals(List.of("You have been invited to Alpha."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void invite_answersSomethingWentWrongWhenThePlayerIsAlreadyInvited() {
+        faction.addInvite(outsider);
+
+        boolean result = new InviteCommand().execute(ONLINE.get(leader), new String[]{"Outsider"});
+
+        assertFalse(result);
+        assertTrue(faction.hasBeenInvited(outsider));
+        assertEquals(List.of("Something went wrong."), RECEIVED.get(leader));
+        assertTrue(RECEIVED.get(outsider).isEmpty(), "the player is not told a second time");
+    }
+
+    @Test
+    void invite_refusesAMemberWhoIsNotTheLeader() {
+        new InviteCommand().execute(ONLINE.get(member), new String[]{"Outsider"});
+
+        assertFalse(faction.hasBeenInvited(outsider));
+        assertEquals(List.of("You are not the leader of your faction."), RECEIVED.get(member));
+    }
+
+    @Test
+    void join_refusesAPlayerWithoutAnInvitation() {
+        new JoinCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertFalse(faction.isMember(outsider));
+        assertEquals(List.of("You have not been invited to this faction."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void join_addsAnInvitedPlayerAndUsesUpTheInvitation() {
+        faction.addInvite(outsider);
+
+        new JoinCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertTrue(faction.isMember(outsider));
+        assertFalse(faction.hasBeenInvited(outsider), "the invitation outlived the join");
+        assertEquals(List.of("Outsider has joined the faction."), RECEIVED.get(leader));
+    }
+
+    @Test
+    void join_refusesAPlayerAlreadyInAFaction() {
+        Faction other = new FactionImpl("Beta", UUID.randomUUID());
+        other.addInvite(member);
+        PersistentData.getInstance().addFaction(other);
+
+        new JoinCommand().execute(ONLINE.get(member), new String[]{"Beta"});
+
+        assertFalse(other.isMember(member));
+        assertEquals(List.of("You are already in a faction."), RECEIVED.get(member));
+    }
+
+    @Test
+    void join_namesAFactionThatDoesNotExist() {
+        new JoinCommand().execute(ONLINE.get(outsider), new String[]{"Nowhere"});
+
+        assertEquals(List.of("That faction wasn't found."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void disband_removesTheFactionAndTellsItsMembers() {
+        boolean result = new DisbandCommand().execute(ONLINE.get(leader));
+
+        assertTrue(result);
+        assertThrows(Exception.class, () -> PersistentData.getInstance().getFaction("Alpha"));
+        assertEquals(List.of("Leader is disbanding the faction.", "Your faction has been disbanded."), RECEIVED.get(leader));
+        assertEquals(List.of("Leader is disbanding the faction."), RECEIVED.get(member));
+    }
+
+    @Test
+    void disband_refusesAMemberWhoIsNotTheLeader() throws Exception {
+        new DisbandCommand().execute(ONLINE.get(member));
+
+        assertEquals(faction, PersistentData.getInstance().getFaction("Alpha"));
+        assertEquals(List.of("You are not the leader of your faction."), RECEIVED.get(member));
     }
 
     private static void online(UUID id, String name) {
