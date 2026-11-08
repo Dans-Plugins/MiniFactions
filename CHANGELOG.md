@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Added automated tests that record how `/mf transfer`, `/mf invite`, `/mf join` and `/mf disband` currently behave: who is refused, what changes in the faction, and the messages players receive. No plugin behaviour changed.
+
 ### Fixed
 
 - `/mf config set` now checks the value before storing it. A malformed number gets a message naming the expected type, where it used to throw out of the command. A value other than `true` or `false` for a Boolean option is refused, where it used to store `false`, so `/mf config set usage-reporting.enabled yes` turned reporting off and answered "Boolean set." `NaN` and `Infinity` are refused for Double options (#137).
