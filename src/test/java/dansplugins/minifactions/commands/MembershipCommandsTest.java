@@ -1,6 +1,7 @@
 package dansplugins.minifactions.commands;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
+import dansplugins.minifactions.commands.config.force.ForceInviteCommand;
 import dansplugins.minifactions.commands.config.force.ForceJoinCommand;
 import dansplugins.minifactions.commands.config.force.ForceKickCommand;
 import dansplugins.minifactions.commands.social.DisbandCommand;
@@ -35,8 +36,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Regression coverage for https://github.com/Dans-Plugins/MiniFactions/issues/136 and
- * https://github.com/Dans-Plugins/MiniFactions/issues/138, and a record of how {@code /mf transfer},
+ * Regression coverage for https://github.com/Dans-Plugins/MiniFactions/issues/136,
+ * https://github.com/Dans-Plugins/MiniFactions/issues/138 and
+ * https://github.com/Dans-Plugins/MiniFactions/issues/146, and a record of how {@code /mf transfer},
  * {@code /mf invite}, {@code /mf join} and {@code /mf disband} currently behave.
  *
  * <p>The real commands run against a stub {@link Server} that answers only the calls they make, so
@@ -185,15 +187,53 @@ class MembershipCommandsTest {
     }
 
     @Test
-    void invite_answersSomethingWentWrongWhenThePlayerIsAlreadyInvited() {
+    void invite_refusesAPlayerWhoIsAlreadyInvited() {
         faction.addInvite(outsider);
 
         boolean result = new InviteCommand().execute(ONLINE.get(leader), new String[]{"Outsider"});
 
         assertFalse(result);
         assertTrue(faction.hasBeenInvited(outsider));
-        assertEquals(List.of("Something went wrong."), RECEIVED.get(leader));
+        assertEquals(List.of("That player is already invited."), RECEIVED.get(leader));
         assertTrue(RECEIVED.get(outsider).isEmpty(), "the player is not told a second time");
+    }
+
+    @Test
+    void invite_refusesACurrentMember() {
+        boolean result = new InviteCommand().execute(ONLINE.get(leader), new String[]{"Member"});
+
+        assertFalse(result);
+        assertFalse(faction.hasBeenInvited(member), "a stale invitation was recorded for a member");
+        assertEquals(List.of("That player is already in your faction."), RECEIVED.get(leader));
+        assertTrue(RECEIVED.get(member).isEmpty(), "the member is not told they were invited");
+    }
+
+    @Test
+    void forceInvite_refusesACurrentMember() {
+        new ForceInviteCommand().execute(admin, new String[]{"Member", "Alpha"});
+
+        assertFalse(faction.hasBeenInvited(member), "a stale invitation was recorded for a member");
+        assertEquals(List.of("That player is already in Alpha."), sent);
+        assertTrue(RECEIVED.get(leader).isEmpty(), "the faction is not told about an invitation");
+    }
+
+    @Test
+    void forceInvite_refusesAPlayerWhoIsAlreadyInvited() {
+        faction.addInvite(outsider);
+
+        new ForceInviteCommand().execute(admin, new String[]{"Outsider", "Alpha"});
+
+        assertTrue(faction.hasBeenInvited(outsider));
+        assertEquals(List.of("That player is already invited to Alpha."), sent);
+        assertTrue(RECEIVED.get(leader).isEmpty(), "the faction is told a second time");
+    }
+
+    @Test
+    void forceInvite_recordsTheInvitationAndTellsTheFaction() {
+        new ForceInviteCommand().execute(admin, new String[]{"Outsider", "Alpha"});
+
+        assertTrue(faction.hasBeenInvited(outsider));
+        assertEquals(List.of("Outsider was forcefully invited to the faction."), RECEIVED.get(leader));
     }
 
     @Test
