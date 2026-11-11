@@ -1,5 +1,7 @@
 # MiniFactions
 
+![MiniFactions banner: a Strata render of a forest and lake in a test-server world](docs/images/banner.jpg)
+
 ![Creating the faction Stonebridge, claiming a chunk, inviting a second player and viewing /mf info](docs/images/faction-commands.png)
 
 *Real in-game output from MiniFactions 1.0.1 on a local throwaway Paper 1.21.11 test server: the commands were typed by a scripted bot client, and the chat it received is drawn as Minecraft-style chat (typed commands appear in the input bars; grey lines say what happened between commands).*
