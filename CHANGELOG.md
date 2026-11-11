@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- `/mf invite` now refuses a player who is already in the faction, with `That player is already in your faction.` It used to record an invitation and tell both the faction and the player that they had been invited. A repeat invitation is now answered with `That player is already invited.` instead of `Something went wrong.` `/mf force invite` refuses the same two cases and names the faction; it used to tell the faction about the invitation again (#146).
 - `/mf config set` now checks the value before storing it. A malformed number gets a message naming the expected type, where it used to throw out of the command. A value other than `true` or `false` for a Boolean option is refused, where it used to store `false`, so `/mf config set usage-reporting.enabled yes` turned reporting off and answered "Boolean set." `NaN` and `Infinity` are refused for Double options (#137).
 - `/mf config set` now refuses a section such as `usage-reporting`. It used to store the value over the section and answer "String set.", losing the `enabled`, `endpoint` and `key` values in the file, including an `enabled: false` (#137).
 - `/mf force join` now refuses a player who is already in a faction and names that faction. It used to add them anyway, leaving them in two factions, with hash order deciding which one they acted for. It also now revokes any invitation to the faction it adds them to (#136).

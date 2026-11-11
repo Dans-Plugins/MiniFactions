@@ -51,7 +51,17 @@ public class ForceInviteCommand extends AbstractMFCommand {
             sender.sendMessage("Something went wrong.");
             return false;
         }
-        
+
+        if (faction.isMember(targetUUID)) {
+            sender.sendMessage("That player is already in " + faction.getName() + ".");
+            return false;
+        }
+
+        if (faction.hasBeenInvited(targetUUID)) {
+            sender.sendMessage("That player is already invited to " + faction.getName() + ".");
+            return false;
+        }
+
         faction.addInvite(factionPlayer);
         faction.sendMessage(factionPlayer.getName() + " was forcefully invited to the faction.");
         return false;
