@@ -44,6 +44,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * are recorded here.
  */
 class FactionLifecycleCommandsTest {
+    private static final UUID WORLD_ID = UUID.randomUUID();
+
     private final List<String> sent = new ArrayList<>();
     private final CommandSender console = commandSender(sent);
 
@@ -223,8 +225,6 @@ class FactionLifecycleCommandsTest {
         assertSame(faction, PersistentData.getInstance().getFaction("Alpha"));
         assertEquals(List.of("Usage: /mf force disband <faction>"), sent);
     }
-
-    private static final UUID WORLD_ID = UUID.randomUUID();
 
     /** A chunk at ({@code x}, {@code z}) of a world that answers only its id. */
     private static Chunk chunk(int x, int z) {
