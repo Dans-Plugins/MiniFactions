@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Added automated tests that record how `/mf transfer`, `/mf invite`, `/mf join` and `/mf disband` currently behave: who is refused, what changes in the faction, and the messages players receive. No plugin behaviour changed.
 - Added automated tests that record how `/mf checkclaim`, `/mf unclaim` and `/mf power` currently behave, and how `/mf claim` refuses a player outside a faction, a member who is not the leader, and a chunk the faction already holds. A successful claim is not covered, because it reads the plugin's config, which the tests cannot load. No plugin behaviour changed.
+- Added automated tests that record how `/mf create`, `/mf list` and `/mf force disband` currently behave, and how `/mf info` refuses a player outside a faction, an unknown faction name and the console. A faction's info card is not covered, because it names the leader through the running plugin, which the tests do not start. The tests also record that `/mf force disband` releases the faction's territory, and that it answers `false` even when the disband succeeds. No plugin behaviour changed.
 
 ### Fixed
 
