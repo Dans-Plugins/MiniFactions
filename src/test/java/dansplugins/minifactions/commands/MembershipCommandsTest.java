@@ -12,24 +12,20 @@ import dansplugins.minifactions.commands.social.LeaveCommand;
 import dansplugins.minifactions.commands.social.TransferCommand;
 import dansplugins.minifactions.data.PersistentData;
 import dansplugins.minifactions.objects.FactionImpl;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.logging.Logger;
 
+import static dansplugins.minifactions.commands.StubServer.ONLINE;
+import static dansplugins.minifactions.commands.StubServer.RECEIVED;
+import static dansplugins.minifactions.commands.StubServer.commandSender;
+import static dansplugins.minifactions.commands.StubServer.online;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -41,14 +37,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * https://github.com/Dans-Plugins/MiniFactions/issues/146, and a record of how {@code /mf transfer},
  * {@code /mf invite}, {@code /mf join} and {@code /mf disband} currently behave.
  *
- * <p>The real commands run against a stub {@link Server} that answers only the calls they make, so
- * the membership changes and the messages players receive are observed rather than read from the
- * source, and no live Bukkit server is needed.
+ * <p>The real commands run against {@link StubServer}, so the membership changes and the messages
+ * players receive are observed rather than read from the source, and no live Bukkit server is needed.
  */
 class MembershipCommandsTest {
-    private static final Map<UUID, Player> ONLINE = new LinkedHashMap<>();
-    private static final Map<UUID, List<String>> RECEIVED = new LinkedHashMap<>();
-
     private final List<String> sent = new ArrayList<>();
     private final CommandSender admin = commandSender(sent);
 
@@ -59,9 +51,7 @@ class MembershipCommandsTest {
 
     @BeforeAll
     static void installServer() {
-        if (Bukkit.getServer() == null) {
-            Bukkit.setServer(stub(Server.class, MembershipCommandsTest::answerServerCall));
-        }
+        StubServer.install();
     }
 
     @BeforeEach
@@ -77,8 +67,7 @@ class MembershipCommandsTest {
     @AfterEach
     void clearState() {
         PersistentData.getInstance().clearFactions();
-        ONLINE.clear();
-        RECEIVED.clear();
+        StubServer.reset();
     }
 
     @Test
@@ -147,8 +136,6 @@ class MembershipCommandsTest {
     }
 
     // Characterization of /mf transfer, /mf invite, /mf join and /mf disband as they behave today.
-    // They live in this class because Bukkit's server can be installed only once per JVM, and the
-    // stub installed above is the one these commands' messages are observed through.
 
     @Test
     void transfer_makesTheMemberLeaderAndTellsTheFaction() {
@@ -298,73 +285,5 @@ class MembershipCommandsTest {
 
         assertEquals(faction, PersistentData.getInstance().getFaction("Alpha"));
         assertEquals(List.of("You are not the leader of your faction."), RECEIVED.get(member));
-    }
-
-    private static void online(UUID id, String name) {
-        List<String> received = new ArrayList<>();
-        RECEIVED.put(id, received);
-        ONLINE.put(id, stub(Player.class, (method, args) -> {
-            switch (method.getName()) {
-                case "getUniqueId":
-                    return id;
-                case "getName":
-                    return name;
-                case "isOnline":
-                    return true;
-                case "sendMessage":
-                    received.add((String) args[0]);
-                    return null;
-                default:
-                    return null;
-            }
-        }));
-    }
-
-    private static CommandSender commandSender(List<String> received) {
-        return stub(CommandSender.class, (method, args) -> {
-            if (method.getName().equals("sendMessage")) {
-                received.add((String) args[0]);
-            }
-            return null;
-        });
-    }
-
-    private static Object answerServerCall(Method method, Object[] args) {
-        switch (method.getName()) {
-            case "getLogger":
-                return Logger.getLogger(MembershipCommandsTest.class.getName());
-            case "getName":
-            case "getVersion":
-            case "getBukkitVersion":
-                return "test";
-            case "getOnlinePlayers":
-                return new ArrayList<>(ONLINE.values());
-            case "getOfflinePlayers":
-                return ONLINE.values().toArray(new Player[0]);
-            case "getPlayer":
-            case "getOfflinePlayer":
-                return args[0] instanceof UUID ? ONLINE.get(args[0]) : byName((String) args[0]);
-            default:
-                return null;
-        }
-    }
-
-    private static Player byName(String name) {
-        return ONLINE.values().stream().filter(player -> player.getName().equals(name)).findFirst().orElse(null);
-    }
-
-    private interface Answer {
-        Object call(Method method, Object[] args);
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> T stub(Class<T> type, Answer answer) {
-        return (T) Proxy.newProxyInstance(type.getClassLoader(), new Class<?>[]{type}, (proxy, method, args) -> {
-            Object result = answer.call(method, args);
-            if (result != null || !method.getReturnType().isPrimitive() || method.getReturnType() == void.class) {
-                return result;
-            }
-            return method.getReturnType() == boolean.class ? Boolean.FALSE : Integer.valueOf(0);
-        });
     }
 }
