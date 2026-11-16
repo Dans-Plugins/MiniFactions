@@ -2,6 +2,8 @@ package dansplugins.minifactions.commands;
 
 import dansplugins.minifactions.api.definitions.core.Faction;
 import dansplugins.minifactions.api.definitions.core.TerritoryChunk;
+import dansplugins.minifactions.commands.config.force.ForceClaimCommand;
+import dansplugins.minifactions.commands.config.force.ForceUnclaimCommand;
 import dansplugins.minifactions.commands.territory.CheckClaimCommand;
 import dansplugins.minifactions.commands.territory.ClaimCommand;
 import dansplugins.minifactions.commands.territory.PowerCommand;
@@ -35,21 +37,25 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Characterization of {@code /mf claim}, {@code /mf unclaim}, {@code /mf checkclaim} and
- * {@code /mf power} as they behave today.
+ * Characterization of {@code /mf claim}, {@code /mf unclaim}, {@code /mf checkclaim},
+ * {@code /mf power}, {@code /mf force claim} and {@code /mf force unclaim} as they behave today.
  *
  * <p>The real commands run against {@link StubServer}. Every player stands in chunk (2, -3) of one
  * stub world, so the chunk a command acts on is the one the test claimed beforehand.
  *
- * <p>Three paths are not covered because they reach {@code MiniFactions.getInstance()}, which is
+ * <p>Four paths are not covered because they reach {@code MiniFactions.getInstance()}, which is
  * null outside a server:
  * <ul>
  *   <li>a successful {@code /mf claim}, which reads {@code territoryCostsPower} from the plugin's
  *       config once the chunk is found to be free;</li>
  *   <li>{@code /mf claim} on a chunk held by another faction, whether or not that faction still
  *       exists, which looks the holder up through {@code TerritoryChunk.getFaction()} and so through
- *       the plugin's API instance.</li>
+ *       the plugin's API instance;</li>
+ *   <li>{@code /mf force claim} on a chunk another faction holds, which names the holder the same
+ *       way.</li>
  * </ul>
+ * A successful {@code /mf force claim} is covered: unlike {@code /mf claim}, it never reads the
+ * plugin's config.
  * {@code /mf power <name>} for a name no player has used is also not covered: the lookup is made by
  * Ponder's {@code UUIDChecker} against {@code Server.getOfflinePlayer(String)}, whose answer for an
  * unknown name the stub server cannot reproduce faithfully.
@@ -251,6 +257,128 @@ class TerritoryCommandsTest {
 
         assertTrue(result);
         assertEquals(List.of("That player's current power is 12.0"), sent);
+    }
+
+    // /mf force claim (the sender acts for the named faction and need not belong to any)
+
+    @Test
+    void forceClaim_claimsANeverClaimedChunkForTheNamedFaction() {
+        boolean result = new ForceClaimCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertTrue(result);
+        TerritoryChunk chunk = PersistentData.getInstance().getTerritoryChunk(CHUNK_X, CHUNK_Z, worldId);
+        assertEquals(faction.getId(), chunk.getFactionUUID());
+        assertEquals(1, faction.getNumTerritoryChunks());
+        assertEquals(List.of("Claimed."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceClaim_reclaimsAReleasedChunkWithoutReplacingIt() {
+        Faction previous = new FactionImpl("Beta", UUID.randomUUID());
+        PersistentData.getInstance().addFaction(previous);
+        TerritoryChunk chunk = claimHereFor(previous);
+        previous.unclaimChunk(chunk);
+
+        boolean result = new ForceClaimCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertTrue(result);
+        assertSame(chunk, PersistentData.getInstance().getTerritoryChunk(CHUNK_X, CHUNK_Z, worldId));
+        assertEquals(faction.getId(), chunk.getFactionUUID());
+        assertEquals(1, faction.getNumTerritoryChunks());
+        assertEquals(List.of("Claimed."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceClaim_refusesAFactionNameThatDiffersOnlyInCase() {
+        boolean result = new ForceClaimCommand().execute(ONLINE.get(outsider), new String[]{"alpha"});
+
+        assertFalse(result);
+        assertFalse(PersistentData.getInstance().doesTerritoryChunkExist(world.getChunkAt(CHUNK_X, CHUNK_Z)));
+        assertEquals(List.of("That faction wasn't found."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceClaim_refusesASenderWhoIsNotAPlayer() {
+        boolean result = new ForceClaimCommand().execute(console, new String[]{"Alpha"});
+
+        assertFalse(result);
+        assertEquals(0, faction.getNumTerritoryChunks());
+        assertEquals(List.of("This command can only be used by a player."), sent);
+    }
+
+    @Test
+    void forceClaim_withoutAFactionNamePrintsUsageAndReturnsFalse() {
+        boolean result = new ForceClaimCommand().execute(console);
+
+        assertFalse(result);
+        assertEquals(List.of("Usage: /mf force claim <faction>"), sent);
+    }
+
+    // /mf force unclaim
+
+    @Test
+    void forceUnclaim_releasesTheNamedFactionsChunkButKeepsItInTheStore() {
+        TerritoryChunk chunk = claimHereFor(faction);
+
+        boolean result = new ForceUnclaimCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertTrue(result);
+        assertNull(chunk.getFactionUUID());
+        assertEquals(0, faction.getNumTerritoryChunks());
+        assertSame(chunk, PersistentData.getInstance().getTerritoryChunk(CHUNK_X, CHUNK_Z, worldId));
+        assertEquals(List.of("Unclaimed."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceUnclaim_leavesAChunkHeldByADifferentFaction() {
+        Faction other = new FactionImpl("Beta", UUID.randomUUID());
+        PersistentData.getInstance().addFaction(other);
+        TerritoryChunk chunk = claimHereFor(other);
+
+        boolean result = new ForceUnclaimCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertFalse(result);
+        assertEquals(other.getId(), chunk.getFactionUUID());
+        assertEquals(1, other.getNumTerritoryChunks());
+        assertEquals(List.of("This territory is not claimed by Alpha."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceUnclaim_reportsAChunkThatWasNeverClaimed() {
+        boolean result = new ForceUnclaimCommand().execute(ONLINE.get(outsider), new String[]{"Alpha"});
+
+        assertFalse(result);
+        assertEquals(List.of("This territory has never been claimed."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceUnclaim_refusesAnUnknownFaction() {
+        TerritoryChunk chunk = claimHereFor(faction);
+
+        boolean result = new ForceUnclaimCommand().execute(ONLINE.get(outsider), new String[]{"Gamma"});
+
+        assertFalse(result);
+        assertEquals(faction.getId(), chunk.getFactionUUID());
+        assertEquals(List.of("That faction wasn't found."), RECEIVED.get(outsider));
+    }
+
+    @Test
+    void forceUnclaim_refusesASenderWhoIsNotAPlayer() {
+        TerritoryChunk chunk = claimHereFor(faction);
+
+        boolean result = new ForceUnclaimCommand().execute(console, new String[]{"Alpha"});
+
+        assertFalse(result);
+        assertEquals(faction.getId(), chunk.getFactionUUID());
+        assertEquals(List.of("This command can only be used by a player."), sent);
+    }
+
+    @Test
+    void forceUnclaim_withoutAFactionNamePrintsUsageAndReturnsFalse() {
+        boolean result = new ForceUnclaimCommand().execute(console);
+
+        assertFalse(result);
+        assertEquals(List.of("Usage: /mf force unclaim <faction>"), sent);
     }
 
     private TerritoryChunk claimHereFor(Faction holder) {
