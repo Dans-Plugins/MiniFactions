@@ -13,7 +13,7 @@ The configuration file is located at `plugins/MiniFactions/config.yml`.
 | `percentagePowerLostOnDeath` | Double | `0.10` | Fraction of power lost on death (e.g. `0.10` = 10%). |
 | `chunkRequirementFactor` | Double | `0.10` | A claim costs the number of chunks the faction already holds times this, in power, taken from the leader who claims; never less than `minimumPowerCost`. |
 | `autosaveMinutes` | Integer | `5` | How often, in minutes, faction data is saved while the server runs, in addition to when the plugin is disabled. `0` turns autosaving off. Read when the plugin enables, so a change takes effect after a restart. |
-| `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. Read when the plugin enables, so a change takes effect after a restart. |
+| `usage-reporting.enabled` | Boolean | `true` | Whether the plugin reports usage events (see below). Set to `false` to turn it off. Read when the plugin enables, so a change takes effect after a restart. Other spellings of the block or the switch (`usage_reporting:`, `usageReporting:`, `enable: false`, `disabled: true`), or `usage-reporting: false`, also count as off. |
 | `usage-reporting.endpoint` | String | `https://trace.danielstephenson.dev` | The trace server events are sent to. |
 | `usage-reporting.key` | String | the plugin's key | Identifies this plugin to the trace server so reports are attributed to it. Not a secret: it ships in the default config and can only report as MiniFactions. Empty means reporting is off regardless of `enabled`. |
 
