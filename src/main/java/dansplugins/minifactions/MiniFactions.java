@@ -25,6 +25,7 @@ import dansplugins.minifactions.eventhandlers.JoinHandler;
 import dansplugins.minifactions.services.LocalConfigService;
 import dansplugins.minifactions.services.StorageService;
 import dansplugins.minifactions.trace.TraceClient;
+import dansplugins.minifactions.trace.UsageReportingSetting;
 import preponderous.ponder.minecraft.bukkit.abs.AbstractPluginCommand;
 import preponderous.ponder.minecraft.bukkit.abs.PonderBukkitPlugin;
 import preponderous.ponder.minecraft.bukkit.services.CommandService;
@@ -82,6 +83,53 @@ public class MiniFactions extends PonderBukkitPlugin {
         territoryHandler = new TerritoryHandler();
         handlebStatsIntegration();
         handleUsageReporting();
+    }
+
+    /**
+     * Every save of config.yml goes through here. A config.yml Bukkit could not parse was loaded
+     * as empty, so saving it would replace the operator's whole file, opt-out included, with the
+     * defaults: it is left alone instead. Otherwise an {@code enabled: false} found on disk is
+     * carried into the loaded config first, so a copy loaded before the operator edited the file
+     * cannot turn reporting back on.
+     */
+    @Override
+    public void saveConfig() {
+        saveConfig(true);
+    }
+
+    /**
+     * Saves the switch an operator has just set with {@code /mf config set usage-reporting.enabled},
+     * which may turn reporting back on, so the opt-out on disk is not carried over this once. A
+     * config.yml that cannot be parsed is still never written over.
+     */
+    public void saveConfigWithUsageReportingSetByCommand() {
+        saveConfig(false);
+    }
+
+    private void saveConfig(boolean keepOptOutFromDisk) {
+        File configFile = new File(getDataFolder(), "config.yml");
+        if (UsageReportingSetting.isUnparseable(configFile)) {
+            getLogger().severe("config.yml could not be read, so it was not overwritten. Fix the YAML error in it"
+                    + " and restart; until then the defaults are used, and usage reporting is off.");
+            return;
+        }
+        if (keepOptOutFromDisk) {
+            UsageReportingSetting.keepOptOutFromDisk(getConfig(), configFile);
+        }
+        super.saveConfig();
+    }
+
+    /**
+     * Stops usage reporting at once, for an operator who has just turned it off in-game. Turning
+     * it back on still waits for the next restart; turning it off never does.
+     */
+    public void stopUsageReporting() {
+        TraceClient previous = trace;
+        trace = TraceClient.disabled();
+        if (previous != null) {
+            previous.close();
+        }
+        getLogger().info("Usage reporting is off (config.yml).");
     }
 
     /**

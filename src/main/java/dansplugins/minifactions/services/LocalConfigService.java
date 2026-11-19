@@ -12,6 +12,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import dansplugins.minifactions.MiniFactions;
+import dansplugins.minifactions.trace.UsageReportingSetting;
+
+import java.io.File;
 
 /**
  * @author Daniel McCoy Stephenson
@@ -65,8 +68,17 @@ public class LocalConfigService {
 
     public void setConfigOption(String option, String value, CommandSender sender) {
         if (applyConfigOption(getConfig(), option, value, sender)) {
-            MiniFactions.getInstance().saveConfig();
+            if (option.equalsIgnoreCase(USAGE_REPORTING_ENABLED_KEY)) {
+                // The operator's own choice, which may be to turn reporting back on.
+                MiniFactions.getInstance().saveConfigWithUsageReportingSetByCommand();
+            } else {
+                MiniFactions.getInstance().saveConfig();
+            }
             altered = true;
+            // Turning reporting off in-game stops it at once; turning it on waits for a restart.
+            if (turnsUsageReportingOff(option, getConfig(), configFile())) {
+                MiniFactions.getInstance().stopUsageReporting();
+            }
         }
     }
 
@@ -228,7 +240,25 @@ public class LocalConfigService {
     // (see UsageReportingDefaultsTest), not assumed.
 
     public boolean isUsageReportingEnabled() {
-        return getBoolean(USAGE_REPORTING_ENABLED_KEY);
+        return isUsageReportingEnabled(getConfig(), configFile());
+    }
+
+    /**
+     * Not {@code getBoolean()}: it returns the bundled true for a quoted "false" or any other
+     * value that is not a YAML boolean. Only a value that clearly means "on" turns reporting on,
+     * and an opt-out in {@code configFile} on disk (or a file that cannot be parsed) always wins.
+     */
+    static boolean isUsageReportingEnabled(FileConfiguration config, File configFile) {
+        return UsageReportingSetting.isEnabled(config, configFile);
+    }
+
+    /** Whether setting {@code option} has just left usage reporting off. */
+    static boolean turnsUsageReportingOff(String option, FileConfiguration config, File configFile) {
+        return option.equalsIgnoreCase(USAGE_REPORTING_ENABLED_KEY) && !isUsageReportingEnabled(config, configFile);
+    }
+
+    private static File configFile() {
+        return new File(MiniFactions.getInstance().getDataFolder(), "config.yml");
     }
 
     public String getUsageReportingEndpoint() {

@@ -36,8 +36,9 @@ and sent together, when the minute ends, as one event carrying the count in a `c
 count still open is sent when the plugin is disabled. Sending happens off the main thread, never delays a
 tick, and is dropped silently if the
 server cannot be reached. Set `usage-reporting.enabled` to `false` to turn it off, either in the file
-or with `/mf config set usage-reporting.enabled false`. It is read when the plugin enables, so events
-keep being sent until the next restart.
+or with `/mf config set usage-reporting.enabled false`. It is read when the plugin enables; turning it
+off with `/mf config set` stops reporting at once, while any other change (including turning it back
+on) waits for the next restart.
 
 It can also be turned off for every plugin on the server that reports this way, with `enabled: false`
 in `plugins/trace/config.yml` (created the first time such a plugin enables; plugins never turn it
@@ -46,3 +47,10 @@ or `DO_NOT_TRACK=1`. Each startup logs whether reporting is on or, if it is off,
 `usage-reporting` block is written into `config.yml` on the first enable that finds it missing, so
 the switch is visible on servers upgraded from before it existed. Details:
 <https://danielstephenson.dev/usage-reporting>.
+
+Only a value that clearly means on (`true`, or the string `true`, `on`, `yes` or `1`) turns reporting on: a quoted
+`"false"`, a typo or an empty value turns it off. The plugin never writes over a `config.yml` it cannot
+parse; it logs the error, and reporting stays off until the file is fixed. An `enabled: false` written by
+hand while the server runs is kept by every later save of the config. The environment variables fail
+closed too: `TRACE_USAGE_REPORTING` set to anything but blank or `true`/`on`/`yes`/`1` turns reporting
+off, as does `DO_NOT_TRACK` set to anything but blank or `0`/`false`/`off`/`no`.
