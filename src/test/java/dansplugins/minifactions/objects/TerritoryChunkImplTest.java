@@ -48,7 +48,7 @@ class TerritoryChunkImplTest {
 
     @Test
     void newChunk_getsItsOwnIdEachTime() {
-        // Two records for the same chunk are told apart only by this id.
+        // The constructor draws a random id; it is not derived from the chunk.
         Chunk chunk = chunk(0, 0, UUID.randomUUID());
 
         TerritoryChunk first = new TerritoryChunkImpl(chunk, UUID.randomUUID());
